@@ -1,0 +1,324 @@
+::-webkit-input-placeholder {
+    color: #909090;
+    opacity: 0.7;
+}
+
+#back{
+    width: 22px;
+    height: 22px;
+    position: relative;
+    top: 30px;
+    left: 25px;
+}
+#back a{
+    display: inline;
+}
+#back img{
+    width: 100%;
+    height: 100%;
+}
+
+#login{
+    background: #1a1a1a;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 100;
+    overflow: scroll;
+
+}
+
+#login>.login{
+    background: url("../.././img/login/icbc.png") no-repeat 50% 98%;
+    background-size: 60%;
+    width: 100%;
+    height: 100%;
+}
+
+#login>.login>img{
+    width: 23%;
+    margin: 0.67rem auto;
+}
+
+#login>.login>.content{
+    width: 80%;
+    margin: auto;
+}
+
+#login>.login>.contentTwo{
+    width: 90%;
+    margin: 70px auto 0 auto;
+}
+
+#login>.login>.contentThree{
+    overflow: hidden;
+    width: 90%;
+    margin: 10% auto 0 auto;
+}
+
+
+
+#login .yhm_login{
+    width: 100%;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    padding: 4% 0;
+    border-bottom: 1px rgba(76,76,76,0.7) solid;
+    font-size: 14px;
+    text-align: left;
+}
+
+#login .yhm_login>input{
+    box-sizing: border-box;
+    width: 70%;
+    height: 30px;
+    line-height: 30px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    color: #fafafa
+}
+
+/*#login .yhm_login>input[type="date"]{*/
+    /*width: 0;*/
+/*}*/
+
+
+#login .pass_reg {
+    text-align: center;
+    margin-top: 0.15rem;
+    position: relative;
+}
+
+#login .pass_reg>span {
+    float: left;
+    font-size: 14px;
+    color: #e5e5e5;
+    opacity: 0.5;
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+}
+
+#login .pass_reg>span:last-child {
+    text-align: right;
+}
+
+#login .but_dl{
+    width: 100%;
+    background: #af904a;
+    text-align: center;
+    color: #fff;
+    letter-spacing: 5px;
+    border: none;
+    margin-top: 0.25rem;
+    line-height: 40px;
+    font-size: 20px;
+    padding: 2% 0 2%;
+    border-radius: 4px;
+}
+
+#login .yhm_dl_gym{
+    width: 100%;
+    height: 10%;
+    padding: 3px 0;
+}
+
+#login .yhm_sr {
+    width: 100%;
+    height: 20%;
+    padding: 4% 0;
+    border-bottom: 1px rgba(76,76,76,0.7) solid;
+}
+
+#login .yhm_sr>input{
+    box-sizing: border-box;
+    width: 60%;
+    height: 30px;
+    background: none;
+    border: none;
+    line-height: 30px;
+    color: #fafafa;
+    font-size: 14px;
+    outline: none;
+    float: left;
+}
+
+#getCaptcha{
+    text-align: center;
+    height: 30px;
+    width: 35%;
+    border: none;
+    font-size: 14px;
+    line-height: 30px;
+    background: none;
+    color: #af904a;
+    border-left: 1px #666 solid;
+    border-radius: 0;
+}
+
+#xy_zc{
+    padding-top: 2%;
+    font-size: 15px;
+    text-align: left;
+}
+#xy_zc>span{
+    padding-left: 1%;
+    color: #af904a;
+}
+
+#xy_zc>a{
+    width: auto;
+    color: #fff;
+}
+
+
+
+/** 注册时候 填写头像信息***/
+.headPic{
+    text-align: center;
+}
+
+.headPic img {
+    width: 93px;
+    height: 93px;
+    border: 1px #fff solid;
+    border-radius: 100%;
+    margin-bottom: 10px;
+}
+
+.headPic span{
+    color: #909090;
+}
+
+select{
+    display: inline;
+    width: 80%;
+    height: 100%;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: rgba(144, 144, 144, 0.8);
+}
+
+#headPic{
+    display: none;
+}
+
+#login .yhm_login>input[type="date"]{
+    width: 1px;
+}
+
+#birthDay{
+    width: 1px;
+}
+
+#birthDay+label{
+    color: rgba(144, 144, 144, 0.8);
+    width: 70%;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+
+/** 填写兴趣***/
+#login>.login>.contentThree>h3{
+    color: #fafafa;
+    margin: 0.25rem 0 0.1rem 0;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: left;
+}
+
+#login>.login>.contentThree>.list{
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    height: 3.15rem;
+    position: initial;
+}
+
+#login>.login>.contentThree>.list li{
+    float: left;
+    width: 0.96rem;
+    height: 0.77rem;
+    text-align: center;
+}
+
+.contentThree>ul input{
+    display: none;
+}
+
+.contentThree>ul input+label{
+    border-radius: 3px;
+    text-align: center;
+    display: inline-block;
+    width: 93%;
+    height: 0.7rem;
+    color: #fafafa;
+    border: 1px rgba(144,144,144,0.5) solid;
+    position: relative;
+}
+.contentThree>ul input+label>img{
+    background: #fafafa;
+    width: 0.27rem;
+    height: 0.27rem;
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    margin-left: -17px;
+}
+.contentThree>ul input+label>span{
+    display: inline-block;
+    height: 0.16rem;
+    line-height: 0.16rem;
+    margin-top: 0.45rem;
+}
+
+
+.contentThree>ul input+label.active{
+    border: 1px #af904a solid;
+}
+.contentThree>ul input+label>img.active{
+    background: #f9d27b;
+}
+.contentThree>ul input+label>span.active{
+    color: #af904a;
+}
+
+.contentThree>ul>li i{
+    background: url('../../img/login/check.png') no-repeat;
+    background-size: 100%;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 4px;
+    top: 3px;
+}
+
+
+
+
+.fail{
+    color: #fff;
+    position: absolute;
+    top: 0;
+}
+
+
+@media screen and (max-width: 320px) {
+    .contentThree>ul input+label>span{
+        font-size: 14px;
+    }
+}
+
+
+
+
+
+
+
+

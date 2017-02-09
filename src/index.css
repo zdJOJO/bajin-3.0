@@ -1,0 +1,56 @@
+body,html{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #fafafa;
+}
+
+html{
+  font-size: 100px;
+}
+
+body{
+  font-size: 0.15rem;
+}
+
+
+ul, li{
+  list-style: none;
+}
+
+#root{
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.panel, .panel-body{
+  height: 100%;
+  width: 100%;
+}
+
+
+  /********* 人员管理系统***********/
+#staff{
+  width: 98%;
+  margin: auto;
+}
+
+#head ul{
+  padding: 0;
+}
+
+#head li{
+  width: 33.33%;
+  float: left;
+}
+
+#head li>select{
+  width: 40%;
+}
+
+#head li>input{
+  width: 100%;
+}

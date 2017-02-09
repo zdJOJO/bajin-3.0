@@ -1,0 +1,158 @@
+/**
+ * Created by Administrator on 2017/01/09 0009.
+ */
+import { hashHistory } from 'react-router';
+import cookie from 'react-cookie';
+import {port} from '../public/index'
+import {
+    BEGIN_FETCH,
+    DONE_GET_ActList,
+    DONE_GET_DETAIL ,
+    FALL_FETCH,
+    POPUP,
+    SUBMIT_ACTINFO_SUCCESS,
+    SHOW_DIALOG
+} from './actionTypes';
+
+//开始发起请求
+export const  beginGetActList = ()=>{
+    return {
+        type: BEGIN_FETCH
+    }
+}
+
+//活动列表 请求成功
+export const successGetActList = (data,isRefresh)=>{
+    return{
+        type: DONE_GET_ActList,
+        data,
+        isRefresh
+    }
+}
+
+//活动详情 请求成功
+export const successGetActDetail = (data)=>{
+    return{
+        type: DONE_GET_DETAIL ,
+        data
+    }
+}
+
+//获取失败
+export const fallGetActList = ()=> {
+    return {
+        type: FALL_FETCH,
+    }
+}
+
+//发起活动的 POPUP 的显示隐藏
+export const popup = popupIsShow =>{
+    return {
+        type: POPUP,
+        popupIsShow
+    }
+}
+
+//提交发起活动信息
+export const submitInfoSuccess = (showToast)=>{
+    return{
+        type: SUBMIT_ACTINFO_SUCCESS,
+        showToast
+    }
+}
+
+//显示错误提示
+export const showDialog = (isDialogShow)=>{
+    return{
+        type: SHOW_DIALOG,
+        isDialogShow
+    }
+}
+
+
+
+function fetchActList(page,isRefresh) {
+    return dispatch =>{
+        dispatch(beginGetActList());
+        return fetch( port + '/card/activity?currentPage='+page+'&size=10')
+            .then(res => {
+                console.log(res.status)
+                return res.json()
+            })
+            .then(data => {
+                dispatch(successGetActList(data,isRefresh))
+            })
+            .catch(e =>{
+                dispatch(fallGetActList())
+                console.log(e)
+            })
+    }
+}
+
+function fetchActDetail(itemId) {
+    return dispatch =>{
+        return fetch( port + '/card/activity/'+itemId)
+            .then(res => {
+                console.log(res.status)
+                return res.json()
+            })
+            .then(data => {
+                dispatch(successGetActDetail(data))
+            }).then(e =>{
+                console.log(e)
+            })
+    }
+}
+
+
+function fetchPostInfo(infoObj) {
+    return dispatch=>{
+        return fetch( port+"/card/activityDriver/create?token="+cookie.load('token') ,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(infoObj)
+        }).then( res=>{
+            return res.json()
+        }).then( json=>{
+            if(json.code==='201'){
+                dispatch(submitInfoSuccess(true))
+                setTimeout(()=>{
+                    dispatch(submitInfoSuccess(false))
+                    dispatch(popup(false))
+                },1500)
+            }else if(json.code==='666'){
+                cookie.remove('token');
+                hashHistory.push({pathname: '/login'})
+            }
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+}
+
+
+export const getActList = (page,isRefresh) => {
+    return (dispatch, getState) => {
+        return dispatch(fetchActList(page,isRefresh))
+    }
+}
+
+export const getActDetail = (itemId) => {
+    return (dispatch, getState) => {
+        return dispatch(fetchActDetail(itemId))
+    }
+}
+
+
+export const postActInfo = infoObj =>{
+    return(dispatch)=>{
+        return dispatch(fetchPostInfo(infoObj))
+    }
+}
+
+
+
+
+
