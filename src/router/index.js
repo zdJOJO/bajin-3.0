@@ -5,7 +5,9 @@ import App from '../container/App';
 import Home from '../container/home';
 import ActivityBox from '../container/activity/index';
 import ActivityInfo from '../container/activity/activityInfo';
-import Course from '../container/course';
+import CourseBox from '../container/course';
+import Select from '../container/course/select'
+import Two4Class from '../container/course/two4Class'
 import MyInfo from '../container/myInfo';
 import Login from '../container/login';
 import CommentList from '../container/comment/commentList';
@@ -18,7 +20,14 @@ export const routeConfig = [
         indexRoute: { component: Home },
         childRoutes: [
             { path: 'activity', component: ActivityBox },
-            { path: 'course', component: Course  },
+            {
+                path: 'course',
+                component: CourseBox ,
+                indexRoute: { component: Select },
+                childRoutes: [
+                    { path: 'two4Class', component: Two4Class },
+                ]
+            },
             { path: 'myInfo', component: MyInfo },
             { path: 'login', component: Login },
             { path: 'comment', component: CommentList },

@@ -7,6 +7,7 @@ import { combineReducers } from 'redux'; // 利用combineReducers 合并reducers
 import menuReducer from './menu'
 import commentReducer from './comment'
 import activityReducer from './activity'
+import courseReducer from './course'
 import detailReducer from './detail'
 import loginReducer from './login'
 
@@ -14,6 +15,7 @@ export default combineReducers({
     menuReducer,
     commentReducer,
     activityReducer,
+    courseReducer,
     detailReducer,
     loginReducer
 })

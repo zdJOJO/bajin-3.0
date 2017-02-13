@@ -3,18 +3,35 @@
  */
 import React,{Component} from 'react';
 
+import HeaderBar from '../../components/headerNav/headBar';
+import HeaderNav from '../../components/headerNav/index';
 import Menu from '../../router/menu';
 
+const menuList = [
+    {
+        menuName: '精选',
+        path: '/course'
+    },
+    {
+        menuName: '24课堂',
+        path: '/course/two4Class'
+    }
+]
 
-class Activity extends Component{
+
+class CourseBox extends Component{
     render(){
         return(
             <div className="panel panel-default">
-                这个是课程
+                <div className="headerBox">
+                    <HeaderBar content="课程"/>
+                    <HeaderNav menuList={menuList}/>
+                </div>
+                { this.props.children }
                 <Menu />
             </div>
         )
     }
 }
 
-export default Activity;
+export default CourseBox;

@@ -14,8 +14,9 @@ import {
     SHOW_DIALOG
 } from './actionTypes';
 
+
 //开始发起请求
-export const  beginGetActList = ()=>{
+const beginGetActList = ()=>{
     return {
         type: BEGIN_FETCH
     }
@@ -39,7 +40,7 @@ export const successGetActDetail = (data)=>{
 }
 
 //获取失败
-export const fallGetActList = ()=> {
+const fallGetActList = ()=> {
     return {
         type: FALL_FETCH,
     }

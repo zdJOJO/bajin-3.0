@@ -22,13 +22,6 @@ const initState = {
         pageCount: 0,
         isLoading: true,
         isListNull: false,  //判断每次请求的data列表长度是否为0
-    },
-    consultation:{
-        currentPage: 1,
-        list: [],
-        pageCount: 0,
-        isLoading: true,
-        isListNull: false  //判断列表长度是否为0
     }
 };
 
@@ -56,14 +49,6 @@ export default function activityReducer(state=initState, action){
                 isLoading: true
             }
         case POPUP:
-            // return{
-            //     ...state,
-            //     initiateAct:{
-            //         popupIsShow: action.popupIsShow,
-            //         isDialogShow: false,
-            //         showToast: false
-            //     }
-            // }
             return{
                 ...state,
                 initiateAct:{
@@ -72,14 +57,6 @@ export default function activityReducer(state=initState, action){
                 }
             }
         case SHOW_DIALOG:
-            // return{
-            //     ...state,
-            //     initiateAct:{
-            //         popupIsShow: true,
-            //         isDialogShow: action.isDialogShow,
-            //         showToast: false
-            //     }
-            // }
             return{
                 ...state,
                 initiateAct:{
@@ -88,14 +65,6 @@ export default function activityReducer(state=initState, action){
                 }
             }
         case SUBMIT_ACTINFO_SUCCESS:
-            // return{
-            //     ...state,
-            //     initiateAct:{
-            //         popupIsShow: true,
-            //         isDialogShow: false,
-            //         showToast: action.showToast
-            //     }
-            // }
             return{
                 ...state,
                 initiateAct:{

@@ -48,7 +48,7 @@ class Menu extends Component{
         const { handleChangeTab} = this.props;
          if(location.hash==='#/activity'){
              handleChangeTab(1);
-         }else if(location.hash==='#/course'){
+         }else if(location.hash==='#/course'||location.hash==='#/course/select'||location.hash==='#/course/two4Class'){
              handleChangeTab(2);
          }else if(location.hash==='#/myInfo'){
              handleChangeTab(3);

@@ -69,6 +69,15 @@ nav i{
   font-size: large;
 }
 
+.subContentPanel{
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: fixed;
+  top: 0.65rem;
+  bottom: 0.46rem;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

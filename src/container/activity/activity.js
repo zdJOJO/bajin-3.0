@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import ActivityItem from '../../components/activity/activityItem';
 
 //import Using ES6 syntax
-import {InfiniteLoader} from 'react-weui';
+import {InfiniteLoader,LoadMore} from 'react-weui';
 
 import './index.css';
 
@@ -22,35 +22,42 @@ class Activity extends Component{
     render(){
         const { getActList ,activityList ,isListNull ,startPage } = this.props;
         return(
-            <div className="itemBox">
-                <InfiniteLoader
-                    onLoadMore={ (resolve, finish) => {
-                        getActList(startPage+1 ,false);
-                        if(isListNull){
-                            setTimeout( ()=> {
-                                console.log('list is null')
-                                finish()
-                            }, 4000)
-                        }else{
-                            setTimeout( ()=> {
-                                resolve()
-                            }, 1000)
-                        }
-                }}
-                >
-                    <div className="list">
-                        {
-                            activityList.map( (activity,index) => {
-                                return(
-                                    <ActivityItem
-                                        key={index}
-                                        activity={activity}
-                                    />
-                                )
-                            })
-                        }
+            <div>
+                { activityList.length === 0 &&
+                    <div className="first">
+                        <LoadMore loading>Loading</LoadMore>
                     </div>
-                </InfiniteLoader>
+                }
+                <div className="itemBox">
+                    <InfiniteLoader
+                        onLoadMore={ (resolve, finish) => {
+                            getActList(startPage+1 ,false);
+                            if(isListNull){
+                                setTimeout( ()=> {
+                                    console.log('list is null')
+                                    finish()
+                                }, 4000)
+                            }else{
+                                setTimeout( ()=> {
+                                    resolve()
+                                }, 1000)
+                            }
+                    }}
+                    >
+                        <div className="list">
+                            {
+                                activityList.map( (activity,index) => {
+                                    return(
+                                        <ActivityItem
+                                            key={index}
+                                            activity={activity}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    </InfiniteLoader>
+                </div>
             </div>
         )
     }

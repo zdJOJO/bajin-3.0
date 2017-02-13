@@ -24,29 +24,22 @@ export default class ActivityItem extends Component{
                     <div className="tit-content">
                         <h3>{this.props.activity.activityTitle}</h3>
                         <p className="time">
-                            {/*<span>时间: </span>*/}
                             {timestampFormat(this.props.activity.startTime,true)}-{timestampFormat(this.props.activity.endTime,true)}
                         </p>
-                        <p className="deTile">{this.props.activity.activityAddress}</p>
+                        {/* <p className="deTile">{this.props.activity.activityAddress}</p>*/}
+                        { this.props.activity.activityPrice === 0 &&
+                            <div className='price'>
+                                <span>￥0.00</span>
+                                <span className="vip">会员专享</span>
+                            </div>
+                        }
+                        { this.props.activity.activityPrice !== 0 &&
+                            <div className='price'>
+                                <span>￥{this.props.activity.activityPrice.toFixed(2)}</span>
+                            </div>
+                        }
                     </div>
                 </div>
-                <hr/>
-                { (this.props.activity.activityTitle.length<=12 || this.props.activity.activityAddress.length<=15) &&
-                    <div className='bottom bottomOne'>
-                        <span>价格: </span>
-                    <span>
-                        {this.props.activity.activityPrice === 0 ? '会员专享' : '￥'+this.props.activity.activityPrice.toFixed(2)}
-                    </span>
-                    </div>
-                }
-                { (this.props.activity.activityTitle.length>12 && this.props.activity.activityAddress.length>15) &&
-                    <div className='bottom bottomTwo'>
-                        <span>价格: </span>
-                    <span>
-                        {this.props.activity.activityPrice === 0 ? '会员专享' : '￥'+this.props.activity.activityPrice.toFixed(2)}
-                    </span>
-                    </div>
-                }
             </div>
         )
     }
