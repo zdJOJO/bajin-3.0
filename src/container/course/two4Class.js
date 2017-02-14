@@ -6,7 +6,7 @@ import React,{Component} from 'react';
 class Two4Class extends Component{
     render(){
         return(
-            <div className="subContentPanel">
+            <div id="" className="subContentPanel">
                 这是24课堂
             </div>
         )

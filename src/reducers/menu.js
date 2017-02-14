@@ -1,10 +1,16 @@
 /**
  * Created by Administrator on 2017/02/08 0008.
  */
-import {CHANGE_MENU_TAB} from '../actions/actionTypes';
+import {
+    CHANGE_MENU_TAB,
+    CHANGE_SUB_NAV
+} from '../actions/actionTypes';
 
 const initState = {
-    index: 0
+    index: 0,
+    courseNav:{
+        index: 0
+    }
 }
 
 export default function menuReducer(state=initState, action){
@@ -13,6 +19,16 @@ export default function menuReducer(state=initState, action){
             return {
                 ...state,
                 index: action.index
+            }
+        case CHANGE_SUB_NAV :
+            if(action.typeStr==='course'){
+                return {
+                    ...state,
+                    courseNav: {
+                        ...state.courseNav,
+                        index: action.index
+                    }
+                }
             }
         default:
             return state;

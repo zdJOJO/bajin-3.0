@@ -7,6 +7,8 @@ import HeaderBar from '../../components/headerNav/headBar';
 import HeaderNav from '../../components/headerNav/index';
 import Menu from '../../router/menu';
 
+import './index.css'
+
 const menuList = [
     {
         menuName: '精选',

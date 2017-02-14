@@ -1,6 +1,43 @@
 
 
 /*** 精选 ***/
+#select .weui-media-box_appmsg .weui-media-box__hd{
+    width: 88px;
+    height: 66px;
+}
+
+.weui-media-box_appmsg .weui-media-box__bd{
+    height: 66px;
+    position: relative;
+}
+
+#select .weui-media-box__title {
+    text-align: left;
+    font-size: 14px;
+    color: #323232;
+    margin-bottom: 2px;
+}
+
+#select .weui-media-box__desc{
+    text-align: left;
+    font-size: 12px;
+    color: #909090;
+}
+
+#select .weui-media-box__desc:last-child{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+#select .weui-media-box__info__meta{
+    float: right;
+    font-size: 13px;
+    color: #c49327;
+}
+
+
+
 
 
 /*** 24堂课 ***/

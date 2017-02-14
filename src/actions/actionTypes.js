@@ -3,7 +3,8 @@
  */
 
 //菜单栏切换
-export const  CHANGE_MENU_TAB= 'CHANGE_MENU_TAB';   
+export const CHANGE_MENU_TAB= 'CHANGE_MENU_TAB';  
+export const CHANGE_SUB_NAV = 'CHANGE_SUB_NAV';
 
 //发送请求
 export const BEGIN_FETCH = 'BEGIN_FETCH';
