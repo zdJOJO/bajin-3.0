@@ -4,7 +4,8 @@
 import {port} from '../public/index'
 import {
     BEGIN_FETCH,
-    FALL_FETCH
+    FALL_FETCH,
+    DONE_GET_COURSELIST
 } from './actionTypes'
 
 //开始发起请求
@@ -22,8 +23,11 @@ const fallGetActList = ()=> {
 }
 
 //获取列表成功
-const successGetCourseList =()=>{
-
+const successGetCourseList =(list)=>{
+    return{
+        type: DONE_GET_COURSELIST,
+        list
+    }
 }
 
 
@@ -31,9 +35,8 @@ const successGetCourseList =()=>{
 // http://121.196.232.233/card/scmv?currentPage={currentPage}&size={size}&type={type}&isFather={isFather}
 // type:  0全部 1课程 2视频 3音频    isFather: 0-单个  1-集合
 const fetchActList =(page,type)=>{
-    let url = '';
+    let url = port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=1';
     return dispatch =>{
-        console.log(11111111111111)
         dispatch(beginGetActList());
         return fetch(url)
             .then(res => {
@@ -41,7 +44,7 @@ const fetchActList =(page,type)=>{
                 return res.json()
             })
             .then(data => {
-                dispatch(successGetCourseList(data))
+                dispatch(successGetCourseList(data.data.list))
             })
             .catch(e =>{
                 dispatch(fallGetActList())

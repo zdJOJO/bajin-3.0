@@ -1,33 +1,69 @@
 
 
 /*** 精选 ***/
+#select .weui-panel__hd{
+    padding: 5px 15px 0;
+    text-align: left;
+    color: #909090;
+    font-size: 13px;
+}
+
+#select .weui-panel__hd:after{
+    border-bottom: none;
+}
+
+#select .weui-media-box{
+    border-bottom: 1px solid #f0f0f0;
+    display: block;
+    overflow: hidden;
+}
+
+#select .first{
+    padding-top: 5px;
+}
+
+#select .weui-media-box:before{
+    border-top: none;
+}
+
 #select .weui-media-box_appmsg .weui-media-box__hd{
-    width: 88px;
-    height: 66px;
+    width: 0.68rem;
+    height: 0.51rem;
+    float: left;
+    margin-top: 3px;
+}
+
+#select .weui-media-box_appmsg .weui-media-box__hd>img{
+    width: 100%;
+    height: 100%;
 }
 
 .weui-media-box_appmsg .weui-media-box__bd{
-    height: 66px;
-    position: relative;
+    width: 2.1rem;
+    min-height: 66px;
+    float: left;
 }
 
 #select .weui-media-box__title {
     text-align: left;
     font-size: 14px;
     color: #323232;
-    margin-bottom: 2px;
+    line-height: 20px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 #select .weui-media-box__desc{
     text-align: left;
     font-size: 12px;
     color: #909090;
+    margin-top: 5px;
 }
 
 #select .weui-media-box__desc:last-child{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    margin-top: 12px;
 }
 
 #select .weui-media-box__info__meta{
@@ -40,4 +76,110 @@
 
 
 
+
 /*** 24堂课 ***/
+
+
+
+/**** selectDetail  精选详情 ****/
+#selectDetail  i{
+    font-style: normal;
+}
+
+#selectDetail{
+    width: 100%;
+    height: 100%;
+}
+
+#selectDetail .head>img{
+    width: 3.2rem;
+    height: 2.4rem;
+    background: #bfbfbf;
+    vertical-align: top
+}
+
+#selectDetail .head>div{
+    overflow: hidden;
+    border-bottom: 5px #f0f0f0 solid;
+}
+
+#selectDetail .head>h3{
+    font-size: 23px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-top: 0.2rem;
+    padding: 0 0.5rem 0 0.15rem;
+    line-height: 30px;
+}
+
+#selectDetail .head .weui-panel__hd{
+    width: 40%;
+    text-align: left;
+    float: left;
+    padding: 0.13rem 0.15rem 0.22rem;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+#selectDetail .head .weui-panel__hd:last-child{
+    color: #c49327;
+    text-align: right;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+#selectDetail .head .weui-panel__hd:after {
+    border: none;
+}
+/*--.body--*/
+#selectDetail .body .weui-panel__hd{
+    padding: 14px 0.075rem;
+    position: relative;
+    height: 0.2rem;
+}
+
+#selectDetail .body .weui-panel__hd:after {
+    left: 0;
+}
+
+#selectDetail .body .weui-panel__hd>span{
+    position: absolute;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio{
+    left: 0.09rem;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio i{
+    color: #323232;
+    font-size: 14px;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio img{
+    padding-right: 0.09rem;
+    height: 12px;
+    width: auto;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio img{
+    color: #323232;
+    font-size: 12px;
+}
+
+#selectDetail .body .weui-panel__hd>.more{
+    right: 0;
+    display: flex;
+}
+
+#selectDetail .body .weui-panel__hd>.more img{
+    padding-right: 0.09rem;
+    height: 24px;
+    width: auto;
+}
+
+#selectDetail .body .weui-panel__hd>.more i{
+    line-height: 26px;
+}

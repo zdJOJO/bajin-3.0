@@ -30,6 +30,7 @@ export default function menuReducer(state=initState, action){
                     }
                 }
             }
+            break
         default:
             return state;
     }

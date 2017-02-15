@@ -3,6 +3,7 @@
  */
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
+import { hashHistory } from 'react-router';
 
 //import Using ES6 syntax
 import {
@@ -11,57 +12,57 @@ import {
     MediaBoxBody,
     MediaBoxTitle,
     MediaBoxDescription,
-    MediaBoxInfoMeta
+    MediaBoxInfoMeta,
+    PanelHeader
 } from 'react-weui';
 
 import {getCourseList} from '../../actions/courseAction'
 
-import search from '../../img/search.svg'
-const appMsgIcon = <img src={search} />
+import test from '../../img/test.jpg'
+const appMsgIcon = <img src={test} role="presentation" />
 
 class Select extends Component{
     componentWillMount(){
         const {getCourseList} = this.props;
-        getCourseList(1,0)
+        getCourseList(1,1)
+    }
+
+    handleClick(selectId){
+        console.log(1111111)
+        hashHistory.push({
+            pathname: `/course/select/${selectId}`,
+            query: {itemType: 1,itemId: selectId}
+        })
     }
 
     render(){
-        const {getCourseList} = this.props;
+        const {getCourseList ,selectList} = this.props;
+       
         return(
-            <div id="select" className="subContentPanel">
-                <MediaBox type="appmsg" href="javascript:void(0);">
-                    <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                    <MediaBoxBody>
-                        <MediaBoxTitle>朗诗雅静|2017，触动你的心弦</MediaBoxTitle>
-                        <MediaBoxDescription>支付定金转用</MediaBoxDescription>
-                        <MediaBoxDescription>
-                            已经更新9期|19人订阅
-                            <MediaBoxInfoMeta>￥180000</MediaBoxInfoMeta>
-                        </MediaBoxDescription>
-                    </MediaBoxBody>
-                </MediaBox>
-                <MediaBox type="appmsg" href="javascript:void(0);">
-                    <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                    <MediaBoxBody>
-                        <MediaBoxTitle>朗诗雅静|2017，触动你的心弦</MediaBoxTitle>
-                        <MediaBoxDescription>复杂的三个月社会klan啊</MediaBoxDescription>
-                        <MediaBoxDescription>
-                            已经更新9期|19人订阅
-                            <MediaBoxInfoMeta>￥199</MediaBoxInfoMeta>
-                        </MediaBoxDescription>
-                    </MediaBoxBody>
-                </MediaBox>
-                <MediaBox type="appmsg" href="javascript:void(0);">
-                    <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                    <MediaBoxBody>
-                        <MediaBoxTitle>朗诗雅静|2017，触动你的心弦</MediaBoxTitle>
-                        <MediaBoxDescription>减肥啦是加拉垃圾了</MediaBoxDescription>
-                        <MediaBoxDescription>
-                            已经更新9期|19人订阅
-                            <MediaBoxInfoMeta>￥199</MediaBoxInfoMeta>
-                        </MediaBoxDescription>
-                    </MediaBoxBody>
-                </MediaBox>
+            <div>
+                <div id="select" className="subContentPanel">
+                    <PanelHeader>实修</PanelHeader>
+                    {
+                        selectList.map((course,index)=>{
+                            return(
+                                <MediaBox className="first" type="appmsg" href="javascript:void(0);"
+                                          key={index}
+                                          onClick={this.handleClick.bind(this,course.id)}
+                                >
+                                    <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
+                                    <MediaBoxBody>
+                                        <MediaBoxTitle>{course.title}</MediaBoxTitle>
+                                        <MediaBoxDescription>{course.subtitle}</MediaBoxDescription>
+                                        <MediaBoxDescription>
+                                            已经更新9期|19人订阅
+                                            <MediaBoxInfoMeta>￥{course.price}</MediaBoxInfoMeta>
+                                        </MediaBoxDescription>
+                                    </MediaBoxBody>
+                                </MediaBox>
+                            )
+                        })
+                    }
+                </div>
             </div>
         )
     }
@@ -69,6 +70,7 @@ class Select extends Component{
 
 function mapStateToProps(state) {
     return{
+        selectList: state.courseReducer.select.list
     }
 }
 

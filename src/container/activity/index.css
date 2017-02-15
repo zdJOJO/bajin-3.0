@@ -1,11 +1,11 @@
 .first>.weui-loadmore{
     line-height: 3.5rem;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .first>.weui-loadmore>.weui-loading{
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
 }
 
 .itemBox .weui-loadmore_line{
