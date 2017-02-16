@@ -82,13 +82,42 @@
 
 
 /**** selectDetail  精选详情 ****/
-#selectDetail  i{
-    font-style: normal;
+#backTop{
+    display: none;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    right: 15px;
+    z-index: 10;
+    border-radius: 100%;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);
+}
+#backTop img{
+    width: 40px;
+    height: 40px;
+}
+#backTop.up{
+    display: block;
+    animation: pop-up 0.5s;
+    bottom: 60px;
+}
+#backTop.down{
+    display: block;
+    animation: pop-down 0.8s;
+    bottom: -50px;
 }
 
 #selectDetail{
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    bottom: 0.36rem;
+}
+
+#selectDetail  i{
+    font-style: normal;
 }
 
 #selectDetail .head>img{
@@ -104,14 +133,15 @@
 }
 
 #selectDetail .head>h3{
+    font-weight: normal;
     font-size: 23px;
     text-align: left;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    margin-top: 0.2rem;
-    padding: 0 0.5rem 0 0.15rem;
+    margin-top: 0.1rem;
+    padding: 0 0.15rem 0 0.15rem;
     line-height: 30px;
 }
 
@@ -135,10 +165,15 @@
     border: none;
 }
 /*--.body--*/
+#selectDetail .body{
+    border-bottom: 5px #f0f0f0 solid;
+}
+
 #selectDetail .body .weui-panel__hd{
-    padding: 14px 0.075rem;
+    padding: 14px 0.075rem 12px;
     position: relative;
     height: 0.2rem;
+    line-height: 0.2rem;
 }
 
 #selectDetail .body .weui-panel__hd:after {
@@ -176,10 +211,191 @@
 
 #selectDetail .body .weui-panel__hd>.more img{
     padding-right: 0.09rem;
-    height: 24px;
+    height: 21px;
     width: auto;
 }
 
 #selectDetail .body .weui-panel__hd>.more i{
-    line-height: 26px;
+    line-height: 23px;
 }
+
+#selectDetail .body h3{
+    font-size: 14px;
+    color: #909090;
+    font-weight: normal;
+    margin: 0.21rem 0 0.11rem 0.135rem;
+    text-align: left;
+}
+
+#selectDetail .body>.detailInfo{
+    position: relative;
+    height: 3.4rem;
+    overflow: hidden;
+    background: #000000;
+}
+#selectDetail .body>.detailInfo.active{
+    animation: long 1.5s;
+    height: 6rem;
+    overflow: initial;
+}
+
+#selectDetail .body>.detailInfo>.show{
+    width: 100%;
+    height: 0.7rem;
+    position: absolute;
+    bottom: 0;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+}
+
+#selectDetail .body>.detailInfo>.show>h4{
+    width: 100%;
+    height: 0.25rem;
+    color: #b9984f;
+    font-size: 13px;
+    font-weight: normal;
+    position: absolute;
+    bottom: 0;
+}
+
+
+/*--.comment--*/
+#selectDetail .comment {
+    border-bottom: 5px #f0f0f0 solid;
+    padding: 0.17rem 0.135rem 0;
+}
+
+#selectDetail .comment .weui-panel__hd{
+    height: 0.315rem;
+    line-height: 0.315rem;
+    padding: 0;
+    border-top: 1px #f0f0f0 solid;
+}
+
+#selectDetail .comment .weui-panel__hd:after{
+    border: none;
+}
+
+#selectDetail .comment .singleCmt{
+    margin: 0 auto 10px auto;
+    width: 100%;
+    min-height: 0.3rem;
+}
+
+#selectDetail .comment .singleCmt>.imgBox{
+    margin-right: 0.075rem;
+    width: initial;
+}
+
+#selectDetail .comment .singleCmt img{
+    width: 0.25rem;
+    height: 0.25rem;
+}
+
+#selectDetail .comment .cmtContent{
+    margin-left: 0;
+    width: 2.6rem;
+}
+
+#selectDetail .comment .cmtContent>.userName{
+    font-size: 12px;
+    position: relative;
+}
+
+#selectDetail .comment .cmtContent>.userName>span:last-child{
+    position: absolute;
+    right: 0;
+    color: #909090;
+    font-weight: normal;
+}
+
+
+
+#selectDetail .comment .cmtContent>.commentContent{
+    font-size: 12px;
+    margin: 0.02rem 0 0 0;
+    color: #646464;
+}
+
+
+
+
+/*--.relate  相关推荐--*/
+#selectDetail .relate{
+
+}
+
+#selectDetail .relate .weui-panel__hd{
+    padding: 0.15rem 0 0.11rem 0;
+    text-align: left;
+    font-size: 14px;
+    color: #323232;
+}
+
+
+/*--.do  购买--*/
+.do{
+    position: fixed;
+    width: 100%;
+    height: 0.36rem;
+    bottom: 0;
+    display: flex;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.1);
+    background: #fafafa;
+    z-index: 20;
+}
+
+.do>.weui-btn-area{
+    margin: 0;
+}
+
+.do button{
+    width: 0.93rem;
+    height: 0.24rem;
+    line-height: 0.24rem;
+    font-size: 13px;
+    margin: 0.06rem 0.1rem 0 0!important;
+}
+
+#flow{
+    color: #b9984f;
+    border-color: #b9984f;
+}
+
+#flow:not(.weui-btn_plain-disabled):active{
+    color: #a5845b;
+    border-color: #a5845b;
+}
+
+.do >.weui-btn-area button:last-child{
+
+}
+
+.do>img{
+    width: 0.22rem;
+    height: 0.22rem;
+    margin: 0.06rem 0.45rem 0;
+}
+
+
+
+/*动画*/
+@keyframes long
+{
+    from {height: 3.4rem;}
+    to {height: 6rem;}
+}
+
+@keyframes pop-up{
+    0%   {bottom: 0;}
+    100% { bottom: 60px;}
+}
+
+@keyframes pop-down{
+    0%   {bottom: 60px;}
+    100% { bottom: -50px;}
+}
+

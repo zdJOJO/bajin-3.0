@@ -3,8 +3,8 @@
  */
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-import { hashHistory } from 'react-router';
 
+import CourseItem from './item';
 //import Using ES6 syntax
 import {
     MediaBox,
@@ -16,49 +16,28 @@ import {
     PanelHeader
 } from 'react-weui';
 
-import {getCourseList} from '../../actions/courseAction'
+import {fetchInfo} from '../../actions/courseAction'
 
-import test from '../../img/test.jpg'
-const appMsgIcon = <img src={test} role="presentation" />
 
 class Select extends Component{
     componentWillMount(){
-        const {getCourseList} = this.props;
-        getCourseList(1,1)
-    }
-
-    handleClick(selectId){
-        console.log(1111111)
-        hashHistory.push({
-            pathname: `/course/select/${selectId}`,
-            query: {itemType: 1,itemId: selectId}
-        })
+        const {fetchInfo ,selectList} = this.props;
+        fetchInfo(0,1)
     }
 
     render(){
-        const {getCourseList ,selectList} = this.props;
-       
+        const {fetchInfo ,selectList} = this.props;
+
         return(
             <div>
                 <div id="select" className="subContentPanel">
-                    <PanelHeader>实修</PanelHeader>
                     {
                         selectList.map((course,index)=>{
                             return(
-                                <MediaBox className="first" type="appmsg" href="javascript:void(0);"
-                                          key={index}
-                                          onClick={this.handleClick.bind(this,course.id)}
-                                >
-                                    <MediaBoxHeader>{appMsgIcon}</MediaBoxHeader>
-                                    <MediaBoxBody>
-                                        <MediaBoxTitle>{course.title}</MediaBoxTitle>
-                                        <MediaBoxDescription>{course.subtitle}</MediaBoxDescription>
-                                        <MediaBoxDescription>
-                                            已经更新9期|19人订阅
-                                            <MediaBoxInfoMeta>￥{course.price}</MediaBoxInfoMeta>
-                                        </MediaBoxDescription>
-                                    </MediaBoxBody>
-                                </MediaBox>
+                                <CourseItem
+                                    key={index}
+                                    course={course}
+                                />
                             )
                         })
                     }
@@ -75,5 +54,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps,{getCourseList}
+    mapStateToProps,{fetchInfo}
 )(Select);

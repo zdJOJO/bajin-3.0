@@ -21,7 +21,7 @@ const initState = {
         applyNumber: 0,
         applyEndTime: 0,
         activityDetail: '',
-    },
+    },   //活动详情
     actStateStr: ''
 }
 

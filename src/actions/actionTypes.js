@@ -30,18 +30,25 @@ export const DONE_GET_COMMENT = 'DONE_GET_COMMENT';
 export const FAIL_GET_COMMENT = 'FAIL_GET_COMMENT';
 export const PUBLISH_COMMENT = 'PUBLISH_COMMENT';
 
-//活动
+//活动 列表
 export const DONE_GET_ActList = 'DONE_GET_ActList';
 export const POPUP = 'POPUP';
 export const SUBMIT_ACTINFO_SUCCESS = 'SUBMIT_ACTINFO_SUCCESS';
 export const SHOW_DIALOG = 'SHOW_DIALOG';
 
+//课程 列表
+export const DONE_GET_COURSELIST = 'DONE_GET_COURSELIST';
+/*课程详情*/
+export const DONE_GET_COURSEDETAIL = 'DONE_GET_COURSEDETAIL';
+export const SHOW_MORE_COURSEDETAIL = 'SHOW_MORE_COURSEDETAIL';
+export const SHOW_BACK_TOP = 'SHOW_BACK_TOP'
 
-//详情
+
+//活动详情
 export const DONE_GET_DETAIL = 'DONE_GET_DETAIL';
 export const DONE_GET_ACTSTATU = 'DONE_GET_ACTSTATU';
 export const DONE_GET_ACTCOMMENT = 'DONE_GET_ACTCOMMENT';
 
 
-//课程
-export const DONE_GET_COURSELIST = 'DONE_GET_COURSELIST';
+
+
