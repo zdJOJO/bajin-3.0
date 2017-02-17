@@ -1,4 +1,7 @@
 
+#select.in{
+    position: inherit;
+}
 
 /*** 精选 ***/
 #select .weui-panel__hd{
@@ -234,7 +237,7 @@
     background: #000000;
 }
 #selectDetail .body>.detailInfo.active{
-    animation: long 1.5s;
+    animation: long 1.0s;
     height: 6rem;
     overflow: initial;
 }
@@ -262,77 +265,20 @@
 }
 
 
-/*--.comment--*/
-#selectDetail .comment {
-    border-bottom: 5px #f0f0f0 solid;
-    padding: 0.17rem 0.135rem 0;
-}
-
-#selectDetail .comment .weui-panel__hd{
-    height: 0.315rem;
-    line-height: 0.315rem;
-    padding: 0;
-    border-top: 1px #f0f0f0 solid;
-}
-
-#selectDetail .comment .weui-panel__hd:after{
-    border: none;
-}
-
-#selectDetail .comment .singleCmt{
-    margin: 0 auto 10px auto;
-    width: 100%;
-    min-height: 0.3rem;
-}
-
-#selectDetail .comment .singleCmt>.imgBox{
-    margin-right: 0.075rem;
-    width: initial;
-}
-
-#selectDetail .comment .singleCmt img{
-    width: 0.25rem;
-    height: 0.25rem;
-}
-
-#selectDetail .comment .cmtContent{
-    margin-left: 0;
-    width: 2.6rem;
-}
-
-#selectDetail .comment .cmtContent>.userName{
-    font-size: 12px;
-    position: relative;
-}
-
-#selectDetail .comment .cmtContent>.userName>span:last-child{
-    position: absolute;
-    right: 0;
-    color: #909090;
-    font-weight: normal;
-}
-
-
-
-#selectDetail .comment .cmtContent>.commentContent{
-    font-size: 12px;
-    margin: 0.02rem 0 0 0;
-    color: #646464;
-}
-
-
-
-
 /*--.relate  相关推荐--*/
 #selectDetail .relate{
 
 }
 
 #selectDetail .relate .weui-panel__hd{
-    padding: 0.15rem 0 0.11rem 0;
+    padding: 0.15rem 0 0.11rem 0.135rem;
     text-align: left;
     font-size: 14px;
     color: #323232;
+}
+
+#selectDetail .relate .weui-panel__hd:after{
+    left: 0;
 }
 
 

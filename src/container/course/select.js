@@ -6,30 +6,26 @@ import {connect} from 'react-redux';
 
 import CourseItem from './item';
 //import Using ES6 syntax
-import {
-    MediaBox,
-    MediaBoxHeader,
-    MediaBoxBody,
-    MediaBoxTitle,
-    MediaBoxDescription,
-    MediaBoxInfoMeta,
-    PanelHeader
-} from 'react-weui';
+import {LoadMore} from 'react-weui';
 
 import {fetchInfo} from '../../actions/courseAction'
 
 
 class Select extends Component{
     componentWillMount(){
-        const {fetchInfo ,selectList} = this.props;
+        const {fetchInfo} = this.props;
         fetchInfo(0,1)
     }
 
     render(){
-        const {fetchInfo ,selectList} = this.props;
-
+        const {selectList} = this.props;
         return(
             <div>
+                { selectList.length === 0 &&
+                    <div className="first">
+                        <LoadMore loading>Loading</LoadMore>
+                    </div>
+                }
                 <div id="select" className="subContentPanel">
                     {
                         selectList.map((course,index)=>{

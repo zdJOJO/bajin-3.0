@@ -1,9 +1,10 @@
-.comments{
+/***  评论 列表 模块 ***/
+#comments{
     width: 100%;
     height: 100%;
     position: relative;
     border-top: 1px #f1f1f1 solid;
-    padding-top: 25px;
+    padding-top: 0.4rem;
     /*margin-bottom: 80px;*/
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -17,28 +18,32 @@
     font-size: 17px;
 }
 
-.singleCmt{
-    width: 90%;
-    min-height: 90px;
-    margin: 20px auto 10px auto;
+#comments .singleCmt{
+    width: 100%;
     overflow: hidden;
+    padding: 0 0.135rem 0.17rem;
+    margin-bottom: 0.17rem;
+    border-bottom: 1px #ebebeb solid;
+}
+#comments .singleCmt:first-child{
+    margin-top: 0.17rem;
 }
 
-.singleCmt>div{
+#comments .singleCmt>div{
     float: left;
     height: 100%;
 }
 
-.imgBox{
+#comments .imgBox{
     width: 50px;
 }
 
-.cmtContent {
+#comments .cmtContent {
     width: 77%;
-    margin-left: 10px;
+    margin-left: 0.11rem;
 }
 
-.imgBox img{
+#comments .imgBox img{
     display: block;
     width: 100%;
     height: auto;
@@ -46,90 +51,132 @@
 }
 
 
-li{
+#comments li{
     text-align: left;
 }
 
-.userName {
+#comments .userName {
     display: block;
     font-size: 14px;
+    line-height: 14px;
     color: #323232;
     font-weight: bold;
 }
 
-.commentContent  {
-    color: #808080;
-    font-size: 14px;
-    margin: 10px 0;
+#comments .commentContent  {
+    color: #646464;
+    font-size: 13px;
     word-break: break-all;
 }
 
-.creatTime{
+#comments .creatTime{
     display: block;
-    font-size: 13px;
-    color: #cfcfcf;
+    font-size: 12px;
+    color: #909090;
+    margin: 0.05rem 0px 0.13rem;
 }
 
-
-
-
-/***详情里面的评论 ***/
-#comment{
-    font-size: 13px;
-    color: #A5A2A2;
-    width: 92%;
-    margin: 0 auto 0.5rem auto;
-    position: relative;
-}
-
-#comment>.cmtNUm{
-    font-weight: normal;
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-#comment>.list-one{
-    overflow: hidden;
-    position: relative;
-    margin: 0 0 10px 0;
-}
-
-#comment>.list-one>img{
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    position: absolute;
+#comments .publishCmt{
+    width: 100%;
+    height: 0.24rem;
+    position: fixed;
+    bottom: 0;
     left: 0;
+    padding: 0.06rem 0;
+    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.1);
+    display: flex;
 }
 
-#comment>.list-one>.customerCmt, #comment>.list-one>.customerService{
-    float: left;
-    width: 85%;
-    margin-left: 60px;
-    line-height: 25px;
+#comments .publishCmt>.img{
+    flex: 0.2;
+}
+#comments .publishCmt>.img>img{
+    width: 0.24rem;
+    height: 0.24rem;
+}
+
+#comments .publishCmt>input{
+    flex: 0.6;
+    font-size: 14px;
+    color: #646464;
+    border: none;
+    outline: none;
+    background: #fafafa;
+}
+
+#comments .publishCmt>button{
+    flex: 0.2;
+    height: 100%;
+    border-left: 1px #e0e0e0 solid;
+    border-radius: 0;
+    font-size: 15px;
+    color: #323232;
+}
+#comments .publishCmt>button:after{
+    border: none;
+}
+
+
+
+/*** 详情里面的 评论 模块 ***/
+#comment {
+    border-bottom: 5px #f0f0f0 solid;
+    padding: 0.17rem 0.135rem 0;
+}
+
+#comment p{
     text-align: left;
 }
 
-#comment>.list-one>.customerCmt span{
-    font-size: 14px;
-    color: #323232;
-    font-weight: bold;
+#comment .weui-panel__hd{
+    height: 0.315rem;
+    line-height: 0.315rem;
+    padding: 0;
+    border-top: 1px #f0f0f0 solid;
 }
 
-#comment>.list-one>.customerCmt p{
-    margin: 0.01rem 0 0.04rem 0;
-    color: #808080;
-    font-size: 14px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+#comment .weui-panel__hd:after{
+    border: none;
+}
+
+#comment .singleCmt{
+    margin: 0 auto 0.2rem auto;
+    width: 100%;
+    min-height: 0.3rem;
     overflow: hidden;
 }
 
-#moreComts{
-    display: inline-block;
-    line-height: 0.2rem;
+#comment .singleCmt>.imgBox{
+    margin-right: 0.075rem;
+    width: 0.25rem;
+    height: 0.25rem;
+    float: left;
+}
+
+#comment .singleCmt img{
+    width: 100%;
+}
+
+#comment .cmtContent{
+    float: left;
+    margin-left: 0;
+    width: 2.6rem;
+}
+
+#comment .cmtContent>.userName{
+    font-size: 12px;
+    position: relative;
+}
+
+#comment .cmtContent>.userName>span:last-child{
     position: absolute;
     right: 0;
-    width: initial;
+    color: #909090;
+    font-weight: normal;
+}
+
+#comment .cmtContent>.commentContent{
+    font-size: 12px;
+    margin: 0.02rem 0 0 0;
+    color: #646464;
 }

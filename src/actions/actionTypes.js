@@ -29,6 +29,9 @@ export const BEGIN_GET_COMMENT = 'BEGIN_GET_COMMENT';
 export const DONE_GET_COMMENT = 'DONE_GET_COMMENT';
 export const FAIL_GET_COMMENT = 'FAIL_GET_COMMENT';
 export const PUBLISH_COMMENT = 'PUBLISH_COMMENT';
+export const CHANGE_PLACEHOLDER = 'CHANGE_PLACEHOLDER';
+
+
 
 //活动 列表
 export const DONE_GET_ActList = 'DONE_GET_ActList';
@@ -41,7 +44,8 @@ export const DONE_GET_COURSELIST = 'DONE_GET_COURSELIST';
 /*课程详情*/
 export const DONE_GET_COURSEDETAIL = 'DONE_GET_COURSEDETAIL';
 export const SHOW_MORE_COURSEDETAIL = 'SHOW_MORE_COURSEDETAIL';
-export const SHOW_BACK_TOP = 'SHOW_BACK_TOP'
+export const SHOW_BACK_TOP = 'SHOW_BACK_TOP';
+export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';
 
 
 //活动详情

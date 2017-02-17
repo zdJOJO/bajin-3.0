@@ -8,13 +8,21 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    PUBLISH_COMMENT
+    PUBLISH_COMMENT,
+    CHANGE_PLACEHOLDER
 } from './actionTypes';
 
 //发表评论
 export const publishComment = ()=> {
     return {
         type: PUBLISH_COMMENT
+    }
+}
+
+const changePlaceholder = str =>{
+    return{
+        type: CHANGE_PLACEHOLDER,
+        str
     }
 }
 
@@ -45,19 +53,9 @@ export const fallGetCommet = (page)=> {
 }
 
 
-//提供组件 调用
-export function getCommentList(itemType,itemId,page,isListNull,isInDetail) {
-    if(!isListNull)  page++
-    if(isInDetail) page=1
-    return (dispatch, getState) => {
-        return dispatch(fetchComment(itemType,itemId,page,isListNull,isInDetail))
-    }
-}
-
-
 
 //获取评论列表
-function fetchComment(itemType,itemId,page,isListNull,isInDetail) {
+const fetchComment = (itemType,itemId,page,isListNull,isInDetail)=> {
     return dispatch =>{
         dispatch(beginGetComment(page));
         return fetch( port + '/card/comment/list?currentPage='+page+'&type='+itemType+'&itemId='+itemId)
@@ -79,5 +77,24 @@ function fetchComment(itemType,itemId,page,isListNull,isInDetail) {
                 console.log(e.message)
                 dispatch(fallGetCommet(page));
             })
+    }
+}
+
+
+//提供组件 调用
+export const getCommentList = (itemType,itemId,page,isListNull,isInDetail)=> {
+    if(!isListNull)  page++
+    if(isInDetail) page=1
+    return (dispatch, getState) => {
+        return dispatch(fetchComment(itemType,itemId,page,isListNull,isInDetail))
+    }
+}
+
+//type: 1-修改placeholder
+export const dispatchAction =(type,obj)=>{
+    return dispatch=>{
+        if(type===1){
+            return dispatch(changePlaceholder(obj.str))
+        }
     }
 }

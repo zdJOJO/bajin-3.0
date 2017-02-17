@@ -8,7 +8,8 @@ import {
     DONE_GET_COURSELIST,
     DONE_GET_COURSEDETAIL,
     SHOW_MORE_COURSEDETAIL,
-    SHOW_BACK_TOP
+    SHOW_BACK_TOP,
+    SHOW_PAY_POPUP
 } from './actionTypes'
 
 
@@ -28,6 +29,17 @@ export const backTop =(isBackTop)=>{
         isBackTop
     }
 }
+
+
+//弹出支付层
+export const showPayPopup =(isShowPayPopup)=>{
+    return{
+        type: SHOW_PAY_POPUP,
+        isShowPayPopup
+    }
+}
+
+
 
 //开始发起请求
 const beginGet = ()=>{

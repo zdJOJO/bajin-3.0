@@ -13,8 +13,8 @@ import Foot from '../../components/activity/foot';
 
 import './index.css';
 
-class ActivityInfo extends Component{
 
+class ActivityInfo extends Component{
     componentWillMount() {
         const { getActDetail ,getCommentList } = this.props;
         getActDetail(this.props.location.query.itemId);
@@ -27,7 +27,7 @@ class ActivityInfo extends Component{
     }
 
     render(){
-        const { activityInfo ,commentList ,rowCount ,actStateStr } = this.props;
+        const { activityInfo ,actStateStr ,commentList ,rowCount} = this.props;
         return(
             <div className="panel panel-default">
                 { activityInfo &&
@@ -80,10 +80,12 @@ class ActivityInfo extends Component{
                             </div>
                         </div>
                         <CommentIn
-                            itemType={this.props.location.query.itemType}
-                            itemId={this.props.location.query.itemId}
-                            commentInfo={commentList[0]}
-                            rowCount={rowCount}
+                            commentObj={{
+                             itemType: this.props.location.query.itemType,
+                             itemId: this.props.location.query.itemId,
+                             rowCount: rowCount,
+                             commentList: commentList.slice(0,2)
+                            }}
                         />
                     </div>
                 }
@@ -102,6 +104,7 @@ const mapStateToProps = (state)=> {
     return {
         activityInfo: state.detailReducer.activityInfo,
         actStateStr: state.detailReducer.actStateStr,
+
         commentList: state.commentReducer.list,
         rowCount: state.commentReducer.rowCount
     }

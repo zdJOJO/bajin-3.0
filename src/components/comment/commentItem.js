@@ -24,7 +24,6 @@ export default class CommentItem extends Component{
     }
 
     render(){
-        console.log(this.props.headPic)
         return(
             <div className="singleCmt">
                 <div className="imgBox">
@@ -32,8 +31,8 @@ export default class CommentItem extends Component{
                 </div>
                 <div className="cmtContent">
                     <li className="userName">{this.props.userName}</li>
-                    <li className="commentContent">{this.props.content}</li>
                     <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.time,10)/1000)}</li>
+                    <li className="commentContent">{this.props.content}</li>
                 </div>
             </div>
         )

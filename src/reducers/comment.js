@@ -5,7 +5,8 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    PUBLISH_COMMENT
+    PUBLISH_COMMENT,
+    CHANGE_PLACEHOLDER
 } from '../actions/actionTypes';
 
 const initState = {
@@ -15,6 +16,7 @@ const initState = {
     rowCount: 0,
     isLoading: true,
     isListNull: false,  //判断列表长度是否为0
+    placeholder: '请填写评论'
 };
 
 export default function commentReducer(state=initState ,action){
@@ -37,6 +39,11 @@ export default function commentReducer(state=initState ,action){
             return{
                 ...state,
                 isLoading: true
+            }
+        case CHANGE_PLACEHOLDER:
+            return{
+                ...state,
+                placeholder: action.str
             }
         case PUBLISH_COMMENT:
         default:
