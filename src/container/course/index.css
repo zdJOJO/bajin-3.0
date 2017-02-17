@@ -88,12 +88,12 @@
 #backTop{
     display: none;
     position: fixed;
-    width: 40px;
-    height: 40px;
+    width: 72px;
+    height: 72px;
     right: 15px;
     z-index: 10;
     border-radius: 100%;
-    box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);
+    /*box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);*/
 }
 #backTop img{
     width: 40px;
