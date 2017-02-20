@@ -77,10 +77,130 @@
 
 
 
-
-
-
 /*** 24堂课 ***/
+#course .buy{
+    position: fixed;
+    width: 72px;
+    height: 72px;
+    bottom: 70px;
+    right: 15px;
+    z-index: 10;
+}
+#course .buy img{
+    width: 100%;
+}
+
+#course .leftBuyBar{
+    color: #909090;
+    position: fixed;
+    width: 2.45rem;
+    height: 0.29rem;
+    line-height: 0.3rem;
+    bottom: 145px;
+    left: 52px;
+    display: flex;
+    font-size: 12px;
+}
+
+#course .leftBuyBar.toLeftShow{
+    -webkit-transform-origin: bottom right;
+    animation: showBuyBarLeft 0.4s;
+}
+
+
+#course .leftBuyBar>.box{
+    box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    padding: 0.03rem 0;
+    width: 1.8rem;
+}
+
+#course .leftBuyBar>.box>div{
+    float: left;
+    height: 100%;
+    line-height: 0.24rem;
+}
+
+#course .leftBuyBar>.box >.number{
+    padding: 0 0.06rem 0 0.2rem;
+    border-right: 1px #e7e7e7 solid;
+    width: 0.55rem;
+}
+
+#course .leftBuyBar>.box>.price{
+    padding: 0 0.06rem;
+    width: 0.8rem;
+    overflow: hidden;
+}
+
+#course .leftBuyBar button{
+    border-radius: 2px;
+    width: 0.49rem;
+    height: 0.29rem;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    position: absolute;
+    right: 0;
+    padding: 0;
+}
+
+
+@media screen and (max-width: 375px) {
+    #course .leftBuyBar>.box >.number{
+        padding: 0 0.06rem 0 0.06rem;
+        width: 0.6rem;
+    }
+    #course .leftBuyBar{
+        left: 43px;
+    }
+    #course .buy{
+        right: 10px;
+    }
+    #course .leftBuyBar>.box>.price{
+        width: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #course .buy{
+        width: 55px;
+        height: 55px;
+        bottom: 55px;
+        right: 10px;
+    }
+    #course .leftBuyBar{
+        width: 2.6rem;
+        bottom: 114px;
+        left: 27px;
+    }
+    #course .leftBuyBar>.box{
+        width: 2rem;
+    }
+    #course .leftBuyBar>.box >.number{
+        width: 0.7rem;
+        padding: 0 0.06rem 0 0.1rem;
+    }
+    #course .leftBuyBar>.box>.price{
+        width: 1rem;
+    }
+}
+
+@keyframes showBuyBarLeft{
+    from {
+        opacity: 0;
+        -webkit-transform:scale(0);
+        /*height: 0;*/
+        /*left: 2.5rem;*/
+    }
+    to {
+        opacity: 1;
+        -webkit-transform:scale(1);
+        /*height: 0.25rem;*/
+        /*left: 10px;*/
+    }
+}
+
+
 
 
 

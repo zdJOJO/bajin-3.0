@@ -4,7 +4,7 @@
 
 //dev位boolean类型
 // true--正式环境， false--测试环境
-export const dev = false;
+const dev = false;
 
 // 接口
 export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
@@ -14,12 +14,19 @@ import cookie from 'react-cookie';
 export const token = cookie.load('token');
 
 /*
+*
 * 注意在使用react-router时候，若是使用了browserHistory，需要配置nginx
+*
 * */
 // 路由根目录。
 export const rootPath =()=>{
     return dev ? '/test' : '/bcard';
 }
+
+
+//
+export const appid = ''
+
 
 //通用函数 时间戳转换成 固定格式
     // isAll：true  输出完整格式 年月日时分秒

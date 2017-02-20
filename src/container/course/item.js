@@ -16,10 +16,11 @@ import {
 
 export default class CourseItem extends Component{
 
-    handleClick(selectId){
+    //_typeStr  判断是否为 24堂课
+    handleClick(selectId,_typeStr){
         console.log(selectId)
         hashHistory.push({
-            pathname: `/course/select/${selectId}`,
+            pathname: `/course/${selectId}`,
             query: {itemId: selectId}
         })
     }
@@ -27,10 +28,9 @@ export default class CourseItem extends Component{
     render(){
         return(
             <MediaBox
-                className="first"
                 type="appmsg"
                 href="javascript:void(0);"
-                onClick={this.handleClick.bind(this,this.props.course.id)}
+                onClick={this.handleClick.bind(this,this.props.course.id,this.props.course.typeStr)}
             >
                 <MediaBoxHeader>
                     <img src={this.props.course.minPic} role="presentation" />
@@ -39,7 +39,7 @@ export default class CourseItem extends Component{
                     <MediaBoxTitle>{this.props.course.title}</MediaBoxTitle>
                     <MediaBoxDescription> 已经更新9期|19人订阅  </MediaBoxDescription>
                     <MediaBoxDescription>
-                        {typeStr(this.props.course.type)}
+                        { typeStr(this.props.course.type) }
                         <MediaBoxInfoMeta>￥{this.props.course.price}</MediaBoxInfoMeta>
                     </MediaBoxDescription>
                 </MediaBoxBody>

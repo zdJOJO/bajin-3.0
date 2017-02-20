@@ -9,7 +9,8 @@ import {
     DONE_GET_COURSEDETAIL,
     SHOW_MORE_COURSEDETAIL,
     SHOW_BACK_TOP,
-    SHOW_PAY_POPUP
+    SHOW_PAY_POPUP,
+    POP_LEFT_BUYBAR
 } from './actionTypes'
 
 
@@ -56,10 +57,11 @@ const fallGet = ()=> {
 }
 
 //获取列表成功
-const successGetCourseList =(list)=>{
+const successGetCourseList =(list,typeValue)=>{
     return{
         type: DONE_GET_COURSELIST,
-        list
+        list,
+        typeValue
     }
 }
 
@@ -71,11 +73,22 @@ const successGetCourseDetail =(info)=>{
     }
 }
 
+//弹出 购买
+export const pupLeftBuyBar = (isPop)=>{
+    return{
+        type: POP_LEFT_BUYBAR,
+        isPop
+    }
+}
 
-//get 获取列表
-// type:  0全部 1时修 2视频 3音频    isFather: 0-单个  1-集合
+
+//get 获取列表   24堂课列表： type是1,isFather是0   ； 课程列表： type是0,isFather是1
+// type: 0全部 1时修 2视频 3音频
+// isFather: 0-单个  1-集合
 const getCourseList =(page,type)=>{
-    let url = port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=1';
+
+    let url = type===1 ?  port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=0'
+        :  port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=1';
     return dispatch =>{
         dispatch(beginGet());
         return fetch(url)
@@ -84,7 +97,7 @@ const getCourseList =(page,type)=>{
                 return res.json()
             })
             .then(data => {
-                dispatch(successGetCourseList(data.data.list))
+                dispatch(successGetCourseList(data.data.list,type))
             })
             .catch(e =>{
                 dispatch(fallGet())
@@ -117,13 +130,15 @@ const getCourseDetail = (_id)=>{
 
 
 /*
-* type: 0-课程全部列表  -1-课程详情  -2-更新详情是否显示更多
-* 当page为-1时，说明没用
+* type: 0:课程全部列表  1:24堂课列表  -1:课程详情  -2:更新详情是否显示更多
+* 当page为-1时，说明当page为没用
 * */
 export const fetchInfo = (type ,page ,_id) => {
     return (dispatch, getState) => {
        switch (type){
            case 0:
+               return dispatch(getCourseList(page,type))
+           case 1:
                return dispatch(getCourseList(page,type))
            case -1:
                return dispatch(getCourseDetail(_id))

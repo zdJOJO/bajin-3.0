@@ -14,6 +14,7 @@ import {
 } from 'react-weui';
 
 import {fetchInfo ,showMoreCourseDetail ,showPayPopup} from '../../actions/courseAction'
+import {wx_jssdk_api} from '../../public/wx/wxConfig'
 
 
 import more from '../../img/more.svg';

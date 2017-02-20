@@ -8,7 +8,8 @@ import {
     DONE_GET_COURSEDETAIL,
     SHOW_MORE_COURSEDETAIL,
     SHOW_BACK_TOP,
-    SHOW_PAY_POPUP
+    SHOW_PAY_POPUP,
+    POP_LEFT_BUYBAR
 } from '../actions/actionTypes';
 
 const initState = {
@@ -19,7 +20,8 @@ const initState = {
     },
     two4Class:{
         page:0,
-        list:[]
+        list:[],
+        isLeftBarShow: false
     },
     courseDetail: {},
     isShowMoreDetail: false,
@@ -41,11 +43,21 @@ export default function courseReducer(state=initState, action){
                 isLoading: true
             }
         case DONE_GET_COURSELIST:
-            return{
-                ...state,
-                select:{
-                    ...state.select,
-                    list: action.list
+            if(action.typeValue===0){
+                return{
+                    ...state,
+                    select:{
+                        ...state.select,
+                        list: action.list
+                    }
+                }
+            }else {
+                return{
+                    ...state,
+                    two4Class:{
+                        ...state.two4Class,
+                        list: action.list
+                    }
                 }
             }
         case DONE_GET_COURSEDETAIL:
@@ -70,6 +82,14 @@ export default function courseReducer(state=initState, action){
             return{
                 ...state,
                 isShowPayPopup: action.isShowPayPopup
+            }
+        case POP_LEFT_BUYBAR:
+            return{
+                ...state,
+                two4Class:{
+                    ...state.two4Class,
+                    isLeftBarShow: action.isPop
+                }
             }
         default:
             return state;

@@ -18,7 +18,11 @@ export default function menuReducer(state=initState, action){
         case CHANGE_MENU_TAB :
             return {
                 ...state,
-                index: action.index
+                index: action.index,
+                courseNav: {
+                    ...state.courseNav,
+                    index: 0
+                }
             }
         case CHANGE_SUB_NAV :
             if(action.typeStr==='course'){

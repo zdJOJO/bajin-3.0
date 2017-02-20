@@ -2,38 +2,76 @@
  * Created by Administrator on 2017/02/13 0013.
  */
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 
-class WelcomeDialog extends Component{
-    render(){
-        return (
-            <div color="blue" name="章炜">
-                <H className="Dialog-title" name={this.props.name}>
+import CourseItem from './item';
+//import Using ES6 syntax
+import {LoadMore,Button} from 'react-weui';
 
-                </H>
+import {fetchInfo ,pupLeftBuyBar} from '../../actions/courseAction'
 
-                <p className="Dialog-message">
-                    Thank you for visiting our spacecraft!
-                </p >
-            </div>
-        );
-    }
-}
-class H extends Component{
-    render(){
-        return(
-            <h1>{this.props.name}</h1>
-        )
-    }
-}
+import buy from '../../img/buy.png'
+import close from '../../img/close.png'
 
 class Two4Class extends Component{
+    componentWillMount(){
+        const {fetchInfo ,pupLeftBuyBar} = this.props;
+        fetchInfo(1,1)
+        pupLeftBuyBar(false)
+    }
+
+    handleClick(){
+
+    }
+
     render(){
+        const {two4ClassList ,pupLeftBuyBar ,isLeftBarShow} = this.props;
         return(
-            <div id="" className="subContentPanel">
-                <WelcomeDialog name="段明明" />
+            <div id="course">
+                { two4ClassList.length === 0 &&
+                    <div className="first">
+                        <LoadMore loading>Loading</LoadMore>
+                    </div>
+                }
+                <div id="select" className="subContentPanel">
+                    {
+                        two4ClassList.map((course,index)=>{
+                            return(
+                                <CourseItem
+                                    className="2fourItem"
+                                    key={index}
+                                    course={course}
+                                    typeStr="24"
+                                />
+                            )
+                        })
+                    }
+                </div>
+                <div className="buy" onClick={()=>{pupLeftBuyBar(!isLeftBarShow)}}>
+                    <img role="presentation" src={ isLeftBarShow ? close : buy  } />
+                </div>
+                { isLeftBarShow &&
+                    <div className={ isLeftBarShow ? 'leftBuyBar toLeftShow' : 'leftBuyBar'}>
+                        <div className="box">
+                            <div className="number">已经选择<span>2</span>件</div>
+                            <div className="price">优惠价格:<span>￥5000</span></div>
+                        </div>
+                        <Button type="default" size="small">确认</Button>
+                    </div>
+                }
             </div>
         )
     }
 }
 
-export default Two4Class;
+
+const mapStateToProps = state=>{
+    return{
+        two4ClassList: state.courseReducer.two4Class.list,
+        isLeftBarShow: state.courseReducer.two4Class.isLeftBarShow
+    }
+}
+
+export default connect(
+    mapStateToProps, {fetchInfo ,pupLeftBuyBar}
+)(Two4Class);

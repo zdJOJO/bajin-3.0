@@ -37,7 +37,7 @@ export const routeConfig = [
             { path: 'login', component: Login },
             { path: 'comment', component: CommentList },
             { path: 'activity/:activityId', component: ActivityInfo },
-            { path: 'course/select/:selectId', component: SelectDetail }
+            { path: 'course/:selectId', component: SelectDetail }
         ]
     }
 ]

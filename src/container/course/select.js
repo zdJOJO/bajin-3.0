@@ -20,7 +20,7 @@ class Select extends Component{
     render(){
         const {selectList} = this.props;
         return(
-            <div>
+            <div id="course">
                 { selectList.length === 0 &&
                     <div className="first">
                         <LoadMore loading>Loading</LoadMore>

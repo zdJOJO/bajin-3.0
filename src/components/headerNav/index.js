@@ -18,7 +18,8 @@ class HeaderNav extends Component{
                     this.props.menuList.map((menu,index)=>{
                         return (
                             menu.path === '/course' ?
-                                <IndexLink key={index} to={menu.path} activeClassName="active_headerNav" onClick={()=>{changeSub('course',index)}}>
+                                <IndexLink key={index} to={menu.path} activeClassName="active_headerNav"
+                                           onClick={()=>{changeSub('course',index)}}>
                                     <span>
                                         {menu.menuName}
                                         { currentIndex === index &&

@@ -14,7 +14,7 @@ import course_active from '../img/menu/course_active.png'
 import my from '../img/menu/my.png'
 import my_active from '../img/menu/my_active.png'
 
-import {handleChangeTab} from '../actions/menuAction'
+import {handleChangeTab ,changeSub} from '../actions/menuAction'
 
 const menu = [
     {
@@ -45,11 +45,14 @@ const menu = [
 
 class Menu extends Component{
     componentDidMount() {
-        const { handleChangeTab} = this.props;
+        const { handleChangeTab  ,changeSub} = this.props;
          if(location.hash==='#/activity'){
              handleChangeTab(1);
          }else if(location.hash==='#/course'||location.hash==='#/course/select'||location.hash==='#/course/two4Class'){
              handleChangeTab(2);
+             if(location.hash==='#/course/two4Class'){
+                 changeSub('course',1)
+             }
          }else if(location.hash==='#/myInfo'){
              handleChangeTab(3);
         }else {
@@ -90,10 +93,10 @@ class Menu extends Component{
 
 function mapStateToProps(state) {
     return {
-        currentIndex: state.menuReducer.index
+        currentIndex: state.menuReducer.index,
     }
 }
 
 export default connect(
-    mapStateToProps,{handleChangeTab}
+    mapStateToProps,{handleChangeTab ,changeSub}
 )(Menu)
