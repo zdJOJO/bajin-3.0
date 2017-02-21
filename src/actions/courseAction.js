@@ -10,7 +10,9 @@ import {
     SHOW_MORE_COURSEDETAIL,
     SHOW_BACK_TOP,
     SHOW_PAY_POPUP,
-    POP_LEFT_BUYBAR
+    POP_LEFT_BUYBAR,
+    CHOOSE_ITEM,
+    INIT_CHOOSEDATA
 } from './actionTypes'
 
 
@@ -39,7 +41,6 @@ export const showPayPopup =(isShowPayPopup)=>{
         isShowPayPopup
     }
 }
-
 
 
 //开始发起请求
@@ -74,10 +75,45 @@ const successGetCourseDetail =(info)=>{
 }
 
 //弹出 购买
-export const pupLeftBuyBar = (isPop)=>{
+export const pupLeftBuyBar = obj =>{
+    let isPop = obj.isPop;
+    for (let item of obj.list) {
+        item.isShow = obj.isPop
+    }
+    let list= obj.list;
     return{
         type: POP_LEFT_BUYBAR,
-        isPop
+        isPop,
+        list
+    }
+}
+
+// 选择购买的item
+const chooseItem = obj =>{
+    let chooseList = obj.chooseList;
+    let isChoose = obj.isChoose;
+    let id = obj.id;
+    let totalPrice = 0;
+    for(let i=0;i<chooseList.length;i++){
+        console.log(chooseList[i].price)
+        totalPrice += chooseList[i].price
+    }
+    return{
+        type: CHOOSE_ITEM ,
+        chooseList,
+        isChoose,
+        id,
+        totalPrice
+    }
+}
+
+//
+const initChooseData = (totalPrice,totalNum ,chooseList)=>{
+    return {
+        type: INIT_CHOOSEDATA ,
+        totalPrice,
+        totalNum,
+        chooseList
     }
 }
 
@@ -86,7 +122,6 @@ export const pupLeftBuyBar = (isPop)=>{
 // type: 0全部 1时修 2视频 3音频
 // isFather: 0-单个  1-集合
 const getCourseList =(page,type)=>{
-
     let url = type===1 ?  port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=0'
         :  port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=1';
     return dispatch =>{
@@ -128,9 +163,44 @@ const getCourseDetail = (_id)=>{
 
 
 
+// 点击 勾选之后 chooseList 和 list 的分配
+const upDateList = obj =>{
+    return dispatch =>{
+        if(obj.course.isChoose){
+            // chooseList 中删除 取消项
+            console.log('删除')
+            obj.course.isChoose = false;
+            for(let i=0;i<obj.chooseList.length;i++){
+                if(obj.course.id === obj.chooseList[i].id){
+                    obj.chooseList.splice(i,1)
+                }
+            }
+        }else {
+            // chooseList 中增加 勾选项
+            console.log('增加')
+            obj.course.isChoose = true;
+            obj.chooseList.push(obj.course)
+        }
+
+        console.log(obj.chooseList)
+
+        dispatch(chooseItem({
+            chooseList: obj.chooseList,
+            isChoose: obj.course.isChoose,
+            id: obj.course.id
+        }))
+    }
+}
+
 
 /*
-* type: 0:课程全部列表  1:24堂课列表  -1:课程详情  -2:更新详情是否显示更多
+* type :
+* 0:  课程全部列表
+* 1:  24堂课列表
+* -1: 课程详情
+* -2: 更新详情是否显示更多
+* -3: 回到顶部次数纪录
+*
 * 当page为-1时，说明当page为没用
 * */
 export const fetchInfo = (type ,page ,_id) => {
@@ -150,9 +220,32 @@ export const fetchInfo = (type ,page ,_id) => {
                }else {
                    return dispatch(backTop(1))
                }
-
            default:
                return true
        }
+    }
+}
+
+
+
+/*
+* obj.type 取值：
+* 1 - 显示购买的bar
+* 2 - 选择勾选购买的产品
+* 3 - 初始化 购买数量和总价格
+* */
+export const disPatchFn = (obj)=>{
+    return dispatch =>{
+        switch (obj.type){
+            case 1:
+                return dispatch(pupLeftBuyBar(obj))
+            case 2:
+                return dispatch(upDateList(obj))
+            case 3:
+                let chooseList = [];
+                return dispatch(initChooseData(0 ,0,chooseList))
+            default:
+                return true
+        }
     }
 }

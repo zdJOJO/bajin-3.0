@@ -34,12 +34,33 @@
     height: 0.51rem;
     float: left;
     margin-top: 3px;
+    position: relative;
 }
 
 #select .weui-media-box_appmsg .weui-media-box__hd>img{
     width: 100%;
     height: 100%;
 }
+
+#select .weui-media-box_appmsg .weui-media-box__hd>label{
+    width: 23px;
+    height: 23px;
+    border-radius: 100%;
+    background: #ebebeb;
+    position: absolute;
+    bottom: -12px;
+    right: -12px;
+}
+#select .weui-media-box_appmsg .weui-media-box__hd>label.choose{
+    background: url("../../img/detail/choose.png") no-repeat;
+    background-size: 100%;
+}
+
+#select .weui-media-box_appmsg .weui-media-box__hd>label>input{
+    display: none;
+}
+
+
 
 .weui-media-box_appmsg .weui-media-box__bd{
     width: 2.1rem;
@@ -96,8 +117,8 @@
     width: 2.45rem;
     height: 0.29rem;
     line-height: 0.3rem;
-    bottom: 145px;
-    left: 52px;
+    bottom: 90px;
+    left: 10px;
     display: flex;
     font-size: 12px;
 }
@@ -151,7 +172,7 @@
         width: 0.6rem;
     }
     #course .leftBuyBar{
-        left: 43px;
+        left:7px;
     }
     #course .buy{
         right: 10px;
@@ -163,15 +184,15 @@
 
 @media screen and (max-width: 320px) {
     #course .buy{
-        width: 55px;
-        height: 55px;
-        bottom: 55px;
-        right: 10px;
+        width: 50px;
+        height: 50px;
+        bottom: 58px;
+        right: 13px;
     }
     #course .leftBuyBar{
-        width: 2.6rem;
-        bottom: 114px;
-        left: 27px;
+        width: 2.55rem;
+        bottom: 69px;
+        left: 2px;
     }
     #course .leftBuyBar>.box{
         width: 2rem;

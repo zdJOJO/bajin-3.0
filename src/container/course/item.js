@@ -3,6 +3,9 @@
  */
 import React,{Component} from 'react';
 import { hashHistory } from 'react-router';
+import {connect} from 'react-redux';
+
+import {disPatchFn} from '../../actions/courseAction'
 
 //import Using ES6 syntax
 import {
@@ -11,17 +14,29 @@ import {
     MediaBoxBody,
     MediaBoxTitle,
     MediaBoxDescription,
-    MediaBoxInfoMeta
+    MediaBoxInfoMeta,
 } from 'react-weui';
 
-export default class CourseItem extends Component{
+class CourseItem extends Component{
 
-    //_typeStr  判断是否为 24堂课
-    handleClick(selectId,_typeStr){
+    handleClick(selectId ,isShow){
         console.log(selectId)
-        hashHistory.push({
-            pathname: `/course/${selectId}`,
-            query: {itemId: selectId}
+        if(!isShow){
+            hashHistory.push({
+                pathname: `/course/${selectId}`,
+                query: {itemId: selectId}
+            })
+        }
+    }
+
+    chooseItem(course ,event){
+        const {disPatchFn ,chooseList} = this.props;
+        event.stopPropagation();  //冒泡阻止
+        console.log('choose item')
+        disPatchFn({
+            type: 2,
+            course: course,
+            chooseList
         })
     }
 
@@ -30,11 +45,25 @@ export default class CourseItem extends Component{
             <MediaBox
                 type="appmsg"
                 href="javascript:void(0);"
-                onClick={this.handleClick.bind(this,this.props.course.id,this.props.course.typeStr)}
+                onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow)}
             >
-                <MediaBoxHeader>
-                    <img src={this.props.course.minPic} role="presentation" />
-                </MediaBoxHeader>
+                { !this.props.course.isShow &&
+                    <MediaBoxHeader>
+                        <img src={this.props.course.minPic} role="presentation" />
+                    </MediaBoxHeader>
+                }
+                { this.props.course.isShow &&
+                    <MediaBoxHeader>
+                        <img src={this.props.course.minPic} role="presentation" />
+                        <label
+                            className={ this.props.course.isChoose ? "choose" : ''}
+                            onClick={this.chooseItem.bind(this ,this.props.course)}
+                            htmlFor={this.props.course.id}
+                        >
+                            <input type="checkbox" name={this.props.course.id}/>
+                        </label>
+                    </MediaBoxHeader>
+                }
                 <MediaBoxBody>
                     <MediaBoxTitle>{this.props.course.title}</MediaBoxTitle>
                     <MediaBoxDescription> 已经更新9期|19人订阅  </MediaBoxDescription>
@@ -57,3 +86,16 @@ const typeStr = type =>{
         return '音频'
     }
 }
+
+const mapStateToProps = state=>{
+    return{
+        ...state,
+        chooseList: state.courseReducer.two4Class.chooseList
+    }
+}
+
+export default connect(
+    mapStateToProps, {disPatchFn}
+)(CourseItem);
+
+

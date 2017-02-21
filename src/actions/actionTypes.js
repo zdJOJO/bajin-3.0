@@ -10,9 +10,18 @@ export const CHANGE_SUB_NAV = 'CHANGE_SUB_NAV';
 export const BEGIN_FETCH = 'BEGIN_FETCH';
 export const FALL_FETCH = 'FALL_FETCH';
 
-//提示
+//tips提示
 export const SHOW_SUCCESS = 'SHOW_SUCCESS';
 export const SHOW_ERROR = 'SHOW_ERROR';
+//DIALOG 提示
+export const SHOW_DIALOG = 'SHOW_DIALOG';
+//付款提示 
+export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';
+
+
+//支付
+export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';
+
 
 //登录 注册
 export const CHANGE_TAP = 'CHANGE_TAP';
@@ -37,7 +46,7 @@ export const CHANGE_PLACEHOLDER = 'CHANGE_PLACEHOLDER';
 export const DONE_GET_ActList = 'DONE_GET_ActList';
 export const POPUP = 'POPUP';
 export const SUBMIT_ACTINFO_SUCCESS = 'SUBMIT_ACTINFO_SUCCESS';
-export const SHOW_DIALOG = 'SHOW_DIALOG';
+
 
 //课程 列表
 export const DONE_GET_COURSELIST = 'DONE_GET_COURSELIST';
@@ -45,9 +54,12 @@ export const DONE_GET_COURSELIST = 'DONE_GET_COURSELIST';
 export const DONE_GET_COURSEDETAIL = 'DONE_GET_COURSEDETAIL';
 export const SHOW_MORE_COURSEDETAIL = 'SHOW_MORE_COURSEDETAIL';
 export const SHOW_BACK_TOP = 'SHOW_BACK_TOP';
-export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';
 export const POP_LEFT_BUYBAR = 'POP_LEFT_BUYBAR';
-
+export const CHOOSE_ITEM = 'CHOOSE_ITEM';
+export const INIT_CHOOSEDATA = 'INIT_CHOOSEDATA';
+    
+    
+    
 
 //活动详情
 export const DONE_GET_DETAIL = 'DONE_GET_DETAIL';
