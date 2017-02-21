@@ -14,6 +14,9 @@ import {
 } from 'react-weui';
 
 import {fetchInfo ,showMoreCourseDetail ,showPayPopup} from '../../actions/courseAction'
+import {disPatchFetchOrder} from '../../actions/payAction'
+
+
 import {wx_jssdk_api} from '../../public/wx/wxConfig'
 
 
@@ -83,7 +86,7 @@ class SelectDetail extends Component{
         this.state = {
             menus: [{
                 label: '银行卡支付',
-                onClick: ()=> { console.log('银行卡支付')  }
+                onClick: this.handleSubmitOrderInfo.bind(this)
             }, {
                 label: '微信支付',
                 onClick: ()=> { console.log('微信支付')  }
@@ -96,11 +99,29 @@ class SelectDetail extends Component{
             ]
         }
     }
-    
+
     componentWillMount(){
         const { fetchInfo} = this.props;
         fetchInfo(-1 ,-1 ,this.props.location.query.itemId);
         fetchInfo(-2,-1)
+    }
+
+    handleSubmitOrderInfo(){
+        // isFontPrice:  0表示不是定金
+        const {disPatchFetchOrder ,courseDetail} = this.props;
+        let scmvOrderMapModels =  [{
+            scmvId: courseDetail.id,
+            title: courseDetail.title,
+            price: courseDetail.price,
+            isFontPrice: 0
+        }];
+        disPatchFetchOrder({
+            type: 'scmvOrder',
+            sum: 1,
+            price: courseDetail.price,
+            scmvOrderMapModels: scmvOrderMapModels,
+            dom: this.refs.pay
+        })
     }
 
     handleClick(clickType){
@@ -139,13 +160,10 @@ class SelectDetail extends Component{
     }
 
     render(){
-        const { courseDetail ,
-            isShowMoreDetail ,
-            showMoreCourseDetail ,
-            isShowBackTop ,
-            times,
-            showPayPopup,
-            isShowPayPopup
+        const {
+            courseDetail , isShowMoreDetail , showMoreCourseDetail , isShowBackTop , times,
+            showPayPopup, isShowPayPopup,
+            ciphertext
         } = this.props;
         return(
             <div style={{width:'100%',height:'100%'}} >
@@ -219,6 +237,15 @@ class SelectDetail extends Component{
                     type="ios"
                     onRequestClose={()=>{showPayPopup(false)}}
                 />
+
+                <form
+                    method="post"
+                    action="http://web.zj.icbc.com.cn/mobile/Pay.do?scene=pay"
+                    ref="pay"
+                >
+                    <input type="hidden" id="merSignMsg" name="merSignMsg" value={ciphertext}/>
+                    <input type="hidden" id="companyCis" name="companyCis" value="bjzx" />
+                </form>
             </div>
         )
     }
@@ -238,5 +265,9 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps,{ fetchInfo ,showMoreCourseDetail ,showPayPopup }
+    mapStateToProps,
+    {
+        fetchInfo ,showMoreCourseDetail ,showPayPopup ,
+        disPatchFetchOrder
+    }
 )(SelectDetail);

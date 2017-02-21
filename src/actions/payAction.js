@@ -29,7 +29,7 @@ const getOrderCiphertext = obj =>{
                 return res.text()
             })
             .then( text =>{
-                console.log( typeof (text))
+                console.log(text)
                 dispatch(postCiphertext(text));
                 obj.dom.submit();
             })
@@ -40,7 +40,7 @@ const getOrderCiphertext = obj =>{
 }
 
 //生成订单 POST
-const generateOrder = (obj)=>{
+const generateOrder = obj =>{
     let url = '';
     let data = {};
     if(obj.type === 'scmvOrder'){
@@ -89,7 +89,7 @@ export const disPatchFetchOrder =(obj)=>{
     return dispatch =>{
         switch (obj.type){
             case 'scmvOrder':
-                console.log(obj.dom)
+                console.log(obj)
                 return dispatch(generateOrder(obj))
         }
     }

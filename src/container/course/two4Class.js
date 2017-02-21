@@ -46,7 +46,7 @@ class Two4Class extends Component{
 
     handleSubmitOrderInfo(){
         // isFontPrice:  0表示不是定金
-        const {disPatchFetchOrder ,totalPrice ,totalNum ,chooseList ,ciphertext} = this.props;
+        const {disPatchFetchOrder ,totalPrice ,totalNum ,chooseList } = this.props;
         let scmvOrderMapModels =  new Array(chooseList.length);
         for(let i=0;i<chooseList.length;i++){
             scmvOrderMapModels[i] = {
@@ -150,7 +150,6 @@ class Two4Class extends Component{
                 </Dialog>
 
                 <form
-                    id="infoFormSubmit"
                     method="post"
                     action="http://web.zj.icbc.com.cn/mobile/Pay.do?scene=pay"
                     ref="pay"
