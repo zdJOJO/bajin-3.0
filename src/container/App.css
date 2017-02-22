@@ -73,6 +73,7 @@ nav i{
   width: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   position: fixed;
   top: 0.8rem;
   bottom: 0.46rem;

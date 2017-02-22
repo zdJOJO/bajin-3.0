@@ -116,7 +116,7 @@ class SelectDetail extends Component{
                         <img src={courseDetail.maxPic} role="presentation"/>
                         <h3>{courseDetail.title}</h3>
                         <div>
-                            <PanelHeader>0人关注/0人订阅</PanelHeader>
+                            <PanelHeader>0人关注 / 0人订阅</PanelHeader>
                             <PanelHeader>￥{courseDetail.price}</PanelHeader>
                         </div>
                     </div>
@@ -130,6 +130,10 @@ class SelectDetail extends Component{
                         </PanelHeader>
                         <h3>课程亮点</h3>
                         <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo long'}>
+                            <div
+                                className="conten"
+                                dangerouslySetInnerHTML={{__html: courseDetail.detail}}
+                            ></div>
                             { !isShowMoreDetail&&
                                 <div className="show" onClick={()=>{showMoreCourseDetail(true)}}>
                                     <h4>展开课程亮点↓</h4>

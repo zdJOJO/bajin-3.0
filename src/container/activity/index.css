@@ -265,7 +265,7 @@
     padding: 14px 0.075rem 12px;
     height: 0.2rem;
     line-height: 0.2rem;
-    border-bottom: 1px #E5E5E5 solid;
+    border-bottom: 1px rgba(229,229,229,0.6) solid;
     font-size: 14px;
     position: relative;
 }

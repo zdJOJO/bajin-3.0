@@ -282,12 +282,6 @@
 
 
 /*动画*/
-@keyframes long
-{
-    from {height: 3.4rem;}
-    to {height: 6rem;}
-}
-
 @keyframes pop-up{
     0%   {bottom: 0;}
     100% { bottom: 60px;}

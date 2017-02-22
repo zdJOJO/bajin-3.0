@@ -111,7 +111,7 @@ class ActivityInfo extends Component{
                             <div>
                                 <PanelHeader>
                                     <span className="act">当日活动</span>
-                                    已经报名{activityInfo.applyNumber}人/还有{activityInfo.maxApply-activityInfo.applyNumber}个名额
+                                    已经报名{activityInfo.applyNumber}人 / 还有{activityInfo.maxApply-activityInfo.applyNumber}个名额
                                 </PanelHeader>
                                 <PanelHeader/>
                             </div>
@@ -151,7 +151,10 @@ class ActivityInfo extends Component{
                         <div className="body">
                             <h3>课程亮点</h3>
                             <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo long'}>
-                                <div  dangerouslySetInnerHTML={{__html: activityInfo.activityDetail}}></div>
+                                <div
+                                    className="conten"
+                                    dangerouslySetInnerHTML={{__html: activityInfo.activityDetail}}
+                                ></div>
                                 { !isShowMoreDetail&&
                                     <div className="show"
                                          onClick={()=>{actShowMore(true)}}
