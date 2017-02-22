@@ -11,11 +11,6 @@ import {
     POP_LEFT_BUYBAR,
     CHOOSE_ITEM,
     INIT_CHOOSEDATA,
-
-    SHOW_PAY_POPUP,
-    SHOW_DIALOG,
-
-    POST_CIPHERTEXT
 } from '../actions/actionTypes';
 
 
@@ -37,10 +32,8 @@ const initState = {
     courseDetail: {},
     isShowMoreDetail: false,
     isShowBackTop: -1, // -1默认 0-显示 1-隐藏
-    times: 0, // 回到顶部出现次数
-    isShowPayPopup: false,  //显示隐藏支付
+    times: 0, // 回到顶部按钮点击次数
     showIOS1: false, //显示隐藏错误提示
-    ciphertext: ''  //工行卡支付密文
 }
 
 export default function courseReducer(state=initState, action){
@@ -91,16 +84,6 @@ export default function courseReducer(state=initState, action){
                 isShowBackTop: action.isBackTop ,
                 times: action.isBackTop===0 ? state.times+1 : state.times
             }
-        case SHOW_PAY_POPUP:
-            return{
-                ...state,
-                isShowPayPopup: action.isShowPayPopup
-            }
-        case SHOW_DIALOG:
-            return{
-                ...state,
-                showIOS1: action.isDialogShow
-            }
         case POP_LEFT_BUYBAR:
             return{
                 ...state,
@@ -135,11 +118,6 @@ export default function courseReducer(state=initState, action){
                     totalNum: action.chooseList.length,
                     totalPrice: action.totalPrice
                 }
-            }
-        case POST_CIPHERTEXT:
-            return{
-                ...state,
-                ciphertext: action.text
             }
         default:
             return state;

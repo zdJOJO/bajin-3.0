@@ -45,7 +45,7 @@ export const doneGetComment = (data,isListNull,isInDetail) => {
 }
 
 //获取失败
-export const fallGetCommet = (page)=> {
+export const fallGetCommet = page => {
     return {
         type: FAIL_GET_COMMENT,
         page
@@ -55,38 +55,42 @@ export const fallGetCommet = (page)=> {
 
 
 //获取评论列表
-const fetchComment = (itemType,itemId,page,isListNull,isInDetail)=> {
+const fetchComment = obj => {
     return dispatch =>{
-        dispatch(beginGetComment(page));
-        return fetch( port + '/card/comment/list?currentPage='+page+'&type='+itemType+'&itemId='+itemId)
+        dispatch(beginGetComment(obj.page));
+        return fetch( port + '/card/comment/list?currentPage='+obj.page+'&type='+obj.itemType+'&itemId='+obj.itemId)
             .then(res => {
                 console.log(res.status);
                 return res.json()
             })
             .then(data => {
                 if(data.list.length===0){
-                    isListNull = true
-                    setTimeout(function () {
-                        dispatch(doneGetComment(data,isListNull,isInDetail))
-                    },3000)
+                    obj.isListNull = true
+                    if(!obj.isInDetail){
+                        setTimeout(function () {
+                            dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
+                        },3000)
+                    }else {
+                        dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
+                    }
                     return
                 }
-                dispatch(doneGetComment(data,isListNull,isInDetail))
+                dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
             })
             .catch(e => {
                 console.log(e.message)
-                dispatch(fallGetCommet(page));
+                dispatch(fallGetCommet(obj.page));
             })
     }
 }
 
 
 //提供组件 调用
-export const getCommentList = (itemType,itemId,page,isListNull,isInDetail)=> {
-    if(!isListNull)  page++
-    if(isInDetail) page=1
+export const getCommentList = (obj)=> {
+    if(!obj.isListNull)  obj.page++;
+    if(obj.isInDetail) obj.page=1;
     return (dispatch, getState) => {
-        return dispatch(fetchComment(itemType,itemId,page,isListNull,isInDetail))
+        return dispatch(fetchComment(obj))
     }
 }
 

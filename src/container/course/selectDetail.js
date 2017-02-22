@@ -6,6 +6,9 @@ import {connect} from 'react-redux';
 
 import CourseItem from './item';
 import CommentIn from '../../components/comment/commentIn';
+import BackTopBtn from '../../components/backTopBtn/index';
+import '../../components/detail.css';
+
 //import Using ES6 syntax
 import {
     PanelHeader,
@@ -13,69 +16,20 @@ import {
     ActionSheet
 } from 'react-weui';
 
-import {fetchInfo ,showMoreCourseDetail ,showPayPopup} from '../../actions/courseAction'
-import {disPatchFetchOrder} from '../../actions/payAction'
-
+import {fetchInfo ,showMoreCourseDetail} from '../../actions/courseAction'
+import {disPatchFetchOrder ,showPayPopup} from '../../actions/publicAction'
 
 import {wx_jssdk_api} from '../../public/wx/wxConfig'
 
 
 import more from '../../img/more.svg';
-import backTop from '../../img/detail/backTop.png';
 import kefu from '../../img/detail/kefu.png';
 import vedio from '../../img/detail/vedio.png';
 import down from '../../img/detail/down.png';
 
 
-// 评论假数据
-const commentObj = {
-    itemType: 1,
-    itemId: 2,
-    rowCount: 10,
-    commentList: [
-        {
-            commentContent: '发觉了沙发司法考试的喝开水大火可视电话客户客户看肯定是k',
-            createTime: 1483686098,
-            user: {
-                userName: "哈哈哈哈",
-                headPic: down
-            }
-        },
-        {
-            commentContent: 'hkgh;fkh fkhg;hkf地方老师讲过了数据管理是第几个了时间管理设计灵感加上洛杉矶了',
-            createTime: 1484883546,
-            user: {
-                userName: "刘德华",
-                headPic: ''
-            }
-        }
-    ]
-}
-
-// 相关推荐 假数据
-const selectList  = [
-    {
-        id: 0,
-        title: '2013舒服啦捡垃圾了啊',
-        price: 2000,
-        minPic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=747081213,1247933411&fm=23&gp=0.jpg',
-        type: 1
-    },
-    {
-        id: 1,
-        title: '阿达按时大锅饭大概规范化个回个话愉快就看有空看就看就看',
-        price: 500,
-        minPic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=747081213,1247933411&fm=23&gp=0.jpg',
-        type: 2
-    },
-    {
-        id: 2,
-        title: '上课了放家里圣诞节萨达的',
-        price: 8000,
-        minPic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=747081213,1247933411&fm=23&gp=0.jpg',
-        type: 3
-    }
-]
+//假数据导入
+import {commentObj ,selectList} from '../../public/falseData'
 
 
 class SelectDetail extends Component{
@@ -145,20 +99,6 @@ class SelectDetail extends Component{
         console.log(scrollTop)
     }
 
-    backTop(speed){
-        console.log('speed is;' + speed)
-        console.log( this.refs.bodyBox.scrollTop)
-        let scrollBackTop =()=>{
-            if(this.refs.bodyBox.scrollTop <= 0){
-                console.log('stop ')
-                clearInterval(timer);
-            }else {
-                this.refs.bodyBox.scrollTop = this.refs.bodyBox.scrollTop-20
-            }
-        }
-        let timer = setInterval(scrollBackTop,speed);
-    }
-
     render(){
         const {
             courseDetail , isShowMoreDetail , showMoreCourseDetail , isShowBackTop , times,
@@ -167,11 +107,9 @@ class SelectDetail extends Component{
         } = this.props;
         return(
             <div style={{width:'100%',height:'100%'}} >
-                <img role="presentation"
-                     id="backTop"
-                     className={ (isShowBackTop===1&&times>0) ? "down" : (isShowBackTop===0 ? 'up' : '') }
-                     src={backTop}
-                     onClick={this.backTop.bind(this,10)}
+                <BackTopBtn
+                    className={ (isShowBackTop===1&&times>0) ? "down" : (isShowBackTop===0 ? 'up' : '') }
+                    dom={this.refs.bodyBox}
                 />
                 <div id="selectDetail" onScroll={this.handleScroll.bind(this)} ref="bodyBox">
                     <div className="head">
@@ -191,7 +129,7 @@ class SelectDetail extends Component{
                             </span>
                         </PanelHeader>
                         <h3>课程亮点</h3>
-                        <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo active'}>
+                        <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo long'}>
                             { !isShowMoreDetail&&
                                 <div className="show" onClick={()=>{showMoreCourseDetail(true)}}>
                                     <h4>展开课程亮点↓</h4>
@@ -203,10 +141,7 @@ class SelectDetail extends Component{
                     <CommentIn commentObj={commentObj} />
                     
                     <div className="relate">
-                        <PanelHeader>
-                            相关推荐
-                        </PanelHeader>
-
+                        <PanelHeader>相关推荐</PanelHeader>
                         <div id="select" className="subContentPanel in">
                             {
                                 selectList.map((course,index)=>{
@@ -219,10 +154,10 @@ class SelectDetail extends Component{
                                 })
                             }
                         </div>
-                        
                     </div>
                 </div>
-                <div className="do">
+
+                <div id="footBuy" className="do">
                     <img src={kefu} role="presentation" />
                     <Button id="flow" type="default" plain>关注</Button>
                     <Button id="buy" 
@@ -260,14 +195,16 @@ function mapStateToProps(state) {
         isShowMoreDetail: state.courseReducer.isShowMoreDetail,
         isShowBackTop: state.courseReducer.isShowBackTop,
         times: state.courseReducer.times,
-        isShowPayPopup: state.courseReducer.isShowPayPopup
+
+        isShowPayPopup: state.publicReducer.isShowPayPopup
     }
 }
 
 export default connect(
     mapStateToProps,
     {
-        fetchInfo ,showMoreCourseDetail ,showPayPopup ,
-        disPatchFetchOrder
+        fetchInfo ,showMoreCourseDetail,
+        disPatchFetchOrder,
+        showPayPopup
     }
 )(SelectDetail);

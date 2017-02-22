@@ -9,7 +9,6 @@ import {
     DONE_GET_COURSEDETAIL,
     SHOW_MORE_COURSEDETAIL,
     SHOW_BACK_TOP,
-    SHOW_PAY_POPUP,
     POP_LEFT_BUYBAR,
     CHOOSE_ITEM,
     INIT_CHOOSEDATA
@@ -30,15 +29,6 @@ export const backTop =(isBackTop)=>{
     return{
         type: SHOW_BACK_TOP,
         isBackTop
-    }
-}
-
-
-//弹出支付层
-export const showPayPopup =(isShowPayPopup)=>{
-    return{
-        type: SHOW_PAY_POPUP,
-        isShowPayPopup
     }
 }
 

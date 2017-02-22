@@ -1,0 +1,25 @@
+#backTop{
+    display: none;
+    position: fixed;
+    width: 72px;
+    height: 72px;
+    right: 15px;
+    z-index: 10;
+    border-radius: 100%;
+    background: url("../../img/detail/backTop.png") no-repeat;
+    background-size: 100%;
+}
+#backTop img{
+    width: 40px;
+    height: 40px;
+}
+#backTop.up{
+    display: block;
+    animation: pop-up 0.5s;
+    bottom: 60px;
+}
+#backTop.down{
+    display: block;
+    animation: pop-down 0.8s;
+    bottom: -50px;
+}

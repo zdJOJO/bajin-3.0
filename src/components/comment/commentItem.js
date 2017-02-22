@@ -30,7 +30,10 @@ export default class CommentItem extends Component{
                     <img role="presentation" src={this.props.headPic===null ? headPic : this.props.headPic}/>
                 </div>
                 <div className="cmtContent">
-                    <li className="userName">{this.props.userName}</li>
+                    <li className="userName">
+                        <span>{this.props.userName}</span>
+                        <i/>
+                    </li>
                     <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.time,10)/1000)}</li>
                     <li className="commentContent">{this.props.content}</li>
                 </div>

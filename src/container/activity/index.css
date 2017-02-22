@@ -237,170 +237,210 @@
 
 
 /**** 活动详情 *****/
-#mainBox{
-    position: fixed;
-    top: 0;
-    bottom: 50px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
+#selectDetail.actDetail .head>div{
+    border-bottom: none;
 }
 
-#mainBox .swiper-container{
-    overflow: hidden;
+#selectDetail.actDetail .head .weui-panel__hd{
+    width: 90% !important;
+    padding: 0.05rem 0.15rem 0.1rem 0.15rem !important;
 }
 
-#mainBox .swiper-container>img{
-    width: 100%;
-    height: auto;
+#selectDetail.actDetail .weui-panel__hd:last-child{
+    padding: 0 !important;
 }
 
-#mainBox .msg-tit{
-    line-height: 24px;
-    font-size: 20px;
-    width: 70%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #696969
-}
-
-#mainBox ul{
-    padding-left: 15px;
-}
-#mainBox li{
-    line-height: 60px;
-    border-bottom: 1px #f0f0f0 solid;
-    color: #696969;
-    font-size: 17px;
-}
-
-#mainBox li>span:first-child{
-    width: 18%;
-    font-size: 1em;
-    text-align: left;
-    color: #AEAEAE;
+#selectDetail.actDetail .act{
     display: inline-block;
+    color: #fff;
+    background: #b9984f;
+    font-size: 13px;
+    padding: 4px 10px;
+    margin-right: 10px;
+    border-radius: 3px;
 }
 
-#mainBox li.msg-price>span:last-child{
-    color: #c2b075;
+#selectDetail.actDetail ul>li{
+    display: flex;
+    padding: 14px 0.075rem 12px;
+    height: 0.2rem;
+    line-height: 0.2rem;
+    border-bottom: 1px #E5E5E5 solid;
+    font-size: 14px;
+    position: relative;
 }
 
-#mainBox .content{
-    padding: 20px 0;
-    overflow: hidden;
-    width: 95%;
-    margin: auto;
+#selectDetail.actDetail ul>li>i{
+    flex: 0.12;
 }
-
-#mainBox .content>h3{
-    color: #c8a971;
-    width: 96%;
-    font-size: 18px;
+#selectDetail.actDetail ul>li>.text{
+    flex: 0.23;
     text-align: left;
+    color: #323232;
+}
+#selectDetail.actDetail ul>li>.value{
+    flex: 0.57;
+    text-align: right;
+    color: #999;
+}
+#selectDetail.actDetail ul>li>.more{
+    flex: 0.08;
+    text-align: right;
+    background: url("../../img/more.svg") no-repeat 50% 50%;
+    background-size: 60%;
 }
 
-#mainBox .content a{
-    display: inline;
-    text-decoration: none;
+#selectDetail.actDetail ul>li>i.one{
+    background: url("../../img/detail/time.png") no-repeat 50% 35%;
+    background-size: 35%;
 }
-
-#mainBox .content img{
-    width: 100%!important;
+#selectDetail.actDetail ul>li>i.two{
+    background: url("../../img/detail/address.png") no-repeat 50% 35%;
+    background-size: 35%;
 }
-
-#mainBox .content>.content-text{
-    font-size: 15px;
+#selectDetail.actDetail ul>li>i.three{
+    background: url("../../img/detail/price.png") no-repeat 50% 35%;
+    background-size: 35%;
 }
-
-    /***底部按钮**/
-footer{
-    background: #eee;
-    width: 100%;
-    height: 0.4rem;
-    line-height: 0.4rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    color: #fff;
-    z-index: 1000;
-}
-
-footer>.time{
-    color: #b0b0b0;
-    width: 70%;
-    height: 100%;
-    text-align: center;
-    margin: 0;
-    float: left;
-    font-size: 16px;
-}
-
-footer>button{
-    height: 100%;
-    width: 30%;
-    border: none;
-    color: #fff;
-    background: #9c9c9c;
-    font-size: 20px;
-    float: right;
-}
-
-footer>button.active{
-    background: #C8A971;
-}
-
-footer>button>a{
-    color: #fff;
-}
-
-footer>button.outDate{
-    background: #9c9c9c;
+#selectDetail.actDetail ul>li>i.four{
+    background: url("../../img/detail/vedio.png") no-repeat 50% 35%;
+    background-size: 35%;
 }
 
 
-
-/*适配*/
-/*@media screen and (max-width: 384px) {*/
-    /*.infoItem{*/
-        /*height: 1.58rem;*/
-    /*}*/
-    /*.infoItem img{*/
-        /*width: 1.4rem;*/
-        /*height: 1.4rem;*/
-    /*}*/
-/*}*/
-/*@media screen and (max-width: 375px) {*/
-    /*.infoItem{*/
-        /*height: 1.55rem;*/
-    /*}*/
-    /*.infoItem img{*/
-        /*width: 1.36rem;*/
-        /*height: 1.36rem;*/
-    /*}*/
+/*#mainBox{*/
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*bottom: 50px;*/
+    /*overflow-y: scroll;*/
+    /*overflow-x: hidden;*/
+    /*width: 100%;*/
+    /*-webkit-overflow-scrolling: touch;*/
 /*}*/
 
-/*@media screen and (max-width: 360px) {*/
-    /*.infoItem{*/
-        /*height: 1.47rem;*/
-    /*}*/
-    /*.infoItem img{*/
-        /*width: 1.28rem;*/
-        /*height: 1.28rem;*/
-    /*}*/
+/*#mainBox .swiper-container{*/
+    /*overflow: hidden;*/
 /*}*/
 
-@media screen and (max-width: 320px) {
-    .infoItem h3{
-        -webkit-line-clamp: 1;
-    }
+/*#mainBox .swiper-container>img{*/
+    /*width: 100%;*/
+    /*height: auto;*/
+/*}*/
 
-    .infoItem .deTile{
-        -webkit-line-clamp: 1;
-    }
-}
+/*#mainBox .msg-tit{*/
+    /*line-height: 24px;*/
+    /*font-size: 20px;*/
+    /*width: 70%;*/
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+    /*color: #696969*/
+/*}*/
+
+/*#mainBox ul{*/
+    /*padding-left: 15px;*/
+/*}*/
+/*#mainBox li{*/
+    /*line-height: 60px;*/
+    /*border-bottom: 1px #f0f0f0 solid;*/
+    /*color: #696969;*/
+    /*font-size: 17px;*/
+    /*text-align: left;*/
+/*}*/
+
+/*#mainBox li>span:first-child{*/
+    /*width: 18%;*/
+    /*font-size: 1em;*/
+    /*text-align: left;*/
+    /*color: #AEAEAE;*/
+    /*display: inline-block;*/
+/*}*/
+
+/*#mainBox li.msg-price>span:last-child{*/
+    /*color: #c2b075;*/
+/*}*/
+
+/*#mainBox .content{*/
+    /*padding: 20px 0;*/
+    /*overflow: hidden;*/
+    /*width: 95%;*/
+    /*margin: auto;*/
+/*}*/
+
+/*#mainBox .content>h3{*/
+    /*color: #c8a971;*/
+    /*width: 96%;*/
+    /*font-size: 18px;*/
+    /*text-align: left;*/
+/*}*/
+
+/*#mainBox .content a{*/
+    /*display: inline;*/
+    /*text-decoration: none;*/
+/*}*/
+
+/*#mainBox .content img{*/
+    /*width: 100%!important;*/
+/*}*/
+
+/*#mainBox .content>.content-text{*/
+    /*font-size: 15px;*/
+/*}*/
+
+    /*!***底部按钮**!*/
+/*footer{*/
+    /*background: #eee;*/
+    /*width: 100%;*/
+    /*height: 0.4rem;*/
+    /*line-height: 0.4rem;*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    /*color: #fff;*/
+    /*z-index: 1000;*/
+/*}*/
+
+/*footer>.time{*/
+    /*color: #b0b0b0;*/
+    /*width: 70%;*/
+    /*height: 100%;*/
+    /*text-align: center;*/
+    /*margin: 0;*/
+    /*float: left;*/
+    /*font-size: 16px;*/
+/*}*/
+
+/*footer>button{*/
+    /*height: 100%;*/
+    /*width: 30%;*/
+    /*border: none;*/
+    /*color: #fff;*/
+    /*background: #9c9c9c;*/
+    /*font-size: 20px;*/
+    /*float: right;*/
+/*}*/
+
+/*footer>button.active{*/
+    /*background: #C8A971;*/
+/*}*/
+
+/*footer>button>a{*/
+    /*color: #fff;*/
+/*}*/
+
+/*footer>button.outDate{*/
+    /*background: #9c9c9c;*/
+/*}*/
+
+/*@media screen and (max-width: 320px) {*/
+    /*.infoItem h3{*/
+        /*-webkit-line-clamp: 1;*/
+    /*}*/
+
+    /*.infoItem .deTile{*/
+        /*-webkit-line-clamp: 1;*/
+    /*}*/
+/*}*/
 
 
 

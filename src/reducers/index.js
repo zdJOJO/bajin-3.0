@@ -4,6 +4,7 @@
 
 import { combineReducers } from 'redux'; // 利用combineReducers 合并reducers
 
+import publicReducer from './public'
 import menuReducer from './menu'
 import commentReducer from './comment'
 import activityReducer from './activity'
@@ -12,6 +13,7 @@ import detailReducer from './detail'
 import loginReducer from './login'
 
 export default combineReducers({
+    publicReducer,
     menuReducer,
     commentReducer,
     activityReducer,

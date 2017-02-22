@@ -9,16 +9,12 @@ import CourseItem from './item';
 import {LoadMore,Button,ActionSheet,Dialog} from 'react-weui';
 
 import {fetchInfo ,disPatchFn} from '../../actions/courseAction'
-import {showPayPopup ,showDialog} from '../../actions/showPromptAction'
-import {disPatchFetchOrder} from '../../actions/payAction'
-
-import buy from '../../img/buy.png'
-import close from '../../img/close.png'
+import {disPatchFetchOrder ,showDialog ,showPayPopup} from '../../actions/publicAction'
 
 class Two4Class extends Component{
     constructor(props){
         super(props)
-        const {showPayPopup ,showDialog ,} = this.props;
+        const {showPayPopup ,showDialog} = this.props;
         this.state = {
             menus: [{
                 label: '银行卡支付',
@@ -44,6 +40,19 @@ class Two4Class extends Component{
         }
     }
 
+    componentWillMount(){
+        const {fetchInfo ,disPatchFn ,two4ClassList, totalPrice ,totalNum,} = this.props;
+        fetchInfo(1,1);
+        disPatchFn({
+            type: 1,
+            isPop: false,
+            list: two4ClassList,
+            totalNum: totalNum,
+            totalPrice: totalPrice
+        });
+        disPatchFn({type: 3})
+    }
+
     handleSubmitOrderInfo(){
         // isFontPrice:  0表示不是定金
         const {disPatchFetchOrder ,totalPrice ,totalNum ,chooseList } = this.props;
@@ -65,19 +74,6 @@ class Two4Class extends Component{
         })
     }
 
-    componentWillMount(){
-        const {fetchInfo ,disPatchFn ,two4ClassList, totalPrice ,totalNum,} = this.props;
-        fetchInfo(1,1)
-        disPatchFn({
-            type: 1,
-            isPop: false,
-            list: two4ClassList,
-            totalNum: totalNum,
-            totalPrice: totalPrice
-        })
-        disPatchFn({type: 3})
-    }
-
     handleClick(totalNum){
         const {showPayPopup ,showDialog} = this.props;
         if(totalNum===0){
@@ -89,9 +85,9 @@ class Two4Class extends Component{
 
     render(){
         const {
-            two4ClassList ,disPatchFn ,isLeftBarShow ,totalPrice ,totalNum ,
-            isShowPayPopup ,showPayPopup ,showIOS1,
-            ciphertext
+            two4ClassList ,disPatchFn ,isLeftBarShow ,
+            totalPrice ,totalNum ,
+            isShowPayPopup ,showPayPopup ,isDialogShow,ciphertext
         } = this.props;
         return(
             <div id="course">
@@ -113,17 +109,17 @@ class Two4Class extends Component{
                         })
                     }
                 </div>
-                <div className="buy" onClick={()=>{
+                <div className={ !isLeftBarShow ? 'buy' : 'buy close'}
+                     onClick={()=>{
                     disPatchFn({
                         type: 1,
                         isPop: !isLeftBarShow,
                         list: two4ClassList
                     })
-                }}>
-                    <img role="presentation" src={ isLeftBarShow ? close : buy  } />
-                </div>
+                }}></div>
+
                 { isLeftBarShow &&
-                    <div className={ isLeftBarShow ? 'leftBuyBar toLeftShow' : 'leftBuyBar'}>
+                    <div className={ isLeftBarShow ? 'leftBuyBar toLeftShow' : 'leftBuyBar' } >
                         <div className="box">
                             <div className="number">已经选择<span style={{color: '#c49327'}}>{totalNum}</span>件</div>
                             <div className="price">优惠价格:<span style={{color: '#c49327'}}>￥{totalPrice}</span></div>
@@ -144,7 +140,7 @@ class Two4Class extends Component{
                 <Dialog type="ios"
                         title={this.state.style1.title}
                         buttons={this.state.style1.buttons}
-                        show={showIOS1}
+                        show={isDialogShow}
                 >
                     请选择您感兴趣的课程
                 </Dialog>
@@ -176,10 +172,9 @@ const mapStateToProps = state=>{
         totalNum: state.courseReducer.two4Class.totalNum,
         totalPrice: state.courseReducer.two4Class.totalPrice,
 
-        isShowPayPopup: state.courseReducer.isShowPayPopup,
-        showIOS1: state.courseReducer.showIOS1,
-
-        ciphertext: state.courseReducer.ciphertext
+        isDialogShow: state.publicReducer.isDialogShow,
+        isShowPayPopup: state.publicReducer.isShowPayPopup,
+        ciphertext: state.publicReducer.ciphertext
     }
 }
 

@@ -1,0 +1,170 @@
+#selectDetail{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    bottom: 0.36rem;
+}
+
+#selectDetail  i{
+    font-style: normal;
+}
+
+#selectDetail .head>img{
+    width: 3.2rem;
+    height: 2.4rem;
+    background: #bfbfbf;
+    vertical-align: top
+}
+
+#selectDetail .head>div{
+    overflow: hidden;
+    border-bottom: 5px #f0f0f0 solid;
+}
+
+#selectDetail .head>h3{
+    font-weight: normal;
+    font-size: 23px;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-top: 0.1rem;
+    padding: 0 0.15rem 0 0.15rem;
+    line-height: 30px;
+}
+
+#selectDetail .head .weui-panel__hd{
+    width: 40%;
+    text-align: left;
+    float: left;
+    padding: 0.13rem 0.15rem 0.22rem;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+#selectDetail .head .weui-panel__hd:last-child{
+    color: #c49327;
+    text-align: right;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+#selectDetail .head .weui-panel__hd:after {
+    border: none;
+}
+/*--.body--*/
+#selectDetail .body{
+    border-bottom: 5px #f0f0f0 solid;
+}
+
+#selectDetail .body .weui-panel__hd{
+    padding: 14px 0.075rem 12px;
+    position: relative;
+    height: 0.2rem;
+    line-height: 0.2rem;
+}
+
+#selectDetail .body .weui-panel__hd:after {
+    left: 0;
+}
+
+#selectDetail .body .weui-panel__hd>span{
+    position: absolute;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio{
+    left: 0.09rem;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio i{
+    color: #323232;
+    font-size: 14px;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio img{
+    padding-right: 0.09rem;
+    height: 12px;
+    width: auto;
+}
+
+#selectDetail .body .weui-panel__hd>.vedio img{
+    color: #323232;
+    font-size: 12px;
+}
+
+#selectDetail .body .weui-panel__hd>.more{
+    right: 0;
+    display: flex;
+}
+
+#selectDetail .body .weui-panel__hd>.more img{
+    padding-right: 0.09rem;
+    height: 21px;
+    width: auto;
+}
+
+#selectDetail .body .weui-panel__hd>.more i{
+    line-height: 23px;
+}
+
+#selectDetail .body h3{
+    font-size: 14px;
+    color: #909090;
+    font-weight: normal;
+    margin: 0.21rem 0 0.11rem 0.135rem;
+    text-align: left;
+}
+
+#selectDetail .body>.detailInfo{
+    position: relative;
+    height: 3.4rem;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.11);
+}
+#selectDetail .body>.detailInfo.long{
+    animation: long 1.0s;
+    height: 6rem;
+    overflow: initial;
+}
+
+#selectDetail .body>.detailInfo>.show{
+    width: 100%;
+    height: 0.7rem;
+    position: absolute;
+    bottom: 0;
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%);
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
+}
+
+#selectDetail .body>.detailInfo>.show>h4{
+    width: 100%;
+    height: 0.25rem;
+    color: #b9984f;
+    font-size: 13px;
+    font-weight: normal;
+    position: absolute;
+    bottom: 0;
+}
+
+
+/*--.relate  相关推荐--*/
+#selectDetail .relate{
+
+}
+
+#selectDetail .relate .weui-panel__hd{
+    padding: 0.15rem 0 0.11rem 0.135rem;
+    text-align: left;
+    font-size: 14px;
+    color: #323232;
+}
+
+#selectDetail .relate .weui-panel__hd:after{
+    left: 0;
+}

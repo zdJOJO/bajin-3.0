@@ -6,7 +6,11 @@ import {
     FALL_FETCH,
     DONE_GET_DETAIL,
     DONE_GET_ACTSTATU,
-    DONE_GET_ACTCOMMENT
+    DONE_GET_ACTCOMMENT,
+
+    ACT_SHOW_MORE,
+    ACT_SHOW_BACK_TOP,
+    SHOW_PAY_POPUP
 } from '../actions/actionTypes';
 
 const initState = {
@@ -22,7 +26,12 @@ const initState = {
         applyEndTime: 0,
         activityDetail: '',
     },   //活动详情
-    actStateStr: ''
+    actStateStr: '',
+
+    isShowBackTop: -1, // -1默认 0-显示 1-隐藏
+    times: 0, // 回到顶部按钮点击次数
+    isShowMoreDetail: false,  //是否展示更多
+    isShowPayPopup: false  //弹出支付层
 }
 
 export default function detailReducer(state=initState, action){
@@ -48,6 +57,22 @@ export default function detailReducer(state=initState, action){
         case DONE_GET_ACTCOMMENT:
             return{
 
+            }
+        case ACT_SHOW_MORE:
+            return{
+                ...state,
+                isShowMoreDetail: action.isShowMore
+            }
+        case ACT_SHOW_BACK_TOP:
+            return{
+                ...state,
+                isShowBackTop: action.isBackTop ,
+                times: action.isBackTop===0 ? state.times+1 : state.times
+            }
+        case SHOW_PAY_POPUP:
+            return{
+                ...state,
+                isShowPayPopup: action.isShowPayPopup
             }
         default:
             return state;

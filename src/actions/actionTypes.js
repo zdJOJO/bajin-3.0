@@ -17,8 +17,6 @@ export const SHOW_ERROR = 'SHOW_ERROR';
 export const SHOW_DIALOG = 'SHOW_DIALOG';
 //付款提示 
 export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';
-
-
 //支付
 export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';
 
@@ -46,6 +44,12 @@ export const CHANGE_PLACEHOLDER = 'CHANGE_PLACEHOLDER';
 export const DONE_GET_ActList = 'DONE_GET_ActList';
 export const POPUP = 'POPUP';
 export const SUBMIT_ACTINFO_SUCCESS = 'SUBMIT_ACTINFO_SUCCESS';
+//活动详情
+export const DONE_GET_DETAIL = 'DONE_GET_DETAIL';
+export const DONE_GET_ACTSTATU = 'DONE_GET_ACTSTATU';
+export const DONE_GET_ACTCOMMENT = 'DONE_GET_ACTCOMMENT';
+export const ACT_SHOW_MORE = 'ACT_SHOW_MORE';
+export const ACT_SHOW_BACK_TOP = 'ACT_SHOW_BACK_TOP'
 
 
 //课程 列表
@@ -59,12 +63,7 @@ export const CHOOSE_ITEM = 'CHOOSE_ITEM';
 export const INIT_CHOOSEDATA = 'INIT_CHOOSEDATA';
     
     
-    
-
-//活动详情
-export const DONE_GET_DETAIL = 'DONE_GET_DETAIL';
-export const DONE_GET_ACTSTATU = 'DONE_GET_ACTSTATU';
-export const DONE_GET_ACTCOMMENT = 'DONE_GET_ACTCOMMENT';
+   
 
 
 

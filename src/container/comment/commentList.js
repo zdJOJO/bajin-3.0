@@ -8,7 +8,7 @@ import './index.css';
 
 import HeaderBar from '../../components/headerNav/headBar';
 import CommentItem from '../../components/comment/commentItem';
-import {Button} from 'react-weui';
+import {Button ,LoadMore ,PanelHeader} from 'react-weui';
 
 import {getCommentList ,dispatchAction} from '../../actions/commentAction';
 
@@ -18,12 +18,13 @@ import pic from '../../img/pic.png'
 class CommentList extends Component{
     componentDidMount() {
         const { getCommentList ,dispatchAction ,currentPage ,isListNull } = this.props;
-        getCommentList(
-            this.props.location.query.itemType,
-            this.props.location.query.itemId,
-            currentPage,
-            isListNull
-        );
+        getCommentList({
+            itemType: this.props.location.query.itemType,
+            itemId:  this.props.location.query.itemId,
+            page: currentPage,
+            isListNull: isListNull,
+            isInDetail: false
+        });
         dispatchAction(1,{str: '请填写评论'})
     }
 
@@ -33,11 +34,10 @@ class CommentList extends Component{
     }
 
     render(){
-        const { commentList, rowCount, getCommentList, currentPage, isLoading, isListNull ,placeholder} = this.props;
+        const { commentList, getCommentList, currentPage, isLoading, isListNull ,placeholder} = this.props;
         return(
             <section id="comments" className="comments">
                 <HeaderBar content='评论'/>
-                {/*<h3 className="totalNum">共 {rowCount} 条评论</h3>*/}
                 <div className="commentList">
                     {
                         commentList.map((comment,index)=>{
@@ -54,18 +54,22 @@ class CommentList extends Component{
                         })
                     }
                 </div>
-                <div className={isLoading ? "spinner loadingShow":"spinner loadingHide"}>
-                    <span className="more">加载中</span>
-                    <i className="bounce1"/>
-                    <i className="bounce2"/>
-                    <i className="bounce3"/>
-                </div>
-                <button
-                    onClick={()=>getCommentList(
-                        this.props.location.query.itemType,
-                        this.props.location.query.itemId,currentPage,isListNull
-                    )}
-                >加载更多</button>
+                <PanelHeader>
+                    { !isLoading &&
+                        <Button type="default" size="small"
+                            onClick={()=>getCommentList({
+                                itemType: this.props.location.query.itemType,
+                                itemId:  this.props.location.query.itemId,
+                                page: currentPage,
+                                isListNull: isListNull,
+                                isInDetail: false
+                            })}
+                            >点击加载更多评论</Button>
+                    }
+                    { isLoading &&
+                        <LoadMore loading>Loading</LoadMore>
+                    }
+                </PanelHeader>
 
                 <div className="publishCmt">
                     <div className="img"><img role="presentation" src={pic}/></div>

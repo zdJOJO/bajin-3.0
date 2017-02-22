@@ -11,7 +11,11 @@ import {
     FALL_FETCH,
     POPUP,
     SUBMIT_ACTINFO_SUCCESS,
-    SHOW_DIALOG
+    SHOW_DIALOG,
+
+    ACT_SHOW_MORE,
+    ACT_SHOW_BACK_TOP,
+    SHOW_PAY_POPUP
 } from './actionTypes';
 
 
@@ -70,6 +74,29 @@ export const showDialog = (isDialogShow)=>{
     }
 }
 
+//展示更多
+export const actShowMore = isShowMore =>{
+    return{
+        type: ACT_SHOW_MORE,
+        isShowMore
+    }
+}
+
+//回到顶部
+export const actBackTop = isBackTop =>{
+    return{
+        type: ACT_SHOW_BACK_TOP,
+        isBackTop
+    }
+}
+
+//弹出支付层
+export const showPayPopup = isShowPayPopup =>{
+    return{
+        type: SHOW_PAY_POPUP,
+        isShowPayPopup
+    }
+}
 
 
 function fetchActList(page,isRefresh) {

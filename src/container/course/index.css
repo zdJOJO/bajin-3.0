@@ -106,12 +106,23 @@
     bottom: 70px;
     right: 15px;
     z-index: 10;
+    border-radius: 100%;
+    background: url("../../img/buy.png") no-repeat;
+    background-size: 100%;
 }
+
+#course .buy.close{
+    border-radius: 100%;
+    background: url("../../img/close.png") no-repeat;
+    background-size: 100%;
+}
+
 #course .buy img{
     width: 100%;
 }
 
 #course .leftBuyBar{
+    display: flex;
     color: #909090;
     position: fixed;
     width: 2.45rem;
@@ -119,15 +130,12 @@
     line-height: 0.3rem;
     bottom: 90px;
     left: 10px;
-    display: flex;
     font-size: 12px;
 }
 
 #course .leftBuyBar.toLeftShow{
-    -webkit-transform-origin: bottom right;
-    animation: showBuyBarLeft 0.4s;
+    animation: showBuyBarLeft 0.25s;
 }
-
 
 #course .leftBuyBar>.box{
     box-shadow: 0 0px 8px rgba(0, 0, 0, 0.2);
@@ -156,6 +164,8 @@
 
 #course .leftBuyBar button{
     border-radius: 2px;
+    border: none;
+    outline: none;
     width: 0.49rem;
     height: 0.29rem;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
@@ -171,14 +181,14 @@
         padding: 0 0.06rem 0 0.06rem;
         width: 0.6rem;
     }
-    #course .leftBuyBar{
-        left:7px;
-    }
     #course .buy{
         right: 10px;
     }
     #course .leftBuyBar>.box>.price{
-        width: 0.9rem;
+        width: 0.95rem;
+    }
+    #course .leftBuyBar button{
+        right: 7px;
     }
 }
 
@@ -192,239 +202,41 @@
     #course .leftBuyBar{
         width: 2.55rem;
         bottom: 69px;
-        left: 2px;
     }
     #course .leftBuyBar>.box{
         width: 2rem;
     }
     #course .leftBuyBar>.box >.number{
-        width: 0.7rem;
-        padding: 0 0.06rem 0 0.1rem;
+        width: 0.67rem;
+        padding-right: 0.05rem;
+        text-align: left;
     }
     #course .leftBuyBar>.box>.price{
-        width: 1rem;
+        width: 1.03rem;
+        text-align: left;
+        padding-left: 0.05rem;
+    }
+    #course .leftBuyBar button{
+        right: 3px;
     }
 }
 
 @keyframes showBuyBarLeft{
     from {
         opacity: 0;
-        -webkit-transform:scale(0);
-        /*height: 0;*/
-        /*left: 2.5rem;*/
+        left: 40px;
     }
-    to {
+
+    to{
         opacity: 1;
-        -webkit-transform:scale(1);
-        /*height: 0.25rem;*/
-        /*left: 10px;*/
+        left: 10px;
     }
 }
 
-
-
-
-
-/**** selectDetail  精选详情 ****/
-#backTop{
-    display: none;
-    position: fixed;
-    width: 72px;
-    height: 72px;
-    right: 15px;
-    z-index: 10;
-    border-radius: 100%;
-    /*box-shadow: 0 0px 16px 0 rgba(0,0,0,0.2);*/
-}
-#backTop img{
-    width: 40px;
-    height: 40px;
-}
-#backTop.up{
-    display: block;
-    animation: pop-up 0.5s;
-    bottom: 60px;
-}
-#backTop.down{
-    display: block;
-    animation: pop-down 0.8s;
-    bottom: -50px;
-}
-
-#selectDetail{
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-    position: fixed;
-    bottom: 0.36rem;
-}
-
-#selectDetail  i{
-    font-style: normal;
-}
-
-#selectDetail .head>img{
-    width: 3.2rem;
-    height: 2.4rem;
-    background: #bfbfbf;
-    vertical-align: top
-}
-
-#selectDetail .head>div{
-    overflow: hidden;
-    border-bottom: 5px #f0f0f0 solid;
-}
-
-#selectDetail .head>h3{
-    font-weight: normal;
-    font-size: 23px;
-    text-align: left;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    margin-top: 0.1rem;
-    padding: 0 0.15rem 0 0.15rem;
-    line-height: 30px;
-}
-
-#selectDetail .head .weui-panel__hd{
-    width: 40%;
-    text-align: left;
-    float: left;
-    padding: 0.13rem 0.15rem 0.22rem;
-    font-size: 13px;
-    line-height: 13px;
-}
-
-#selectDetail .head .weui-panel__hd:last-child{
-    color: #c49327;
-    text-align: right;
-    font-size: 16px;
-    line-height: 16px;
-}
-
-#selectDetail .head .weui-panel__hd:after {
-    border: none;
-}
-/*--.body--*/
-#selectDetail .body{
-    border-bottom: 5px #f0f0f0 solid;
-}
-
-#selectDetail .body .weui-panel__hd{
-    padding: 14px 0.075rem 12px;
-    position: relative;
-    height: 0.2rem;
-    line-height: 0.2rem;
-}
-
-#selectDetail .body .weui-panel__hd:after {
-    left: 0;
-}
-
-#selectDetail .body .weui-panel__hd>span{
-    position: absolute;
-}
-
-#selectDetail .body .weui-panel__hd>.vedio{
-    left: 0.09rem;
-}
-
-#selectDetail .body .weui-panel__hd>.vedio i{
-    color: #323232;
-    font-size: 14px;
-}
-
-#selectDetail .body .weui-panel__hd>.vedio img{
-    padding-right: 0.09rem;
-    height: 12px;
-    width: auto;
-}
-
-#selectDetail .body .weui-panel__hd>.vedio img{
-    color: #323232;
-    font-size: 12px;
-}
-
-#selectDetail .body .weui-panel__hd>.more{
-    right: 0;
-    display: flex;
-}
-
-#selectDetail .body .weui-panel__hd>.more img{
-    padding-right: 0.09rem;
-    height: 21px;
-    width: auto;
-}
-
-#selectDetail .body .weui-panel__hd>.more i{
-    line-height: 23px;
-}
-
-#selectDetail .body h3{
-    font-size: 14px;
-    color: #909090;
-    font-weight: normal;
-    margin: 0.21rem 0 0.11rem 0.135rem;
-    text-align: left;
-}
-
-#selectDetail .body>.detailInfo{
-    position: relative;
-    height: 3.4rem;
-    overflow: hidden;
-    background: #000000;
-}
-#selectDetail .body>.detailInfo.active{
-    animation: long 1.0s;
-    height: 6rem;
-    overflow: initial;
-}
-
-#selectDetail .body>.detailInfo>.show{
-    width: 100%;
-    height: 0.7rem;
-    position: absolute;
-    bottom: 0;
-    background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.9) 100%);
-    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
-    background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
-    background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 0.9) 100%);
-}
-
-#selectDetail .body>.detailInfo>.show>h4{
-    width: 100%;
-    height: 0.25rem;
-    color: #b9984f;
-    font-size: 13px;
-    font-weight: normal;
-    position: absolute;
-    bottom: 0;
-}
-
-
-/*--.relate  相关推荐--*/
-#selectDetail .relate{
-
-}
-
-#selectDetail .relate .weui-panel__hd{
-    padding: 0.15rem 0 0.11rem 0.135rem;
-    text-align: left;
-    font-size: 14px;
-    color: #323232;
-}
-
-#selectDetail .relate .weui-panel__hd:after{
-    left: 0;
-}
 
 
 /*--.do  购买--*/
-.do{
+#footBuy{
     position: fixed;
     width: 100%;
     height: 0.36rem;
@@ -435,11 +247,11 @@
     z-index: 20;
 }
 
-.do>.weui-btn-area{
+#footBuy>.weui-btn-area{
     margin: 0;
 }
 
-.do button{
+#footBuy button{
     width: 0.93rem;
     height: 0.24rem;
     line-height: 0.24rem;
@@ -457,11 +269,11 @@
     border-color: #a5845b;
 }
 
-.do >.weui-btn-area button:last-child{
+#footBuy >.weui-btn-area button:last-child{
 
 }
 
-.do>img{
+#footBuy>img{
     width: 0.22rem;
     height: 0.22rem;
     margin: 0.06rem 0.45rem 0;

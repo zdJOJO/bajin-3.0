@@ -17,6 +17,17 @@ import {
     MediaBoxInfoMeta,
 } from 'react-weui';
 
+
+const typeStr = type =>{
+    if(type===1){
+        return '时修'
+    }else if(type===2){
+        return '视频'
+    }else {
+        return '音频'
+    }
+}
+
 class CourseItem extends Component{
 
     handleClick(selectId ,isShow){
@@ -74,16 +85,6 @@ class CourseItem extends Component{
                 </MediaBoxBody>
             </MediaBox>
         )
-    }
-}
-
-const typeStr = type =>{
-    if(type===1){
-        return '时修'
-    }else if(type===2){
-        return '视频'
-    }else {
-        return '音频'
     }
 }
 

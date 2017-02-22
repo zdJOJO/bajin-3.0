@@ -4,6 +4,8 @@
 import cookie from 'react-cookie'
 
 import {
+    SHOW_DIALOG,
+    SHOW_PAY_POPUP ,
     POST_CIPHERTEXT
 } from './actionTypes';
 
@@ -12,12 +14,31 @@ let token = cookie.load('token');
 
 
 //密文
-const postCiphertext =(text)=>{
+const postCiphertext = text =>{
     return{
         type: POST_CIPHERTEXT,
         text
     }
 }
+
+
+//弹出支付层
+export const showPayPopup = isShowPayPopup =>{
+    return{
+        type: SHOW_PAY_POPUP,
+        isShowPayPopup
+    }
+}
+
+
+//显示错误提示
+export const showDialog = isDialogShow =>{
+    return{
+        type: SHOW_DIALOG,
+        isDialogShow
+    }
+}
+
 
 //根据订单号 获取密文 GET
 const getOrderCiphertext = obj =>{
@@ -39,13 +60,17 @@ const getOrderCiphertext = obj =>{
     }
 }
 
+
 //生成订单 POST
 const generateOrder = obj =>{
     let url = '';
     let data = {};
     if(obj.type === 'scmvOrder'){
         url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000)
+    }else if(obj.type === 1){
+        url = port + '/card/apply?token=' + token
     }
+
     if(obj.type === 'scmvOrder'){
         data = {
             sum: obj.sum,
@@ -82,15 +107,18 @@ const generateOrder = obj =>{
 
 /*
 *type:
+* 1 ： 活动支付
 * scmvOrder: 课程模块订单
 *
 * */
 export const disPatchFetchOrder =(obj)=>{
+    console.log(obj)
     return dispatch =>{
         switch (obj.type){
             case 'scmvOrder':
-                console.log(obj)
-                return dispatch(generateOrder(obj))
+                return dispatch( generateOrder(obj) )
+            case 1:
+                return dispatch( generateOrder(obj) )
         }
     }
 }
