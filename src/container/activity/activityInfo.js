@@ -90,7 +90,7 @@ class ActivityInfo extends Component{
 
     render(){
         const {
-            activityInfo ,commentList ,rowCount,
+            activityInfo ,listInDetail ,rowCount,
             isShowBackTop ,times ,actShowMore ,isShowMoreDetail,
             showPayPopup ,isShowPayPopup ,ciphertext
         } = this.props;
@@ -152,7 +152,7 @@ class ActivityInfo extends Component{
                             <h3>课程亮点</h3>
                             <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo long'}>
                                 <div
-                                    className="conten"
+                                    className="content"
                                     dangerouslySetInnerHTML={{__html: activityInfo.activityDetail}}
                                 ></div>
                                 { !isShowMoreDetail&&
@@ -170,7 +170,7 @@ class ActivityInfo extends Component{
                             itemType: 1,
                             itemId: activityInfo.activityId,
                             rowCount: rowCount,
-                            commentList: commentList
+                            commentList: listInDetail
                           }
                         } />
 
@@ -230,8 +230,8 @@ const mapStateToProps = (state)=> {
         isShowBackTop: state.detailReducer.isShowBackTop,
         isShowMoreDetail: state.detailReducer.isShowMoreDetail,
         times: state.detailReducer.times,
-
-        commentList: state.commentReducer.list,
+        
+        listInDetail: state.commentReducer.listInDetail,
         rowCount: state.commentReducer.rowCount,
 
         isShowPayPopup: state.publicReducer.isShowPayPopup,

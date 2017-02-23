@@ -58,7 +58,13 @@ export const fallGetCommet = page => {
 const fetchComment = obj => {
     return dispatch =>{
         dispatch(beginGetComment(obj.page));
-        return fetch( port + '/card/comment/list?currentPage='+obj.page+'&type='+obj.itemType+'&itemId='+obj.itemId)
+
+       // let url = port + '/card/comment/list?currentPage='+obj.page+'&type='+obj.itemType+'&itemId='+obj.itemId
+
+        //假数据
+        let url = 'http://test.winthen.com/card/comment/list?currentPage=1&type=1&itemId=22&isAudit=0'
+        
+        return fetch( url )
             .then(res => {
                 console.log(res.status);
                 return res.json()

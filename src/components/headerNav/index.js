@@ -9,12 +9,13 @@ import {changeSub} from '../../actions/menuAction'
 
 import './index.css';
 
+// this.props.isRouter  判断二级导航是否是 router
 class HeaderNav extends Component{
     render(){
         const { changeSub ,currentIndex } = this.props;
         return(
             <nav className="headerNav">
-                {
+                { !this.props.isRouter &&
                     this.props.menuList.map((menu,index)=>{
                         return (
                             menu.path === '/course' ?
@@ -36,6 +37,22 @@ class HeaderNav extends Component{
                                         }
                                     </span>
                                 </Link>
+                        )
+                    })
+                }
+                { this.props.isRouter === '0' &&
+                    this.props.menuList.map((menu,index)=>{
+                        return(
+                            <a key={index}
+                                  to={menu.path}
+                                  className={ currentIndex === index ? "active_headerNav" : "" }
+                                  onClick={()=>{changeSub('course',index)}}
+                            >
+                                    <span>
+                                        {menu.menuName}
+                                        { currentIndex === index && <i/> }
+                                    </span>
+                            </a>
                         )
                     })
                 }

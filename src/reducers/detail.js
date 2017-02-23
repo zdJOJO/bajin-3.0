@@ -29,7 +29,7 @@ const initState = {
     actStateStr: '',
 
     isShowBackTop: -1, // -1默认 0-显示 1-隐藏
-    times: 0, // 回到顶部按钮点击次数
+    times: 0, //  滚动条超过一屏幕时候 滚动次数
     isShowMoreDetail: false,  //是否展示更多
     isShowPayPopup: false  //弹出支付层
 }

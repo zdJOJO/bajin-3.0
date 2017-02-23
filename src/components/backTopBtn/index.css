@@ -23,3 +23,15 @@
     animation: pop-down 0.8s;
     bottom: -50px;
 }
+
+
+/*动画*/
+@keyframes pop-up{
+    0%   {bottom: 0;}
+    100% { bottom: 60px;}
+}
+
+@keyframes pop-down{
+    0%   {bottom: 60px;}
+    100% { bottom: -50px;}
+}

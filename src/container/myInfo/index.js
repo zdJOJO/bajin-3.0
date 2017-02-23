@@ -10,6 +10,8 @@ class MyInfo extends Component{
         return(
             <div className="panel panel-default">
                 这个是我的信息
+                <br />
+                <a href="#/myCourse">我的课程</a>
                 <Menu />
             </div>
         )

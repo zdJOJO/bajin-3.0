@@ -37,17 +37,21 @@ class CommentList extends Component{
         const { commentList, getCommentList, currentPage, isLoading, isListNull ,placeholder} = this.props;
         return(
             <section id="comments" className="comments">
-                <HeaderBar content='评论'/>
+                <HeaderBar  content='评论' type="2"/>
                 <div className="commentList">
                     {
                         commentList.map((comment,index)=>{
                            return(
-                               <div onClick={this.handleClick.bind(this,comment.user.userName)}  key={index}>
+                               <div
+                                   onClick={this.handleClick.bind(this,comment.user.userName)}
+                                   key={index}
+                               >
                                    <CommentItem
                                        headPic={comment.user.headPic}
                                        userName={comment.user.userName}
                                        content={comment.commentContent}
                                        time={comment.createTime}
+                                       comment={comment}
                                    />
                                </div>
                            )

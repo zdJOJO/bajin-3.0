@@ -18,12 +18,14 @@ import {
 const initState = {
     isLoading: false,
     select:{
-        page:0,
-        list:[]
+        page:1,
+        list:[],
+        selectListIsNull: false //判断列表长度是否为0
     },
     two4Class:{
-        page:0,
+        page:1,
         list:[],
+        two4ClassListIsNull: false, //判断列表长度是否为0
         isLeftBarShow: false,
         chooseList: [], //已选择的产品
         totalNum: 0,  //选择的总产品个数
@@ -32,7 +34,7 @@ const initState = {
     courseDetail: {},
     isShowMoreDetail: false,
     isShowBackTop: -1, // -1默认 0-显示 1-隐藏
-    times: 0, // 回到顶部按钮点击次数
+    times: 0, // 滚动条超过一屏幕时候 滚动次数
     showIOS1: false, //显示隐藏错误提示
 }
 
@@ -54,7 +56,9 @@ export default function courseReducer(state=initState, action){
                     ...state,
                     select:{
                         ...state.select,
-                        list: action.list
+                        list: state.select.page<=1 ? state.select.list.concat(action.list) : state.select.list,
+                        selectListIsNull: action.list.length===0,
+                        page: action.list.length===0 ? state.select.page : action.page+1
                     }
                 }
             }else {
@@ -62,7 +66,9 @@ export default function courseReducer(state=initState, action){
                     ...state,
                     two4Class:{
                         ...state.two4Class,
-                        list: action.list
+                        list: state.two4Class.page<=1 ? state.two4Class.list.concat(action.list) : state.two4Class.list,
+                        two4ClassListIsNull: action.list.length===0,
+                        page: action.list.length===0 ? state.two4Class.page : action.page+1
                     }
                 }
             }

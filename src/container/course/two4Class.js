@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import CourseItem from './item';
 //import Using ES6 syntax
-import {LoadMore,Button,ActionSheet,Dialog} from 'react-weui';
+import {LoadMore,Button,ActionSheet,Dialog ,InfiniteLoader} from 'react-weui';
 
 import {fetchInfo ,disPatchFn} from '../../actions/courseAction'
 import {disPatchFetchOrder ,showDialog ,showPayPopup} from '../../actions/publicAction'
@@ -85,6 +85,7 @@ class Two4Class extends Component{
 
     render(){
         const {
+            fetchInfo,page,two4ClassListIsNull,
             two4ClassList ,disPatchFn ,isLeftBarShow ,
             totalPrice ,totalNum ,
             isShowPayPopup ,showPayPopup ,isDialogShow,ciphertext
@@ -97,17 +98,35 @@ class Two4Class extends Component{
                     </div>
                 }
                 <div id="select" className="subContentPanel">
-                    {
-                        two4ClassList.map((course,index)=>{
-                            return(
-                                <CourseItem
-                                    className="2fourItem"
-                                    key={index}
-                                    course={course}
-                                />
-                            )
-                        })
-                    }
+                    <InfiniteLoader
+                        onLoadMore={ (resolve, finish) => {
+                            fetchInfo(1, page);
+                            if(two4ClassListIsNull){
+                                setTimeout( ()=> {
+                                    console.log('list is null')
+                                    finish()
+                                }, 2000)
+                            }else{
+                               setTimeout( ()=> {
+                                    resolve()
+                                }, 500)
+                            }
+                    }}
+                    >
+                        <div>
+                            {
+                                two4ClassList.map((course,index)=>{
+                                    return(
+                                        <CourseItem
+                                            className="2fourItem"
+                                            key={index}
+                                            course={course}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    </InfiniteLoader>
                 </div>
                 <div className={ !isLeftBarShow ? 'buy' : 'buy close'}
                      onClick={()=>{
@@ -166,6 +185,8 @@ class Two4Class extends Component{
 const mapStateToProps = state=>{
     return{
         two4ClassList: state.courseReducer.two4Class.list,
+        page: state.courseReducer.two4Class.page,
+        two4ClassListIsNull: state.courseReducer.two4Class.two4ClassListIsNull,
         isLeftBarShow: state.courseReducer.two4Class.isLeftBarShow,
 
         chooseList: state.courseReducer.two4Class.chooseList,

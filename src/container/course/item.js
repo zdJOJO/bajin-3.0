@@ -54,6 +54,7 @@ class CourseItem extends Component{
     render(){
         return(
             <MediaBox
+                className={this.props.router?'router':''}
                 type="appmsg"
                 href="javascript:void(0);"
                 onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow)}
@@ -75,13 +76,36 @@ class CourseItem extends Component{
                         </label>
                     </MediaBoxHeader>
                 }
-                <MediaBoxBody>
+                <MediaBoxBody className={this.props.router?'router':''}>
                     <MediaBoxTitle>{this.props.course.title}</MediaBoxTitle>
-                    <MediaBoxDescription> 已经更新9期|19人订阅  </MediaBoxDescription>
                     <MediaBoxDescription>
-                        { typeStr(this.props.course.type) }
-                        <MediaBoxInfoMeta>￥{this.props.course.price}</MediaBoxInfoMeta>
+                        {this.props.router ? '' : '已经更新9期|19人订阅 '}
                     </MediaBoxDescription>
+
+                    { !this.props.router &&
+                        <MediaBoxDescription>
+                            { typeStr(this.props.course.type) }
+                            <MediaBoxInfoMeta>
+                                {'￥'+this.props.course.price }
+                            </MediaBoxInfoMeta>
+                        </MediaBoxDescription>
+                    }
+                    { this.props.router==='one' &&
+                        <MediaBoxDescription className='router'>
+                            广州 【2017/02/15、9】
+                        </MediaBoxDescription>
+                    }
+                    { this.props.router==='two' &&
+                        <MediaBoxDescription className='router two'>
+                            <i />
+                        </MediaBoxDescription>
+                    }
+                    { this.props.router==='three' &&
+                        <MediaBoxDescription className='router three'>
+                            <i />
+                        </MediaBoxDescription>
+                    }
+
                 </MediaBoxBody>
             </MediaBox>
         )

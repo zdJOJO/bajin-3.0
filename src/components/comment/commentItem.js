@@ -6,7 +6,43 @@ import React,{Component} from 'react';
 import './commentItem.css';
 import headPic from '../../img/login/headPic_default.png'
 
+
+class ReplyItem extends Component{
+    render(){
+        return(
+            <li>
+                <span>{this.props.reply.user.userName}: </span>
+                <span>{this.props.reply.commentContent}</span>
+            </li>
+        )
+    }
+}
+
 export default class CommentItem extends Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            disPlayReplyList: []
+        }
+    }
+
+    componentWillMount(){
+        this.replayRecursive(this.props.comment)
+    }
+
+    replayRecursive(comment){
+        if(!comment.commentModelList || comment.commentModelList.length===0)
+            return
+        this.setState({
+            disPlayReplyList: this.state.disPlayReplyList.concat(comment)
+        })
+        for(let item of comment.commentModelList){
+            console.log('继续')
+            this.replayRecursive(item)
+        }
+    }
+
     transFomTimeStamp(preTime){
         if(preTime<60){
             return parseInt(preTime,10)+"秒前";
@@ -36,6 +72,21 @@ export default class CommentItem extends Component{
                     </li>
                     <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.time,10)/1000)}</li>
                     <li className="commentContent">{this.props.content}</li>
+                    { this.props.comment.commentModelList.length>0 &&
+                        <div className="reply">
+                            <i/>
+                            {
+                                this.state.disPlayReplyList.map( (reply,index) =>{
+                                    return(
+                                        <ReplyItem
+                                            key={index}
+                                            reply={reply}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    }
                 </div>
             </div>
         )

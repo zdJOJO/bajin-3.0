@@ -90,14 +90,6 @@ export const actBackTop = isBackTop =>{
     }
 }
 
-//弹出支付层
-export const showPayPopup = isShowPayPopup =>{
-    return{
-        type: SHOW_PAY_POPUP,
-        isShowPayPopup
-    }
-}
-
 
 function fetchActList(page,isRefresh) {
     return dispatch =>{

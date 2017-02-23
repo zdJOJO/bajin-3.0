@@ -33,14 +33,15 @@ class Activity extends Component{
                         onLoadMore={ (resolve, finish) => {
                             getActList(startPage+1 ,false);
                             if(isListNull){
+                                console.log(111111111)
                                 setTimeout( ()=> {
                                     console.log('list is null')
                                     finish()
-                                }, 4000)
+                                }, 2000)
                             }else{
                                 setTimeout( ()=> {
                                     resolve()
-                                }, 1000)
+                                }, 500)
                             }
                     }}
                     >

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import CourseItem from './item';
 //import Using ES6 syntax
-import {LoadMore} from 'react-weui';
+import {LoadMore ,InfiniteLoader} from 'react-weui';
 
 import {fetchInfo} from '../../actions/courseAction'
 
@@ -18,7 +18,7 @@ class Select extends Component{
     }
 
     render(){
-        const {selectList} = this.props;
+        const {selectList ,fetchInfo ,page ,selectListIsNull} = this.props;
         return(
             <div id="course">
                 { selectList.length === 0 &&
@@ -27,16 +27,34 @@ class Select extends Component{
                     </div>
                 }
                 <div id="select" className="subContentPanel">
-                    {
-                        selectList.map((course,index)=>{
-                            return(
-                                <CourseItem
-                                    key={index}
-                                    course={course}
-                                />
-                            )
-                        })
-                    }
+                    <InfiniteLoader
+                        onLoadMore={ (resolve, finish) => {
+                            fetchInfo(0, page);
+                            if(selectListIsNull){
+                                setTimeout( ()=> {
+                                    console.log('list is null')
+                                    finish()
+                                }, 2000)
+                            }else{
+                                setTimeout( ()=> {
+                                    resolve()
+                                }, 500)
+                            }
+                    }}
+                    >
+                        <div>
+                            {
+                                selectList.map((course,index)=>{
+                                    return(
+                                        <CourseItem
+                                            key={index}
+                                            course={course}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                    </InfiniteLoader>
                 </div>
             </div>
         )
@@ -45,7 +63,9 @@ class Select extends Component{
 
 function mapStateToProps(state) {
     return{
-        selectList: state.courseReducer.select.list
+        selectList: state.courseReducer.select.list,
+        page:　state.courseReducer.select.page,
+        selectListIsNull: state.courseReducer.select.selectListIsNull
     }
 }
 

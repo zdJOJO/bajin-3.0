@@ -254,7 +254,7 @@
     display: inline-block;
     color: #fff;
     background: #b9984f;
-    font-size: 13px;
+    font-size: 12px;
     padding: 4px 10px;
     margin-right: 10px;
     border-radius: 3px;
@@ -282,6 +282,9 @@
     flex: 0.57;
     text-align: right;
     color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 #selectDetail.actDetail ul>li>.more{
     flex: 0.08;

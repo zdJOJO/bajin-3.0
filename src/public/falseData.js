@@ -7,7 +7,7 @@ import down from '../img/detail/down.png';
 
 // 评论假数据:  http://test.winthen.com/card/comment/list?currentPage=1&type=1&itemId=22&isAudit=0
 //详情中 评论假数据
-export  const commentObj = {
+export const commentObj = {
     itemType: 1,
     itemId: 2,
     rowCount: 10,
@@ -35,7 +35,7 @@ export  const commentObj = {
 export const selectList  = [
     {
         id: 0,
-        title: '2013舒服啦捡垃圾了啊',
+        title: '2013舒服啦捡垃圾了啊阿达按时大锅饭大概规范化个回个话愉快就看有空看就看就看',
         price: 2000,
         minPic: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=747081213,1247933411&fm=23&gp=0.jpg',
         type: 1

@@ -15,7 +15,7 @@ export default class BackTopBtn extends Component{
                 console.log('stop ')
                 clearInterval(timer);
             }else {
-                dom.scrollTop = dom.scrollTop - 40
+                dom.scrollTop = dom.scrollTop - 500
             }
         }
         let timer = setInterval(scrollBackTop,speed);

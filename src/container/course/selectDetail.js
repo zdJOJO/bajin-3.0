@@ -131,7 +131,7 @@ class SelectDetail extends Component{
                         <h3>课程亮点</h3>
                         <div className={!isShowMoreDetail ? 'detailInfo' : 'detailInfo long'}>
                             <div
-                                className="conten"
+                                className="content"
                                 dangerouslySetInnerHTML={{__html: courseDetail.detail}}
                             ></div>
                             { !isShowMoreDetail&&

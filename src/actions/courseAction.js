@@ -48,11 +48,12 @@ const fallGet = ()=> {
 }
 
 //获取列表成功
-const successGetCourseList =(list,typeValue)=>{
+const successGetCourseList =(list,typeValue,page)=>{
     return{
         type: DONE_GET_COURSELIST,
         list,
-        typeValue
+        typeValue,
+        page
     }
 }
 
@@ -97,7 +98,7 @@ const chooseItem = obj =>{
     }
 }
 
-//
+//初始化选择的item
 const initChooseData = (totalPrice,totalNum ,chooseList)=>{
     return {
         type: INIT_CHOOSEDATA ,
@@ -106,6 +107,7 @@ const initChooseData = (totalPrice,totalNum ,chooseList)=>{
         chooseList
     }
 }
+
 
 
 //get 获取列表   24堂课列表： type是1,isFather是0   ； 课程列表： type是0,isFather是1
@@ -122,7 +124,7 @@ const getCourseList =(page,type)=>{
                 return res.json()
             })
             .then(data => {
-                dispatch(successGetCourseList(data.data.list,type))
+                dispatch(successGetCourseList(data.data.list,type ,page))
             })
             .catch(e =>{
                 dispatch(fallGet())

@@ -7,7 +7,9 @@ import './index.css';
 export default class HeaderBar extends Component{
     render(){
         return(
-            <header className="headBar"><span>{this.props.content}</span></header>
+            <header className={this.props.type==='2' ? 'headBar full' : 'headBar'}>
+                <span>{this.props.content}</span>
+            </header>
         )
     }
 }

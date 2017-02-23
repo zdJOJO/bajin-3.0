@@ -11,12 +11,13 @@ import {
 
 const initState = {
     currentPage: 0,
-    list: [],
+    list: [],  //评论列表
     pageCount: 0,
     rowCount: 0,
     isLoading: true,
     isListNull: false,  //判断列表长度是否为0
-    placeholder: '请填写评论'
+    placeholder: '请填写评论',
+    listInDetail: [],  // 详情内的评论列表
 };
 
 export default function commentReducer(state=initState ,action){
@@ -31,6 +32,7 @@ export default function commentReducer(state=initState ,action){
                 ...state,
                 currentPage: action.data.currentPage,
                 list: action.data.currentPage===1?action.data.list : state.list.concat(action.data.list),
+                listInDetail: action.isInDetail ? action.data.list.slice(0,2) : [],
                 rowCount: action.data.rowCount,
                 isLoading: false,
                 isListNull: action.isListNull
