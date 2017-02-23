@@ -11,8 +11,9 @@ class ReplyItem extends Component{
     render(){
         return(
             <li>
-                <span>{this.props.reply.user.userName}: </span>
-                <span>{this.props.reply.commentContent}</span>
+                <span className="name">{this.props.reply.from.userName} </span>
+                <span>回复 {this.props.reply.to.userName}</span>
+                <span>：{this.props.reply.commentv2Model.commentContent}</span>
             </li>
         )
     }
@@ -20,28 +21,28 @@ class ReplyItem extends Component{
 
 export default class CommentItem extends Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
-            disPlayReplyList: []
-        }
-    }
-
-    componentWillMount(){
-        this.replayRecursive(this.props.comment)
-    }
-
-    replayRecursive(comment){
-        if(!comment.commentModelList || comment.commentModelList.length===0)
-            return
-        this.setState({
-            disPlayReplyList: this.state.disPlayReplyList.concat(comment)
-        })
-        for(let item of comment.commentModelList){
-            console.log('继续')
-            this.replayRecursive(item)
-        }
-    }
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         disPlayReplyList: []
+    //     }
+    // }
+    //
+    // componentWillMount(){
+    //     this.replayRecursive(this.props.comment)
+    // }
+    //
+    // replayRecursive(comment){
+    //     if(!comment.commentModelList || comment.commentModelList.length===0)
+    //         return
+    //     this.setState({
+    //         disPlayReplyList: this.state.disPlayReplyList.concat(comment)
+    //     })
+    //     for(let item of comment.commentModelList){
+    //         console.log('继续')
+    //         this.replayRecursive(item)
+    //     }
+    // }
 
     transFomTimeStamp(preTime){
         if(preTime<60){
@@ -63,20 +64,20 @@ export default class CommentItem extends Component{
         return(
             <div className="singleCmt">
                 <div className="imgBox">
-                    <img role="presentation" src={this.props.headPic===null ? headPic : this.props.headPic}/>
+                    <img role="presentation" src={this.props.comment.userModel.headPic===null ? headPic : this.props.comment.userModel.headPic}/>
                 </div>
                 <div className="cmtContent">
                     <li className="userName">
-                        <span>{this.props.userName}</span>
+                        <span>{this.props.comment.userModel.userName}</span>
                         <i/>
                     </li>
-                    <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.time,10)/1000)}</li>
-                    <li className="commentContent">{this.props.content}</li>
-                    { this.props.comment.commentModelList.length>0 &&
+                    <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.comment.createTime,10)/1000)}</li>
+                    <li className="commentContent">{this.props.comment.commentContent}</li>
+                    { this.props.comment.commentReplyModels.length>0 &&
                         <div className="reply">
                             <i/>
                             {
-                                this.state.disPlayReplyList.map( (reply,index) =>{
+                                this.props.comment.commentReplyModels.map( (reply,index) =>{
                                     return(
                                         <ReplyItem
                                             key={index}

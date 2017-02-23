@@ -10,21 +10,21 @@ import down from '../img/detail/down.png';
 export const commentObj = {
     itemType: 1,
     itemId: 2,
-    rowCount: 10,
+    rowCount: 10+'（假数据）',
     commentList: [
         {
             commentContent: '发觉了沙发司法考试的喝开水大火可视电话客户客户看肯定是k',
             createTime: 1483686098,
-            user: {
-                userName: "哈哈哈哈",
+            userModel: {
+                userName: "（假数据）哈哈哈哈",
                 headPic: down
             }
         },
         {
             commentContent: 'hkgh;fkh fkhg;hkf地方老师讲过了数据管理是第几个了时间管理设计灵感加上洛杉矶了',
             createTime: 1484883546,
-            user: {
-                userName: "刘德华",
+            userModel: {
+                userName: "（假数据）刘德华",
                 headPic: ''
             }
         }

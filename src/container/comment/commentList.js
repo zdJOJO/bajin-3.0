@@ -43,14 +43,10 @@ class CommentList extends Component{
                         commentList.map((comment,index)=>{
                            return(
                                <div
-                                   onClick={this.handleClick.bind(this,comment.user.userName)}
+                                   onClick={this.handleClick.bind(this,comment.userModel.userName)}
                                    key={index}
                                >
                                    <CommentItem
-                                       headPic={comment.user.headPic}
-                                       userName={comment.user.userName}
-                                       content={comment.commentContent}
-                                       time={comment.createTime}
                                        comment={comment}
                                    />
                                </div>

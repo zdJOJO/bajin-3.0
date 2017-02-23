@@ -166,12 +166,12 @@ class ActivityInfo extends Component{
                         </div>
 
                         <CommentIn commentObj={
-                          {
-                            itemType: 1,
-                            itemId: activityInfo.activityId,
-                            rowCount: rowCount,
-                            commentList: listInDetail
-                          }
+                            {
+                                itemType: 1,
+                                itemId: activityInfo.activityId,
+                                rowCount: rowCount,
+                                commentList: listInDetail
+                            }
                         } />
 
                         <div className="relate">

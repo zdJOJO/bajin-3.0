@@ -62,26 +62,27 @@ const fetchComment = obj => {
        // let url = port + '/card/comment/list?currentPage='+obj.page+'&type='+obj.itemType+'&itemId='+obj.itemId
 
         //假数据
-        let url = 'http://test.winthen.com/card/comment/list?currentPage=1&type=1&itemId=22&isAudit=0'
-        
+        let url = 'http://test.winthen.com/card/commentv2?size=10&currentPage=1&type=29&itemId=7&isAudit=0'
+
         return fetch( url )
             .then(res => {
                 console.log(res.status);
                 return res.json()
             })
             .then(data => {
-                if(data.list.length===0){
+                let dataList = data.data;
+                if(dataList.list.length===0){
                     obj.isListNull = true
                     if(!obj.isInDetail){
                         setTimeout(function () {
-                            dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
+                            dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
                         },3000)
                     }else {
-                        dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
+                        dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
                     }
                     return
                 }
-                dispatch(doneGetComment(data ,obj.isListNull ,obj.isInDetail))
+                dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
             })
             .catch(e => {
                 console.log(e.message)
