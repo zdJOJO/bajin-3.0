@@ -6,7 +6,8 @@ import {
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
     PUBLISH_COMMENT,
-    CHANGE_PLACEHOLDER
+    CHANGE_HEADERSTR,
+    CHANGE_COMMENT_VALUE
 } from '../actions/actionTypes';
 
 const initState = {
@@ -16,8 +17,12 @@ const initState = {
     rowCount: 0,
     isLoading: true,
     isListNull: false,  //判断列表长度是否为0
-    placeholder: '请填写评论',
+    headerStr: '',
+    headerStrLength: 0, 
+    commentContent: '',
     listInDetail: [],  // 详情内的评论列表
+    isFather: 0, // 回复评论时， 0-表示父级，1-表示子集.
+    fatherId: 0 // 点击回复那条评论的id, 不点击为0 （ 如果是子集在上送的时候请添加该字段）
 };
 
 export default function commentReducer(state=initState ,action){
@@ -42,12 +47,31 @@ export default function commentReducer(state=initState ,action){
                 ...state,
                 isLoading: true
             }
-        case CHANGE_PLACEHOLDER:
+        case CHANGE_HEADERSTR:
             return{
                 ...state,
-                placeholder: action.str
+                headerStr: action.str,
+                headerStrLength: action.str.length,
+                commentContent: action.str,
+                isFather: action.isFather,
+                fatherId: action.fatherId
             }
-        case PUBLISH_COMMENT:
+        case CHANGE_COMMENT_VALUE:
+            if(state.headerStrLength>0){
+                return {
+                    ...state,
+                    commentContent: action.commentValue,
+                    isFather: action.commentValue.slice(0,state.headerStrLength) ===  state.headerStr ? action.isFather : 0 ,
+                    fatherId: action.commentValue.slice(0,state.headerStrLength) ===  state.headerStr ? action.fatherId : 0
+                }
+            }else {
+                return {
+                    ...state,
+                    commentContent: action.commentValue,
+                    isFather: action.isFather,
+                    fatherId: action.fatherId
+                }
+            }
         default:
             return state;
     }

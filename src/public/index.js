@@ -2,6 +2,19 @@
  * Created by Administrator on 2017/01/09 0009.
  */
 
+/*
+* 当  hashHistory.push({
+         pathname: '/login',
+         query: {isNeedBack: 1}
+     })
+
+     登录需要 返回上一页
+*
+*
+* */
+
+
+
 //dev位boolean类型
 // true--正式环境， false--测试环境
 const dev = false;

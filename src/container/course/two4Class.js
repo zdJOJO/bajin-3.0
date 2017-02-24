@@ -30,6 +30,7 @@ class Two4Class extends Component{
                 }
             ],
             style1: {
+                title: '提示',
                 buttons: [
                     {
                         label: '知道了',

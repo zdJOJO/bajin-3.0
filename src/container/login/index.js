@@ -203,7 +203,8 @@ class Login extends Component{
                             <LoginBtn str="登录"
                                       onClick={()=>shouldFetchGetInfo({
                                       phone: this.state.phone,
-                                      password: this.state.password
+                                      password: this.state.password,
+                                      isNeedBack: this.props.location.query.isNeedBack
                                       },1)}
                             />
                         </div>

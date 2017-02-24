@@ -6,43 +6,10 @@ import React,{Component} from 'react';
 import './commentItem.css';
 import headPic from '../../img/login/headPic_default.png'
 
+import ReplyItem from '../../container/comment/replyItem'
 
-class ReplyItem extends Component{
-    render(){
-        return(
-            <li>
-                <span className="name">{this.props.reply.from.userName} </span>
-                <span>回复 {this.props.reply.to.userName}</span>
-                <span>：{this.props.reply.commentv2Model.commentContent}</span>
-            </li>
-        )
-    }
-}
 
 export default class CommentItem extends Component{
-
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         disPlayReplyList: []
-    //     }
-    // }
-    //
-    // componentWillMount(){
-    //     this.replayRecursive(this.props.comment)
-    // }
-    //
-    // replayRecursive(comment){
-    //     if(!comment.commentModelList || comment.commentModelList.length===0)
-    //         return
-    //     this.setState({
-    //         disPlayReplyList: this.state.disPlayReplyList.concat(comment)
-    //     })
-    //     for(let item of comment.commentModelList){
-    //         console.log('继续')
-    //         this.replayRecursive(item)
-    //     }
-    // }
 
     transFomTimeStamp(preTime){
         if(preTime<60){
@@ -71,7 +38,15 @@ export default class CommentItem extends Component{
                         <span>{this.props.comment.userModel.userName}</span>
                         <i/>
                     </li>
-                    <li className="creatTime">{this.transFomTimeStamp(parseInt(this.props.comment.createTime,10)/1000)}</li>
+                    <li className="creatTime">
+                        {
+                            this.transFomTimeStamp(
+                                parseInt(
+                                    new Date().getTime() - this.props.comment.createTime*1000 ,10
+                                )/1000
+                            )
+                        }
+                    </li>
                     <li className="commentContent">{this.props.comment.commentContent}</li>
                     { this.props.comment.commentReplyModels.length>0 &&
                         <div className="reply">

@@ -35,7 +35,7 @@ class CourseItem extends Component{
         if(!isShow){
             hashHistory.push({
                 pathname: `/course/${selectId}`,
-                query: {itemId: selectId}
+                query: {itemType: 29 ,itemId: selectId}
             })
         }
     }

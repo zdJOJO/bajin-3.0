@@ -174,8 +174,13 @@ const fetchInfo = (valueObj,type,_subType)=> {
             if(type===1 && json.code==='100'){
                 cookie.save('token', json.message);
                 dispatch(loginSuccess(json.data));
-                if(!_subType)  //直接登录和注册登录 区别
-                    hashHistory.push({pathname: '/'})
+
+                //直接登录和注册登录 区别
+                if(!_subType &&　valueObj.isNeedBack==='1'){
+                    history.back(-1);
+                }else {
+                    hashHistory.push({pathname: '/'});
+                }
             }else if(type===2 && json.code==='201'){
                 dispatch(showToptipSetTimeOut("注册成功，请填写信息" ,1));
                 dispatch(fetchInfo({
@@ -422,7 +427,8 @@ const putInterest = (id_Array)=>{
 
 /*
  * type 和 _subType取值:
- * 登录-1  填写注册信息-2
+ * 登录-1
+ * 填写注册信息-2
  * 手机号码是否已注册验证-3
  * 验证码是否正确-5
  * 获取验修改密码验证码-4  新密码设置-6

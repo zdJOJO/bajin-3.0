@@ -18,6 +18,7 @@ import {
 
 import {fetchInfo ,showMoreCourseDetail} from '../../actions/courseAction'
 import {disPatchFetchOrder ,showPayPopup} from '../../actions/publicAction'
+import {getCommentList} from '../../actions/commentAction'
 
 import {wx_jssdk_api} from '../../public/wx/wxConfig'
 
@@ -55,9 +56,16 @@ class SelectDetail extends Component{
     }
 
     componentWillMount(){
-        const { fetchInfo} = this.props;
+        const { fetchInfo ,getCommentList} = this.props;
         fetchInfo(-1 ,-1 ,this.props.location.query.itemId);
         fetchInfo(-2,-1)
+        getCommentList({
+            itemType: this.props.location.query.itemType,
+            itemId:  this.props.location.query.itemId,
+            page: 0,
+            isListNull: false,
+            isInDetail: true
+        })
     }
 
     handleSubmitOrderInfo(){
@@ -103,7 +111,8 @@ class SelectDetail extends Component{
         const {
             courseDetail , isShowMoreDetail , showMoreCourseDetail , isShowBackTop , times,
             showPayPopup, isShowPayPopup,
-            ciphertext
+            ciphertext,
+            listInDetail ,rowCount
         } = this.props;
         return(
             <div style={{width:'100%',height:'100%'}} >
@@ -142,7 +151,14 @@ class SelectDetail extends Component{
                         </div>
                     </div>
 
-                    <CommentIn commentObj={commentObj} />
+                    <CommentIn commentObj={
+                            {
+                                itemType: this.props.location.query.itemType,
+                                itemId: this.props.location.query.itemId,
+                                rowCount: rowCount,
+                                commentList: listInDetail
+                            }
+                        } />
                     
                     <div className="relate">
                         <PanelHeader>相关推荐</PanelHeader>
@@ -200,7 +216,10 @@ function mapStateToProps(state) {
         isShowBackTop: state.courseReducer.isShowBackTop,
         times: state.courseReducer.times,
 
-        isShowPayPopup: state.publicReducer.isShowPayPopup
+        isShowPayPopup: state.publicReducer.isShowPayPopup,
+
+        listInDetail: state.commentReducer.listInDetail,
+        rowCount: state.commentReducer.rowCount,
     }
 }
 
@@ -209,6 +228,7 @@ export default connect(
     {
         fetchInfo ,showMoreCourseDetail,
         disPatchFetchOrder,
-        showPayPopup
+        showPayPopup,
+        getCommentList
     }
 )(SelectDetail);
