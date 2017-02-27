@@ -21,6 +21,7 @@ export const SHOW_TOAST_SUCCESS = 'SHOW_TOAST_SUCCESS';    // Toast 提示（正
 export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';     //付款提示
 export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';     //支付
 export const CHANGE_SWIPE＿INDEX = 'CHANGE_SWIPE＿INDEX';   //滚动分页
+export const GET_RECOMMENDED_LIST_SUCCESS = 'GET_RECOMMENDED_LIST_SUCCESS'  //推荐列表获取成功
 
 
 //登录 注册
@@ -31,6 +32,12 @@ export const COUNT_DOWN = 'COUNT_DOWN';
 export const SET_INTERESTING_LIST = 'SET_INTERESTING_LIST';
 // export const GET_PHONE = 'GET_PHONE';
 // export const GET_PASSWORD = 'GET_PASSWORD';
+
+
+//首页
+export const GET_BANNER_SUCCESS = 'GET_BANNER_SUCCESS';
+export const GET_ICBC_BTN_SUCCESS = 'GET_ICBC_BTN_SUCCESS';
+
 
 
 //评论

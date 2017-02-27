@@ -1,0 +1,51 @@
+/* .title*/
+.icbcBox .title{
+    height: 0.2rem;
+    margin: 0.11rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    color: #646464;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+
+.icbcBox>.title>div{
+    position: relative;
+    margin: auto;
+}
+
+.icbcBox>.title .content-text{
+    padding: 0 13px;
+}
+
+.icbcBox >.title .content-text:before{
+    content: ' ';
+    display: block;
+    border: 1px #646464 solid;
+    width: 5px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -2.5px;
+}
+.icbcBox >.title .content-text:after{
+    content: ' ';
+    display: block;
+    border: 1px #646464 solid;
+    width: 5px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -2.5px;
+}
+
+.icbcBox >.title>.lookMore{
+    position: absolute;
+    font-size: 10px;
+    color: #909090;
+    right: 0;
+    top: 50%;
+    margin-top: -8px;
+}

@@ -189,6 +189,13 @@
     background: #fafafa;
 }
 
+#comment .nullList{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    font-size: 14px;
+    color: #646464;
+}
+
 #comment p{
     text-align: left;
 }

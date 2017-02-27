@@ -6,12 +6,13 @@ import {connect} from 'react-redux';
 
 import { getActDetail ,actShowMore ,actBackTop} from '../../actions/activityAction';
 import { getCommentList } from  '../../actions/commentAction';
-import {disPatchFetchOrder ,showPayPopup} from '../../actions/publicAction'
+import {disPatchFetchOrder ,showPayPopup, disPatchFetchList} from '../../actions/publicAction'
 import { timestampFormat } from '../../public';
 
-import CourseItem from '../course/item';
-import CommentIn from '../../components/comment/commentIn';
-import BackTopBtn from '../../components/backTopBtn/index';
+
+import CommentIn from '../../components/comment/commentIn'
+import BackTopBtn from '../../components/backTopBtn/index'
+import RelateList from '../../components/relateList/index'
 
 //import Using ES6 syntax
 import {
@@ -23,9 +24,6 @@ import {
 import kefu from '../../img/detail/kefu.png';
 import '../../components/detail.css';
 import './index.css';
-
-//假数据导入
-import {selectList} from '../../public/falseData'
 
 class ActivityInfo extends Component{
     constructor(props){
@@ -49,7 +47,7 @@ class ActivityInfo extends Component{
     }
 
     componentWillMount() {
-        const { getActDetail ,getCommentList } = this.props;
+        const { getActDetail ,getCommentList ,disPatchFetchList } = this.props;
         getActDetail(this.props.location.query.itemId);
         getCommentList({
             itemType: this.props.location.query.itemType,
@@ -58,6 +56,7 @@ class ActivityInfo extends Component{
             isListNull: false,
             isInDetail: true
         })
+        disPatchFetchList(this.props.location.query.itemId)
     }
 
     handleSubmitOrderInfo(){
@@ -92,7 +91,7 @@ class ActivityInfo extends Component{
         const {
             activityInfo ,listInDetail ,rowCount,
             isShowBackTop ,times ,actShowMore ,isShowMoreDetail,
-            showPayPopup ,isShowPayPopup ,ciphertext
+            showPayPopup ,isShowPayPopup ,ciphertext, recommendedList
         } = this.props;
         return(
             <div className="panel panel-default">
@@ -174,21 +173,7 @@ class ActivityInfo extends Component{
                             }
                         } />
 
-                        <div className="relate">
-                            <PanelHeader>相关推荐</PanelHeader>
-                            <div id="select" className="subContentPanel in">
-                                {
-                                    selectList.map((course,index)=>{
-                                        return(
-                                            <CourseItem
-                                                key={index}
-                                                course={course}
-                                            />
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                        <RelateList recommendedList={recommendedList} />
 
                     </div>
                 }
@@ -236,6 +221,7 @@ const mapStateToProps = (state)=> {
 
         isShowPayPopup: state.publicReducer.isShowPayPopup,
         ciphertext: state.publicReducer.ciphertext,
+        recommendedList: state.publicReducer.recommendedList
     }
 }
 
@@ -244,7 +230,7 @@ export default connect(
     {
         getActDetail ,getCommentList,
         actShowMore ,actBackTop,
-        showPayPopup ,disPatchFetchOrder
+        showPayPopup ,disPatchFetchOrder ,disPatchFetchList
     }
 )(ActivityInfo)
 

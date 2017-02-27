@@ -8,13 +8,14 @@
 }
 
 #swipe .swiper{
-    height: 2.4rem;
+    width: 3.2rem;
+    height: 1.6rem;
     background: #d8d6d6;
 }
 
 #swipe img{
-    width: 3.2rem;
-    height: 2.4rem;
+    width: 100%;
+    height: auto;
 }
 
 
@@ -37,13 +38,11 @@
     height: 8px;
     display: inline-block;
     border-radius: 100%;
-    background: #000;
-    opacity: 0.2;
+    background: #5b5b5b;
     margin: 0 5px;
 }
 
 #swipe .pagination.active{
-    background: #c49327;
-    opacity: 1;
+    background: #fafafa;
 }
 

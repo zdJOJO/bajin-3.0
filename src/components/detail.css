@@ -162,24 +162,6 @@
 }
 
 
-/*--.relate  相关推荐--*/
-#selectDetail .relate{
-    background: #fafafa;
-
-}
-
-#selectDetail .relate .weui-panel__hd{
-    padding: 0.15rem 0 0.11rem 0.135rem;
-    text-align: left;
-    font-size: 14px;
-    color: #323232;
-    background: #fafafa;
-}
-
-#selectDetail .relate .weui-panel__hd:after{
-    left: 0;
-}
-
 
 
 /*动画*/

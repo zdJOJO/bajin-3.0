@@ -4,11 +4,10 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
-import CourseItem from './item';
-import CommentIn from '../../components/comment/commentIn';
-import BackTopBtn from '../../components/backTopBtn/index';
+import CommentIn from '../../components/comment/commentIn'
+import BackTopBtn from '../../components/backTopBtn/index'
+import RelateList from '../../components/relateList/index'
 import '../../components/detail.css';
-
 //import Using ES6 syntax
 import {
     PanelHeader,
@@ -17,7 +16,7 @@ import {
 } from 'react-weui';
 
 import {fetchInfo ,showMoreCourseDetail} from '../../actions/courseAction'
-import {disPatchFetchOrder ,showPayPopup} from '../../actions/publicAction'
+import {disPatchFetchOrder ,showPayPopup ,disPatchFetchList} from '../../actions/publicAction'
 import {getCommentList} from '../../actions/commentAction'
 
 import {wx_jssdk_api} from '../../public/wx/wxConfig'
@@ -27,10 +26,6 @@ import more from '../../img/more.svg';
 import kefu from '../../img/detail/kefu.png';
 import vedio from '../../img/detail/vedio.png';
 import down from '../../img/detail/down.png';
-
-
-//假数据导入
-import {commentObj ,selectList} from '../../public/falseData'
 
 
 class SelectDetail extends Component{
@@ -56,7 +51,7 @@ class SelectDetail extends Component{
     }
 
     componentWillMount(){
-        const { fetchInfo ,getCommentList} = this.props;
+        const { fetchInfo ,getCommentList ,disPatchFetchList } = this.props;
         fetchInfo(-1 ,-1 ,this.props.location.query.itemId);
         fetchInfo(-2,-1)
         getCommentList({
@@ -65,7 +60,8 @@ class SelectDetail extends Component{
             page: 0,
             isListNull: false,
             isInDetail: true
-        })
+        });
+        disPatchFetchList(this.props.location.query.itemId);
     }
 
     handleSubmitOrderInfo(){
@@ -109,10 +105,10 @@ class SelectDetail extends Component{
 
     render(){
         const {
-            courseDetail , isShowMoreDetail , showMoreCourseDetail , isShowBackTop , times,
-            showPayPopup, isShowPayPopup,
+            courseDetail, isShowMoreDetail, showMoreCourseDetail, isShowBackTop, times,
+            showPayPopup, isShowPayPopup, recommendedList,
             ciphertext,
-            listInDetail ,rowCount
+            listInDetail, rowCount
         } = this.props;
         return(
             <div style={{width:'100%',height:'100%'}} >
@@ -159,22 +155,9 @@ class SelectDetail extends Component{
                                 commentList: listInDetail
                             }
                         } />
+
+                    <RelateList recommendedList={recommendedList} />
                     
-                    <div className="relate">
-                        <PanelHeader>相关推荐</PanelHeader>
-                        <div id="select" className="subContentPanel in">
-                            {
-                                selectList.map((course,index)=>{
-                                    return(
-                                        <CourseItem
-                                            key={index}
-                                            course={course}
-                                        />
-                                    )
-                                })
-                            }
-                        </div>
-                    </div>
                 </div>
 
                 <div id="footBuy" className="do">
@@ -217,6 +200,7 @@ function mapStateToProps(state) {
         times: state.courseReducer.times,
 
         isShowPayPopup: state.publicReducer.isShowPayPopup,
+        recommendedList: state.publicReducer.recommendedList,
 
         listInDetail: state.commentReducer.listInDetail,
         rowCount: state.commentReducer.rowCount,
@@ -229,6 +213,7 @@ export default connect(
         fetchInfo ,showMoreCourseDetail,
         disPatchFetchOrder,
         showPayPopup,
-        getCommentList
+        getCommentList,
+        disPatchFetchList
     }
 )(SelectDetail);

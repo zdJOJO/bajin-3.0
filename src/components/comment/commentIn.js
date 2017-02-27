@@ -36,36 +36,41 @@ export default class CommentIn extends Component{
     render(){
         return(
             <div id="comment">
-                <div className="list">
-                    {
-                        this.props.commentObj.commentList.map( (comment ,index) =>{
-                            return(
-                                <div className="singleCmt" key={index}>
-                                    <div className="imgBox">
-                                        <img role="presentation" src={comment.userModel.headPic || headPic}/>
+                { this.props.commentObj.rowCount === 0 &&
+                    <div className="nullList">暂无评论</div>
+                }
+                { this.props.commentObj.rowCount > 0 &&
+                    <div className="list">
+                        {
+                            this.props.commentObj.commentList.map( (comment ,index) =>{
+                                return(
+                                    <div className="singleCmt" key={index}>
+                                        <div className="imgBox">
+                                            <img role="presentation" src={comment.userModel.headPic || headPic}/>
+                                        </div>
+                                        <div className="cmtContent">
+                                            <p className="userName">
+                                                <span>{comment.userModel.userName}</span>
+                                                <span>
+                                                    {
+                                                        this.transFomTimeStamp(
+                                                            parseInt(
+                                                                new Date().getTime() -comment.createTime*1000 ,10
+                                                            )/1000
+                                                        )
+                                                    }
+                                                </span>
+                                            </p>
+                                            <p className="commentContent">
+                                                {comment.commentContent}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className="cmtContent">
-                                        <p className="userName">
-                                            <span>{comment.userModel.userName}</span>
-                                            <span>
-                                                {
-                                                    this.transFomTimeStamp(
-                                                        parseInt(
-                                                        new Date().getTime() -comment.createTime*1000 ,10
-                                                        )/1000
-                                                    )
-                                                }
-                                            </span>
-                                        </p>
-                                        <p className="commentContent">
-                                            {comment.commentContent}
-                                        </p>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+                                )
+                            })
+                        }
+                    </div>
+                }
                 <Link to={{
                     pathname: '/comment',
                     query: {
@@ -74,9 +79,14 @@ export default class CommentIn extends Component{
                     }
                  }}
                 >
-                    <PanelHeader onClick={this.handleClick.bind(this)}>
-                        查看全部{this.props.commentObj.rowCount}条评论
-                    </PanelHeader>
+                    { this.props.commentObj.rowCount === 0 &&
+                        <PanelHeader onClick={this.handleClick.bind(this)}>点击去抢沙发</PanelHeader>
+                    }
+                    { this.props.commentObj.rowCount > 0 &&
+                        <PanelHeader onClick={this.handleClick.bind(this)}>
+                            查看全部{this.props.commentObj.rowCount}条评论
+                        </PanelHeader>
+                    }
                 </Link>
             </div>
         )

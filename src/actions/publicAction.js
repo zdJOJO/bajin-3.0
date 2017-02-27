@@ -9,7 +9,8 @@ import {
     POST_CIPHERTEXT,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
-    CHANGE_SWIPE＿INDEX
+    CHANGE_SWIPE＿INDEX,
+    GET_RECOMMENDED_LIST_SUCCESS
 } from './actionTypes';
 
 import {port} from '.././public/'
@@ -62,6 +63,15 @@ export const changeSwipeIndex = swipeIndex =>{
     return{
         type: CHANGE_SWIPE＿INDEX,
         swipeIndex
+    }
+}
+
+
+//获取相关列表获取成功
+export const getRecommendedListSuccess = list =>{
+    return{
+        type: GET_RECOMMENDED_LIST_SUCCESS,
+        list
     }
 }
 
@@ -128,6 +138,22 @@ const generateOrder = obj =>{
 }
 
 
+//获取相关列表 GET
+const getRecommendedList = id =>{
+    let url = port + '/card/scmv/relate/'+id+'?currentPage=1&size=10';
+    return disPatch =>{
+        return fetch(url)
+            .then( res =>{
+                return res.json();
+            })
+            .then( json =>{
+                disPatch(getRecommendedListSuccess(json.data.list))
+            })
+            .catch( e =>{
+                console.log(e);
+            })
+    }
+}
 
 
 
@@ -146,5 +172,13 @@ export const disPatchFetchOrder =(obj)=>{
             case 1:
                 return dispatch( generateOrder(obj) )
         }
+    }
+}
+
+
+/* 详情内 相关推荐列表  */
+export const disPatchFetchList = id =>{
+    return dispatch =>{
+        return dispatch(getRecommendedList(id))
     }
 }

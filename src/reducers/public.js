@@ -11,7 +11,8 @@ import {
     POST_CIPHERTEXT,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
-    CHANGE_SWIPE＿INDEX
+    CHANGE_SWIPE＿INDEX,
+    GET_RECOMMENDED_LIST_SUCCESS
 } from '../actions/actionTypes';
 
 const initState = {
@@ -20,7 +21,8 @@ const initState = {
     ciphertext: '',  //工行卡支付密文
     isShowToastLoading: false,
     isShowToastSuccess: false,
-    swipeIndex: 0  //首页滑动
+    swipeIndex: 0,  //首页滑动
+    recommendedList: [] //  产品内部推荐列表
 };
 
 export default function publicReducer(state=initState, action){
@@ -54,6 +56,11 @@ export default function publicReducer(state=initState, action){
             return{
                 ...state,
                 swipeIndex: action.swipeIndex
+            }
+        case GET_RECOMMENDED_LIST_SUCCESS:
+            return{
+                ...state,
+                recommendedList:　action.list
             }
         default:
             return state;

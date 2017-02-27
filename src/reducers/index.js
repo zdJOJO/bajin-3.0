@@ -11,6 +11,7 @@ import activityReducer from './activity'
 import courseReducer from './course'
 import detailReducer from './detail'
 import loginReducer from './login'
+import homeReducer from './home'
 
 export default combineReducers({
     publicReducer,
@@ -19,5 +20,6 @@ export default combineReducers({
     activityReducer,
     courseReducer,
     detailReducer,
-    loginReducer
+    loginReducer,
+    homeReducer
 })

@@ -7,21 +7,19 @@ import {connect} from 'react-redux';
 import ReactSwipe from 'react-swipe';
 
 import {changeSwipeIndex} from '../../actions/publicAction'
+import {fetchData} from '../../actions/homeAction'
 
 import './index.css'
 
 class Myswiper extends Component{
-
     constructor(props){
         super(props)
         const {changeSwipeIndex} = this.props
         this.state = {
-            currentIndex: 0,
-            array: this.props.array ,
             swipeOptions:{
                 startSlide: 0,
                 speed: 500,
-                auto: 4000,
+                auto: 5000,
                 continuous: true,
                 disableScroll: false,
                 stopPropagation: false,
@@ -36,32 +34,35 @@ class Myswiper extends Component{
         }
     }
 
-    componentWillMount(){
-        const {changeSwipeIndex} = this.props;
+    componentDidMount(){
+        console.log(this.props.array)
+        const {changeSwipeIndex, fetchData} = this.props;
+        fetchData({type: 1})
         changeSwipeIndex(0);
     }
 
     render(){
-        const {swipeIndex} = this.props;
+        const {swipeIndex, bannerList } = this.props;
         return(
             <div id="swipe">
-                <div className="swipeBox">
-                    <ReactSwipe ref="reactSwipe"  className="carousel" swipeOptions={this.state.swipeOptions}>
+                { bannerList.length > 0 &&
+                    <div className="swipeBox">
+                        <ReactSwipe ref="reactSwipe"  className="carousel" swipeOptions={this.state.swipeOptions}>
+                    {
+                        bannerList.map((item, index) =>{
+                        return(
+                        <div  key={index}
+                        className="swiper"
+                        >
+                        <img role="presentation" src={item.bannerPic}/>
+                        </div>
+                        )
+                    })
+                    }
+                        </ReactSwipe>
+                        <div className="paginationBox">
                         {
-                            this.state.array.map((array, index) =>{
-                                return(
-                                    <div  key={index}
-                                          className="swiper"
-                                    >
-                                        {array}
-                                    </div>
-                                )
-                            })
-                        }
-                    </ReactSwipe>
-                    <div className="paginationBox">
-                        {
-                            this.state.array.map((array, index) =>{
+                            bannerList.map((item, index) =>{
                                 return(
                                     <span key={index}
                                           className={swipeIndex === index ? 'pagination active' : 'pagination'}
@@ -69,8 +70,9 @@ class Myswiper extends Component{
                                 )
                             })
                         }
-                    </div>
-                </div>
+                        </div>
+                        </div>
+                    }
             </div>
         )
     }
@@ -78,10 +80,16 @@ class Myswiper extends Component{
 
 function mapStateToProps(state) {
     return {
-        swipeIndex: state.publicReducer.swipeIndex
+        swipeIndex: state.publicReducer.swipeIndex,
+
+        bannerList: state.homeReducer.bannerList
     }
 }
 
 export default connect(
-    mapStateToProps, {changeSwipeIndex}
+    mapStateToProps,
+    {
+        changeSwipeIndex,
+        fetchData
+    }
 )(Myswiper);
