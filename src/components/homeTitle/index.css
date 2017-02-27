@@ -1,9 +1,12 @@
 /* .title*/
 .icbcBox .title{
     height: 0.2rem;
-    margin: 0.11rem;
+    margin: 15px 11px;
     text-align: center;
     position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     color: #646464;
     font-size: 14px;

@@ -22,7 +22,7 @@
     flex: 0.25;
     margin: 0 0.1rem;
     position: relative;
-    height: 75px;
+    height: 69px;
 }
 
 .icbcBox li .buttonTitle{
@@ -36,7 +36,14 @@
 
 
 .icbcBox img{
-    width: 48px;
-    height: 48px;
+    width: 43px;
+    height: 43px;
     border-radius: 100%;
+}
+
+
+@media screen and (max-width: 320px){
+    .icbcBox ul{
+        padding: 0px 0.24rem 0.1rem
+    }
 }
