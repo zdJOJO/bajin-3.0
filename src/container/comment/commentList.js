@@ -9,7 +9,7 @@ import './index.css';
 import {Dialog} from 'react-weui';
 import HeaderBar from '../../components/headerNav/headBar';
 import CommentItem from '../../components/comment/commentItem';
-import {Button ,LoadMore ,PanelHeader} from 'react-weui';
+import {Button ,LoadMore ,PanelHeader ,Toast} from 'react-weui';
 
 import {getCommentList ,dispatchAction} from '../../actions/commentAction';
 import {showDialog} from '../../actions/publicAction'
@@ -101,7 +101,6 @@ class CommentList extends Component{
 
                     isFather: isFather, //0表示父级，1表示子集，
                     fatherId: fatherId,  //如果是子集在上送的时候请添加该字段
-
                     imgList: [
                         {
                             pic: "http://h.hiphotos.baidu.com/zhidao/pic/item/3ac79f3df8dcd100ad7f666b738b4710b8122f9c.jpg"
@@ -119,7 +118,7 @@ class CommentList extends Component{
         const {
             commentList, getCommentList, currentPage, isLoading, isListNull ,
             commentContent,
-            isDialogShow
+            isDialogShow, isShowToastLoading, isShowToastSuccess
         } = this.props;
         return(
             <div>
@@ -132,6 +131,10 @@ class CommentList extends Component{
                     >
                         讲点什么吧
                     </Dialog>
+
+                    <Toast icon="loading" show={isShowToastLoading}>正在发送</Toast>
+                    <Toast icon="success-no-circle" show={isShowToastSuccess}>发表成功</Toast>
+
                     <div className="commentList">
                         {
                             commentList.map((comment,index)=>{
@@ -200,7 +203,9 @@ function mapStateToProps(state) {
         isFather: state.commentReducer.isFather,
         fatherId: state.commentReducer.fatherId,
 
-        isDialogShow: state.publicReducer.isDialogShow
+        isDialogShow: state.publicReducer.isDialogShow,
+        isShowToastLoading: state.publicReducer.isShowToastLoading,
+        isShowToastSuccess: state.publicReducer.isShowToastSuccess
     }
 }
 

@@ -10,15 +10,17 @@ export const CHANGE_SUB_NAV = 'CHANGE_SUB_NAV';
 export const BEGIN_FETCH = 'BEGIN_FETCH';
 export const FALL_FETCH = 'FALL_FETCH';
 
-//tips提示
-export const SHOW_SUCCESS = 'SHOW_SUCCESS';
-export const SHOW_ERROR = 'SHOW_ERROR';
-//DIALOG 提示
-export const SHOW_DIALOG = 'SHOW_DIALOG';
-//付款提示 
-export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';
-//支付
-export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';
+
+//公共部分：
+
+export const SHOW_SUCCESS = 'SHOW_SUCCESS';     //tips提示
+export const SHOW_ERROR = 'SHOW_ERROR';     //tips提示
+export const SHOW_DIALOG = 'SHOW_DIALOG';    //DIALOG 提示
+export const SHOW_TOAST_LOADING = 'SHOW_TOAST_LOADING';    // Toast 提示（正在发表评论、发表评论成功）
+export const SHOW_TOAST_SUCCESS = 'SHOW_TOAST_SUCCESS';    // Toast 提示（正在发表评论、发表评论成功）
+export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';     //付款提示
+export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';     //支付
+export const CHANGE_SWIPE＿INDEX = 'CHANGE_SWIPE＿INDEX';   //滚动分页
 
 
 //登录 注册

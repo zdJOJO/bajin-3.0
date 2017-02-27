@@ -6,12 +6,14 @@ import cookie from 'react-cookie'
 import {
     SHOW_DIALOG,
     SHOW_PAY_POPUP ,
-    POST_CIPHERTEXT
+    POST_CIPHERTEXT,
+    SHOW_TOAST_LOADING,
+    SHOW_TOAST_SUCCESS,
+    CHANGE_SWIPE＿INDEX
 } from './actionTypes';
 
 import {port} from '.././public/'
 let token = cookie.load('token');
-
 
 //密文
 const postCiphertext = text =>{
@@ -31,11 +33,35 @@ export const showPayPopup = isShowPayPopup =>{
 }
 
 
+//TOAST提示（正在发表评论、发表评论成功）
+export const showToastLoading = isShowToastLoading =>{
+    return{
+        type: SHOW_TOAST_LOADING,
+        isShowToastLoading
+    }
+}
+export const showToastSuccess = isShowToastSuccess =>{
+    return{
+        type: SHOW_TOAST_SUCCESS,
+        isShowToastSuccess
+    }
+}
+
+
 //显示错误提示
 export const showDialog = isDialogShow =>{
     return{
         type: SHOW_DIALOG,
         isDialogShow
+    }
+}
+
+
+// swiper index
+export const changeSwipeIndex = swipeIndex =>{
+    return{
+        type: CHANGE_SWIPE＿INDEX,
+        swipeIndex
     }
 }
 

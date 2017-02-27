@@ -1,5 +1,6 @@
 /***  评论 列表 模块 ***/
 #comments{
+    width: 100%;
     border-top: 1px #f1f1f1 solid;
     position: fixed;
     top :0.4rem;

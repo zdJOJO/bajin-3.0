@@ -1,0 +1,49 @@
+
+#swipe{
+}
+
+#swipe .react-swipe-container.carousel{
+    width: 100%;
+    height: 100%;
+}
+
+#swipe .swiper{
+    height: 2.4rem;
+    background: #d8d6d6;
+}
+
+#swipe img{
+    width: 3.2rem;
+    height: 2.4rem;
+}
+
+
+#swipe .swipeBox{
+    width: 100%;
+    position: relative;
+}
+
+#swipe .paginationBox{
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -50%;
+}
+
+#swipe .pagination{
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 100%;
+    background: #000;
+    opacity: 0.2;
+    margin: 0 5px;
+}
+
+#swipe .pagination.active{
+    background: #c49327;
+    opacity: 1;
+}
+

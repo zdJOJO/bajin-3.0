@@ -13,7 +13,9 @@ import {
     CHANGE_HEADERSTR,
     CHANGE_COMMENT_VALUE
 } from './actionTypes';
-import {showDialog} from './publicAction'
+import {
+    showDialog ,showToastLoading ,showToastSuccess
+} from './publicAction'
 
 //去空格
 String.prototype.trim=function(){
@@ -101,6 +103,7 @@ const fetchPublishCmt = obj =>{
             dispatch(showDialog(true))
             return
         }
+        dispatch(showToastLoading(true));
         return fetch( url , {
             method: 'POST',
             headers: {
@@ -111,7 +114,6 @@ const fetchPublishCmt = obj =>{
             return res.json()
         }).then( json =>{
             if(json.code==='666'){
-                console.log()
                 cookie.remove('token')
                 hashHistory.push({
                     pathname: '/login',
@@ -119,6 +121,12 @@ const fetchPublishCmt = obj =>{
                 })
                 return
             }
+
+            dispatch(showToastLoading(false));
+            dispatch(showToastSuccess(true))
+            setTimeout(()=>{
+                dispatch(showToastSuccess(false))
+            },1200)
             dispatch(fetchComment(obj.getCmtObj));
             dispatch(commentValue({
                 str: '',
