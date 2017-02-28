@@ -14,8 +14,7 @@ import {
     SHOW_DIALOG,
 
     ACT_SHOW_MORE,
-    ACT_SHOW_BACK_TOP,
-    SHOW_PAY_POPUP
+    ACT_SHOW_BACK_TOP
 } from './actionTypes';
 
 

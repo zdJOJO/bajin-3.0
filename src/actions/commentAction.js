@@ -9,7 +9,7 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    PUBLISH_COMMENT,
+    //PUBLISH_COMMENT,
     CHANGE_HEADERSTR,
     CHANGE_COMMENT_VALUE
 } from './actionTypes';
@@ -18,16 +18,16 @@ import {
 } from './publicAction'
 
 //去空格
-String.prototype.trim=function(){
+String.prototype.trim = function(){
     return this.replace(/(^\s*)|(\s*$)/g, "");
 }
 
 //发表评论
-const publishComment = ()=> {
-    return {
-        type: PUBLISH_COMMENT
-    }
-}
+// const publishComment = ()=> {
+//     return {
+//         type: PUBLISH_COMMENT
+//     }
+// }
 
 
 //改变placeholder
@@ -85,11 +85,46 @@ export const fallGetCommet = page => {
 }
 
 
+
+//获取评论列表 GET
+const fetchComment = obj => {
+    return dispatch =>{
+        dispatch(beginGetComment(obj.page));
+
+        let url = port + '/card/commentv2?currentPage='+obj.page+'&size=10&type='+obj.itemType+'&itemId='+obj.itemId ;
+
+        return fetch( url )
+            .then(res => {
+                console.log(res.status);
+                return res.json()
+            })
+            .then(data => {
+                let dataList = data.data;
+                if(dataList.list.length===0){
+                    obj.isListNull = true
+                    if(!obj.isInDetail){
+                        setTimeout(function () {
+                            dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
+                        },3000)
+                    }else {
+                        dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
+                    }
+                    return
+                }
+                dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
+            })
+            .catch(e => {
+                console.log(e.message)
+                dispatch(fallGetCommet(obj.page));
+            })
+    }
+}
+
 // 发表评论
 const fetchPublishCmt = obj =>{
     return dispatch =>{
         let token = cookie.load('token');
-        let url = port + '/card/commentv2/create?token='+token+'&tp='+ parseInt(new Date().getTime()/1000);
+        let url = port + '/card/commentv2/create?token='+token+'&tp='+ parseInt(new Date().getTime()/1000, 10);
         let data = obj.publishCmtObj;
         if(data.commentContent.slice(0,data.headerStrLength) === data.headerStr){
             if(data.headerStr === data.commentContent){
@@ -140,41 +175,6 @@ const fetchPublishCmt = obj =>{
     }
 }
 
-
-
-//获取评论列表 GET
-const fetchComment = obj => {
-    return dispatch =>{
-        dispatch(beginGetComment(obj.page));
-
-        let url = port + '/card/commentv2?currentPage='+obj.page+'&size=10&type='+obj.itemType+'&itemId='+obj.itemId ;
-        
-        return fetch( url )
-            .then(res => {
-                console.log(res.status);
-                return res.json()
-            })
-            .then(data => {
-                let dataList = data.data;
-                if(dataList.list.length===0){
-                    obj.isListNull = true
-                    if(!obj.isInDetail){
-                        setTimeout(function () {
-                            dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
-                        },3000)
-                    }else {
-                        dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
-                    }
-                    return
-                }
-                dispatch(doneGetComment(dataList ,obj.isListNull ,obj.isInDetail))
-            })
-            .catch(e => {
-                console.log(e.message)
-                dispatch(fallGetCommet(obj.page));
-            })
-    }
-}
 
 
 //提供组件 调用

@@ -26,14 +26,14 @@ class Icbc extends Component{
             <div className="icbcBox">
                 <HomeTitle 
                     title='工行服务'
-                    typeStr='工行服务'
+                    typeStr='icbc'
                 />
                 <ul>
                     {
                         icbcBtnList.map( (item)=>{
                             return(
                                 <li key={item.pickId}>
-                                    <img src={item.buttonPic}/>
+                                    <img role="presentation" src={item.buttonPic}/>
                                     <span className="buttonTitle">{item.buttonTitle}</span>
                                 </li>
                             )

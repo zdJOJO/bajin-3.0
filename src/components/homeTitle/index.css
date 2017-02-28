@@ -1,7 +1,9 @@
 /* .title*/
-.icbcBox .title{
-    height: 0.2rem;
-    margin: 15px 11px;
+#home .title{
+    /*height: 0.2rem;*/
+    /*margin: 15px 11px;*/
+    height: 0.3rem;
+    margin: 0.01rem 11px;
     text-align: center;
     position: relative;
     display: -webkit-box;
@@ -14,16 +16,16 @@
 }
 
 
-.icbcBox>.title>div{
+#home .title>div{
     position: relative;
     margin: auto;
 }
 
-.icbcBox>.title .content-text{
+#home .title .content-text{
     padding: 0 13px;
 }
 
-.icbcBox >.title .content-text:before{
+#home .title .content-text:before{
     content: ' ';
     display: block;
     border: 1px #646464 solid;
@@ -33,7 +35,7 @@
     top: 50%;
     margin-top: -2.5px;
 }
-.icbcBox >.title .content-text:after{
+#home .title .content-text:after{
     content: ' ';
     display: block;
     border: 1px #646464 solid;
@@ -44,7 +46,7 @@
     margin-top: -2.5px;
 }
 
-.icbcBox >.title>.lookMore{
+#home .title>.lookMore{
     position: absolute;
     font-size: 10px;
     color: #909090;

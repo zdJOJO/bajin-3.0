@@ -102,7 +102,7 @@ const generateOrder = obj =>{
     let url = '';
     let data = {};
     if(obj.type === 'scmvOrder'){
-        url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000)
+        url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000, 10)
     }else if(obj.type === 1){
         url = port + '/card/apply?token=' + token
     }
@@ -171,6 +171,8 @@ export const disPatchFetchOrder =(obj)=>{
                 return dispatch( generateOrder(obj) )
             case 1:
                 return dispatch( generateOrder(obj) )
+            default:
+                return false
         }
     }
 }

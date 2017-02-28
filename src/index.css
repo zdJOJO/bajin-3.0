@@ -29,28 +29,9 @@ ul, li{
 .panel, .panel-body{
   height: 100%;
   width: 100%;
-}
-
-
-  /********* 人员管理系统***********/
-#staff{
-  width: 98%;
-  margin: auto;
-}
-
-#head ul{
-  padding: 0;
-}
-
-#head li{
-  width: 33.33%;
-  float: left;
-}
-
-#head li>select{
-  width: 40%;
-}
-
-#head li>input{
-  width: 100%;
+  /*overflow-y: scroll;*/
+  /*overflow-x: hidden;*/
+  /*position: fixed;*/
+  /*bottom: 0.46rem;*/
+  /*-webkit-overflow-scrolling: touch;*/
 }

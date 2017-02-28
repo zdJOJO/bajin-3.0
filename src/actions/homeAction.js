@@ -8,7 +8,8 @@ import {port} from '../public/index'
 
 import {
     GET_BANNER_SUCCESS,
-    GET_ICBC_BTN_SUCCESS
+    GET_ICBC_BTN_SUCCESS,
+    GET_HOME_CONTENTLIST_SUCCESS
 } from './actionTypes'
 
 
@@ -39,15 +40,45 @@ const getIcbcBtnSuccess = (btnList, isHome) =>{
 }
 
 
+// 获取首页内容列表
+const getHomeContentListSuccess = list =>{
+    let firstList = [];
+    let secondList = [];
+    let thirdList = [];
+    for(let item of list){
+        if(item.type===1){
+            firstList.push(item)
+        }else if(item.type===2){
+            secondList.push(item)
+        }else if(item.type===3){
+            thirdList.push(item)
+        }
+    }
+    return{
+        type: GET_HOME_CONTENTLIST_SUCCESS,
+        firstList,
+        secondList,
+        thirdList
+    }
+}
+
+
+
 //获取数据  GET
 const getHomeData =(obj)=>{
     let url = '';
     switch (obj.type){
         case 1:
             url = port + '/card/banner';
-            break
+            break;
         case 2:
             url = port + '/card/icbcbutton';
+            break;
+        case 3:
+            url = port + '/card/hcpage?currentPage='+obj.page+'&size=10';
+            break
+        default:
+            return false
     }
     return dispatch =>{
         return fetch(url)
@@ -59,6 +90,8 @@ const getHomeData =(obj)=>{
                     dispatch(getBannerListSuccess(json.list))
                 }else if(obj.type === 2){
                     dispatch(getIcbcBtnSuccess(json.list, obj.isHome))
+                }else if(obj.type === 3) {
+                    dispatch(getHomeContentListSuccess(json.data.list))
                 }
             })
             .catch( e =>{
@@ -75,17 +108,11 @@ const getHomeData =(obj)=>{
 * obj.type 取值：
 * 1 - 获取首页banner
 * 2 - 获取工行服务按钮
-*
+* 3 - 获取首页内容列表
 * */
 
 export const fetchData = (obj)=>{
     return dispatch =>{
-        switch (obj.type){
-            case 1:
-                dispatch(getHomeData(obj));
-                break
-            case 2:
-                dispatch(getHomeData(obj))
-        }
+        return dispatch(getHomeData(obj));
     }
 }

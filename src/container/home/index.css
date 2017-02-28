@@ -1,3 +1,22 @@
 #home{
+    width: 100%;
+    height: 92%;
+    position: fixed;
+    top: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
 
+#home .contentBox{
+  border-bottom: 5px #f0f0f0 solid;
+}
+
+#home .contentBox:nth-child(2){
+    border-bottom: 10px #f0f0f0 solid;
+}
+
+#home .contentBox>.contentBoxTwo>img{
+    width: 100%;
+    height: auto;
 }

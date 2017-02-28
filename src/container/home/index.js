@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import Menu from '../../router/menu'
 import Myswiper from '../swiper/index'
 import Icbc from '../icbc/index'
+import Content from './Content'
 
 import './index.css'
 
@@ -17,10 +18,18 @@ class Home extends Component{
     }
 
     render(){
+        const {firstList} = this.props;
         return(
-            <div id="home" className="panel panel-default">
-                <Myswiper />
-                <Icbc />
+            <div className="panel panel-default">
+                <div id="home">
+                    <Myswiper pagination="true"  typeStr="icbc" />
+                    <Icbc />
+                    <div className="totalContentBox">
+                        <Content firstList={firstList} type="1" title="热门" typeStr="hot"/>
+                        <Content firstList={firstList} type="2" title="其他" typeStr="second"/>
+                        <Content firstList={firstList} type="3" title="臻品" typeStr="good"/>
+                    </div>
+                </div>
                 <Menu />
             </div>
         )
@@ -29,7 +38,7 @@ class Home extends Component{
 
 function mapStateToProps(state) {
     return {
-
+        firstList: state.homeReducer.firstList
     }
 }
 

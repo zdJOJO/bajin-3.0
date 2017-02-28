@@ -5,11 +5,15 @@ import React,{Component} from 'react';
 
 import './index.css'
 
-export  default class HomeTitle extends Component {
+export default class HomeTitle extends Component {
 
     handleClick(typeStr){
-        if(typeStr === '工行服务'){
+        if(typeStr === 'icbc'){
             console.log('去工行服务')
+        }else if(typeStr === 'hot'){
+            console.log('去热门')
+        }else if(typeStr === 'good'){
+            console.log('去臻品')
         }
     }
     render(){

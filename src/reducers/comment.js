@@ -5,7 +5,7 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    PUBLISH_COMMENT,
+    // PUBLISH_COMMENT,
     CHANGE_HEADERSTR,
     CHANGE_COMMENT_VALUE
 } from '../actions/actionTypes';
