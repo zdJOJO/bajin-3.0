@@ -9,25 +9,41 @@ import Myswiper from '../swiper/index'
 import Icbc from '../icbc/index'
 import Content from './Content'
 
+import {fetchData} from '../../actions/homeAction'
+
 import './index.css'
 
 class Home extends Component{
 
     componentWillMount(){
-        
+        const {fetchData} = this.props;
+        fetchData({
+            type: 3,
+            page: 1
+        })
     }
 
     render(){
-        const {firstList} = this.props;
+        const {contentList} = this.props;
         return(
             <div className="panel panel-default">
                 <div id="home">
                     <Myswiper pagination="true"  typeStr="icbc" />
                     <Icbc />
                     <div className="totalContentBox">
-                        <Content firstList={firstList} type="1" title="热门" typeStr="hot"/>
-                        <Content firstList={firstList} type="2" title="其他" typeStr="second"/>
-                        <Content firstList={firstList} type="3" title="臻品" typeStr="good"/>
+                        {
+                            contentList.map((content,index)=>{
+                                return(
+                                    <Content
+                                        key={index}
+                                        list={content.hcpageModels}
+                                        type={content.type}
+                                        title={content.title}
+                                        pic={content.pic}
+                                    />
+                                )
+                            })
+                        }
                     </div>
                 </div>
                 <Menu />
@@ -38,10 +54,10 @@ class Home extends Component{
 
 function mapStateToProps(state) {
     return {
-        firstList: state.homeReducer.firstList
+        contentList: state.homeReducer.contentList
     }
 }
 
 export default connect(
-    mapStateToProps,{}
+    mapStateToProps,{ fetchData }
 )(Home)

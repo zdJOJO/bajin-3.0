@@ -89,9 +89,7 @@ const firstList = [
 const initState = {
     bannerList: [],
     icbcBtnList: [],
-    firstList: firstList,   //首页内容第一个列表
-    secondList: [], //首页内容第二个列表
-    thirdList: []  //首页内容第三个列表
+    contentList: []
 };
 
 export default function homeReducer(state=initState, action){
@@ -109,9 +107,7 @@ export default function homeReducer(state=initState, action){
         case GET_HOME_CONTENTLIST_SUCCESS:{
             return{
                 ...state,
-                firstList: state.firstList.concat(action.firstList),
-                secondList: state.secondList.concat(action.secondList),
-                thirdList: state.thirdList.concat(action.thirdList)
+                contentList: action.list
             }
         }
         default:

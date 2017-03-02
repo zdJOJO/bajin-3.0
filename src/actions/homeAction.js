@@ -42,23 +42,9 @@ const getIcbcBtnSuccess = (btnList, isHome) =>{
 
 // 获取首页内容列表
 const getHomeContentListSuccess = list =>{
-    let firstList = [];
-    let secondList = [];
-    let thirdList = [];
-    for(let item of list){
-        if(item.type===1){
-            firstList.push(item)
-        }else if(item.type===2){
-            secondList.push(item)
-        }else if(item.type===3){
-            thirdList.push(item)
-        }
-    }
     return{
         type: GET_HOME_CONTENTLIST_SUCCESS,
-        firstList,
-        secondList,
-        thirdList
+        list
     }
 }
 
@@ -75,7 +61,7 @@ const getHomeData =(obj)=>{
             url = port + '/card/icbcbutton';
             break;
         case 3:
-            url = port + '/card/hcpage?currentPage='+obj.page+'&size=10';
+            url = port + '/card/hcpage?currentPage='+obj.page+'&size=100&isDelete=2';
             break
         default:
             return false

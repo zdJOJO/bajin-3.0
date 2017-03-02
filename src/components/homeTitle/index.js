@@ -7,21 +7,15 @@ import './index.css'
 
 export default class HomeTitle extends Component {
 
-    handleClick(typeStr){
-        if(typeStr === 'icbc'){
-            console.log('去工行服务')
-        }else if(typeStr === 'hot'){
-            console.log('去热门')
-        }else if(typeStr === 'good'){
-            console.log('去臻品')
-        }
+    handleClick(str){
+        console.log(' 跳转到：'+str)
     }
     render(){
         return(
             <h3 className="title">
                 <div><span className="content-text">{this.props.title}</span></div>
                 <span className="lookMore"
-                      onClick={this.handleClick.bind(this, this.props.typeStr)}
+                      onClick={this.handleClick.bind(this, this.props.title)}
                 >
                     查看更多 >
                 </span>

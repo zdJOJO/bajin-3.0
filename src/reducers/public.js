@@ -11,7 +11,7 @@ import {
     POST_CIPHERTEXT,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
-    CHANGE_SWIPE＿INDEX,
+    CHANGE_SWIPE_INDEX,
     GET_RECOMMENDED_LIST_SUCCESS
 } from '../actions/actionTypes';
 
@@ -52,7 +52,7 @@ export default function publicReducer(state=initState, action){
                 ...state,
                 isShowToastSuccess:　 action.isShowToastSuccess
             }
-        case CHANGE_SWIPE＿INDEX:
+        case CHANGE_SWIPE_INDEX:
             return{
                 ...state,
                 swipeIndex: action.swipeIndex

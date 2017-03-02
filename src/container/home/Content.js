@@ -8,7 +8,6 @@ import HomeContentList from '../../components/homeContentList'
 import HomeTitle from '../../components/homeTitle'
 
 class Content extends Component{
-
     render(){
         return(
             <div className="contentBox">
@@ -16,20 +15,20 @@ class Content extends Component{
                     <div>
                         <HomeTitle
                             title={this.props.title}
-                            typeStr={this.props.typeStr}
+                            type={this.props.type}
                         />
                         <HomeContentList
                             type={this.props.type}
-                            list={this.props.firstList}
+                            list={this.props.list}
                         />
                     </div>
                 }
                 { this.props.type === '2' &&
                     <div className="contentBoxTwo">
-                        <img role="presentation" src="http://card2016.oss-cn-hangzhou.aliyuncs.com/68ec567fa0e9256a9d68cb1a4707537a.jpg" />
+                        <img role="presentation" src={this.props.pic} />
                         <HomeContentList
                             type={this.props.type}
-                            list={this.props.firstList}
+                            list={this.props.list}
                         />
                     </div>
                 }

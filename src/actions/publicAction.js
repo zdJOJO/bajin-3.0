@@ -9,7 +9,7 @@ import {
     POST_CIPHERTEXT,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
-    CHANGE_SWIPE＿INDEX,
+    CHANGE_SWIPE_INDEX,
     GET_RECOMMENDED_LIST_SUCCESS
 } from './actionTypes';
 
@@ -61,7 +61,7 @@ export const showDialog = isDialogShow =>{
 // swiper index
 export const changeSwipeIndex = swipeIndex =>{
     return{
-        type: CHANGE_SWIPE＿INDEX,
+        type: CHANGE_SWIPE_INDEX,
         swipeIndex
     }
 }
