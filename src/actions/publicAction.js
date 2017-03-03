@@ -78,7 +78,14 @@ export const getRecommendedListSuccess = list =>{
 
 //根据订单号 获取密文 GET
 const getOrderCiphertext = obj =>{
-    let url = port + '/card/bank/scmv/pay/'+obj.cardno+'/'+obj.scmvOrderId+'?token='+token;
+    let url = '';
+    if(obj.type === 'scmvOrder'){
+        //视频 音频
+        url = port + '/card/bank/scmv/pay/'+obj.cardno+'/'+obj.scmvOrderId+'?token='+token;
+    }else if(obj.type === 19){
+        //工行服务按钮
+        url = port + '/card/bank/encryption/'+obj.pickId+'/'+obj.cardNumber+'?token='+token;
+    }
     return dispatch =>{
         return fetch(url)
             .then( res =>{
@@ -86,7 +93,6 @@ const getOrderCiphertext = obj =>{
                 return res.text()
             })
             .then( text =>{
-                console.log(text)
                 dispatch(postCiphertext(text));
                 obj.dom.submit();
             })
@@ -161,18 +167,19 @@ const getRecommendedList = id =>{
 *type:
 * 1 ： 活动支付
 * scmvOrder: 课程模块订单
-*
+* 19： 工行服务的按钮
 * */
 export const disPatchFetchOrder =(obj)=>{
-    console.log(obj)
     return dispatch =>{
         switch (obj.type){
             case 'scmvOrder':
-                return dispatch( generateOrder(obj) )
+                return dispatch( generateOrder(obj) );
             case 1:
-                return dispatch( generateOrder(obj) )
+                return dispatch( generateOrder(obj) );
+            case 19:
+                return dispatch( getOrderCiphertext(obj) );
             default:
-                return false
+                return false;
         }
     }
 }

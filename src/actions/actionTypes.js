@@ -72,7 +72,9 @@ export const POP_LEFT_BUYBAR = 'POP_LEFT_BUYBAR';
 export const CHOOSE_ITEM = 'CHOOSE_ITEM';
 export const INIT_CHOOSEDATA = 'INIT_CHOOSEDATA';
     
-    
+
+//个人信息
+export const GET_BANKLIST_SUCCESS = 'GET_BANKLIST_SUCCESS';
    
 
 

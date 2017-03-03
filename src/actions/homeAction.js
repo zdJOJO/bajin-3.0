@@ -42,6 +42,12 @@ const getIcbcBtnSuccess = (btnList, isHome) =>{
 
 // 获取首页内容列表
 const getHomeContentListSuccess = list =>{
+    for(let item of list){
+        if(item.type === 2){
+            item.type2FirsElement = item.hcpageModels[0];
+            item.hcpageModels.splice(0,1);
+        }
+    }
     return{
         type: GET_HOME_CONTENTLIST_SUCCESS,
         list

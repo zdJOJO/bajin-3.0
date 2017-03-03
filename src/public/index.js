@@ -2,18 +2,17 @@
  * Created by Administrator on 2017/01/09 0009.
  */
 
+import { hashHistory } from 'react-router';
+import cookie from 'react-cookie'
 /*
-* 当  hashHistory.push({
+* 当
+* hashHistory.push({
          pathname: '/login',
          query: {isNeedBack: 1}
      })
-
-     登录需要 返回上一页
-*
-*
+* isNeedBack:
+* 1 -  登录需要 返回上一页
 * */
-
-
 
 //dev位boolean类型
 // true--正式环境， false--测试环境
@@ -23,7 +22,6 @@ const dev = false;
 export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
 
 //cookie
-import cookie from 'react-cookie';
 export const token = cookie.load('token');
 
 /*
@@ -38,7 +36,7 @@ export const rootPath =()=>{
 
 
 //
-export const appid = ''
+export const appid = '';
 
 
 //通用函数 时间戳转换成 固定格式
@@ -60,4 +58,20 @@ export const timestampFormat = (timestamp,isAll)=> {
     }else {
         return (y+'.'+m+'.'+d);
     }
+};
+
+
+//判断  token 是否 过期
+export const isTokenExpired = (code, callback) =>{
+    if(code==='666'){
+        cookie.remove('token');
+        hashHistory.push({
+            pathname: '/login',
+            query: {isNeedBack: 1}
+        })
+    }else {
+        callback();
+    }
 }
+
+

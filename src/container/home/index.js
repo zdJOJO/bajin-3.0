@@ -10,17 +10,19 @@ import Icbc from '../icbc/index'
 import Content from './Content'
 
 import {fetchData} from '../../actions/homeAction'
+import {dispatchFetchData} from '../../actions/userAction'
 
 import './index.css'
 
 class Home extends Component{
 
     componentWillMount(){
-        const {fetchData} = this.props;
+        const {fetchData, dispatchFetchData} = this.props;
         fetchData({
             type: 3,
             page: 1
-        })
+        });
+        dispatchFetchData({type: 2})
     }
 
     render(){
@@ -28,7 +30,7 @@ class Home extends Component{
         return(
             <div className="panel panel-default">
                 <div id="home">
-                    <Myswiper pagination="true"  typeStr="icbc" />
+                    <Myswiper pagination="false"  typeStr="icbc" />
                     <Icbc />
                     <div className="totalContentBox">
                         {
@@ -39,7 +41,9 @@ class Home extends Component{
                                         list={content.hcpageModels}
                                         type={content.type}
                                         title={content.title}
-                                        pic={content.pic}
+                                        type2FirsElement={
+                                         content.type===2 ? content.type2FirsElement : ''
+                                        }
                                     />
                                 )
                             })
@@ -59,5 +63,7 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps,{ fetchData }
+    mapStateToProps,{
+        fetchData, dispatchFetchData
+    }
 )(Home)

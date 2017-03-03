@@ -8,10 +8,17 @@ import HomeContentList from '../../components/homeContentList'
 import HomeTitle from '../../components/homeTitle'
 
 class Content extends Component{
+
+
+    componentDidMount(){
+        if(this.props.type===2)
+            console.log(this.props.list)
+    }
+
     render(){
         return(
-            <div className="contentBox">
-                { this.props.type !== '2' &&
+            <div className={this.props.type===2 ? 'contentBox type2' : 'contentBox'}>
+                { this.props.type !== 2 &&
                     <div>
                         <HomeTitle
                             title={this.props.title}
@@ -23,9 +30,9 @@ class Content extends Component{
                         />
                     </div>
                 }
-                { this.props.type === '2' &&
+                { this.props.type === 2 &&
                     <div className="contentBoxTwo">
-                        <img role="presentation" src={this.props.pic} />
+                        <img role="presentation" src={this.props.type2FirsElement.pic} />
                         <HomeContentList
                             type={this.props.type}
                             list={this.props.list}
@@ -36,5 +43,8 @@ class Content extends Component{
         )
     }
 }
+
+
+
 
 export default connect()(Content);

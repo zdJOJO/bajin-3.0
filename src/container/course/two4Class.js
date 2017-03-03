@@ -4,42 +4,35 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
+import MyDialog from '../../components/showPop/myDialog'
+import MyActionSheet from '../../components/showPop/myActionSheet'
 import CourseItem from './item';
 //import Using ES6 syntax
-import {LoadMore,Button,ActionSheet,Dialog ,InfiniteLoader} from 'react-weui';
+import {LoadMore,Button,ActionSheet ,InfiniteLoader} from 'react-weui';
 
 import {fetchInfo ,disPatchFn} from '../../actions/courseAction'
 import {disPatchFetchOrder ,showDialog ,showPayPopup} from '../../actions/publicAction'
 
 class Two4Class extends Component{
-    constructor(props){
-        super(props)
-        const {showPayPopup ,showDialog} = this.props;
-        this.state = {
-            menus: [{
-                label: '银行卡支付',
-                onClick: this.handleSubmitOrderInfo.bind(this)
-            }, {
-                label: '微信支付',
-                onClick: ()=> { console.log('微信支付')  }
-            }],
-            actions: [
-                {
-                    label: '取消',
-                    onClick: ()=>{showPayPopup(false)}
-                }
-            ],
-            style1: {
-                title: '提示',
-                buttons: [
-                    {
-                        label: '知道了',
-                        onClick: ()=>{showDialog(false)}
-                    }
-                ]
-            }
-        }
-    }
+    // constructor(props){
+    //     super(props)
+    //     const {showPayPopup} = this.props;
+    //     this.state = {
+    //         menus: [{
+    //             label: '银行卡支付',
+    //             onClick: this.handleSubmitOrderInfo.bind(this)
+    //         }, {
+    //             label: '微信支付',
+    //             onClick: ()=> { console.log('微信支付')  }
+    //         }],
+    //         actions: [
+    //             {
+    //                 label: '取消',
+    //                 onClick: ()=>{showPayPopup(false)}
+    //             }
+    //         ]
+    //     }
+    // }
 
     componentWillMount(){
         const {fetchInfo ,disPatchFn ,two4ClassList, totalPrice ,totalNum,} = this.props;
@@ -89,7 +82,7 @@ class Two4Class extends Component{
             fetchInfo,page,two4ClassListIsNull,
             two4ClassList ,disPatchFn ,isLeftBarShow ,
             totalPrice ,totalNum ,
-            isShowPayPopup ,showPayPopup ,isDialogShow,ciphertext
+            showDialog, isShowPayPopup ,showPayPopup ,isDialogShow,ciphertext
         } = this.props;
         return(
             <div id="course">
@@ -150,21 +143,25 @@ class Two4Class extends Component{
                     </div>
                 }
 
-                <ActionSheet
+                {/* <ActionSheet
                     menus={this.state.menus}
                     actions={this.state.actions}
                     show={isShowPayPopup}
                     type="ios"
                     onRequestClose={()=>{showPayPopup(false)}}
-                />
-                <Dialog type="ios"
-                        title={this.state.style1.title}
-                        buttons={this.state.style1.buttons}
-                        show={isDialogShow}
-                >
-                    请选择您感兴趣的课程
-                </Dialog>
+                />*/}
 
+                <MyActionSheet
+                    show={isShowPayPopup}
+                    bandCarPay={this.handleSubmitOrderInfo}
+                />
+                <MyDialog
+                    type="1"
+                    title="提示"
+                    content="请选择您感兴趣的课程"
+                    show={isDialogShow}
+                    showDialog={()=>{showDialog(false) }}
+                />
                 <form
                     method="post"
                     action="http://web.zj.icbc.com.cn/mobile/Pay.do?scene=pay"

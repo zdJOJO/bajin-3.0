@@ -12,7 +12,7 @@
   border-bottom: 5px #f0f0f0 solid;
 }
 
-#home .contentBox:nth-child(2){
+#home .contentBox.type2{
     border-bottom: 10px #f0f0f0 solid;
 }
 

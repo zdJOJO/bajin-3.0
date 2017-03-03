@@ -5,6 +5,7 @@
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     padding: 0 0.075rem;
+    text-align: left;
 }
 
 .homeContent::-webkit-scrollbar {
