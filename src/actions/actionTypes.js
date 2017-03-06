@@ -17,10 +17,11 @@ export const SHOW_ERROR = 'SHOW_ERROR';     //tips提示
 export const SHOW_DIALOG = 'SHOW_DIALOG';    //DIALOG 提示
 export const SHOW_TOAST_LOADING = 'SHOW_TOAST_LOADING';    // Toast 提示（正在发表评论、发表评论成功）
 export const SHOW_TOAST_SUCCESS = 'SHOW_TOAST_SUCCESS';    // Toast 提示（正在发表评论、发表评论成功）
+export const SHOW_FULL_POPUP = 'SHOW_FULL_POPUP';  //显示满屏幕的 popup
 export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';     //付款提示
 export const POST_CIPHERTEXT = 'POST_CIPHERTEXT';     //支付
 export const CHANGE_SWIPE_INDEX = 'CHANGE_SWIPE_INDEX';   //滚动分页
-export const GET_RECOMMENDED_LIST_SUCCESS = 'GET_RECOMMENDED_LIST_SUCCESS'  //推荐列表获取成功
+export const GET_RECOMMENDED_LIST_SUCCESS = 'GET_RECOMMENDED_LIST_SUCCESS';  //推荐列表获取成功
 
 
 //登录 注册
@@ -74,7 +75,10 @@ export const INIT_CHOOSEDATA = 'INIT_CHOOSEDATA';
     
 
 //个人信息
+export const GET_USERINFO_SUCCESS = 'GET_USERINFO_SUCCESS';
 export const GET_BANKLIST_SUCCESS = 'GET_BANKLIST_SUCCESS';
+export const SET_USERINFO_SUCCESS = 'SET_USERINFO_SUCCESS';
+export const SET_HEADPIC_SUCCESS = 'SET_HEADPIC_SUCCESS';
    
 
 

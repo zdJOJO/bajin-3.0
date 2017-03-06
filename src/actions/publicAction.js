@@ -10,8 +10,12 @@ import {
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
     CHANGE_SWIPE_INDEX,
-    GET_RECOMMENDED_LIST_SUCCESS
+    GET_RECOMMENDED_LIST_SUCCESS,
+    SHOW_FULL_POPUP,
+    SET_HEADPIC_SUCCESS
 } from './actionTypes';
+
+import {dispatchFetchData} from './userAction'
 
 import {port} from '.././public/'
 let token = cookie.load('token');
@@ -21,6 +25,15 @@ const postCiphertext = text =>{
     return{
         type: POST_CIPHERTEXT,
         text
+    }
+}
+
+
+//弹出满屏popup
+export const showFullPopup = isFullPopupShow =>{
+    return{
+        type: SHOW_FULL_POPUP,
+        isFullPopupShow
     }
 }
 
@@ -76,6 +89,16 @@ export const getRecommendedListSuccess = list =>{
 }
 
 
+//设置 个人头像
+export const setHeadPicSuccess =(pic)=>{
+    return{
+        type: SET_HEADPIC_SUCCESS,
+        pic
+    }
+}
+
+
+
 //根据订单号 获取密文 GET
 const getOrderCiphertext = obj =>{
     let url = '';
@@ -93,6 +116,7 @@ const getOrderCiphertext = obj =>{
                 return res.text()
             })
             .then( text =>{
+                console.log(text);
                 dispatch(postCiphertext(text));
                 obj.dom.submit();
             })
@@ -133,6 +157,7 @@ const generateOrder = obj =>{
             console.log('json is:')
             console.log(json)
             dispatch(getOrderCiphertext({
+                type: 'scmvOrder',
                 cardno: '3994',
                 scmvOrderId: json.data.id,
                 dom: obj.dom
@@ -162,6 +187,34 @@ const getRecommendedList = id =>{
 }
 
 
+//  上传图片/上传头像  post
+// valueObj.type:
+// 1 - 个人头像   2 - 其他图片上传
+const upImg = (valueObj)=>{
+    return dispatch=>{
+        return fetch( port+"/card/file/base64.method?fileName=" + Math.floor(Math.random()*1000000)+".png" ,{
+            method: 'POST',
+            body: valueObj.imgBase,
+        }).then( res=>{
+            return res.json()
+        }).then( json=>{
+            if(valueObj.type === 1){
+                dispatch(setHeadPicSuccess(json.url));
+                dispatch(dispatchFetchData({
+                    type: 3,
+                    data: {
+                        headPic: json.url,
+                        userName: valueObj.userName,
+                        gender: valueObj.gender
+                    }
+                }))
+            }
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+};
+
 
 /*
 *type:
@@ -189,5 +242,17 @@ export const disPatchFetchOrder =(obj)=>{
 export const disPatchFetchList = id =>{
     return dispatch =>{
         return dispatch(getRecommendedList(id))
+    }
+};
+
+
+// 上传 图片
+export const upImgFn = (obj) =>{
+    return dispatch =>{
+        if(obj.size > 1000*1024){
+            // dispatch(showToptipSetTimeOut('上传图片不要大于1MB,请重新上传',2));
+            return
+        }
+        return dispatch(upImg(obj))
     }
 }

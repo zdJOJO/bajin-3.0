@@ -12,7 +12,8 @@ import {
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
     CHANGE_SWIPE_INDEX,
-    GET_RECOMMENDED_LIST_SUCCESS
+    GET_RECOMMENDED_LIST_SUCCESS,
+    SHOW_FULL_POPUP
 } from '../actions/actionTypes';
 
 const initState = {
@@ -22,7 +23,8 @@ const initState = {
     isShowToastLoading: false,
     isShowToastSuccess: false,
     swipeIndex: 0,  //首页滑动
-    recommendedList: [] //  产品内部推荐列表
+    recommendedList: [] ,//  产品内部推荐列表
+    isFullPopupShow: false   //满屏幕的popup
 };
 
 export default function publicReducer(state=initState, action){
@@ -61,6 +63,11 @@ export default function publicReducer(state=initState, action){
             return{
                 ...state,
                 recommendedList:　action.list
+            }
+        case SHOW_FULL_POPUP:
+            return{
+                ...state,
+                isFullPopupShow:　action.isFullPopupShow
             }
         default:
             return state;

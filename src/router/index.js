@@ -1,24 +1,25 @@
 /**
  * Created by Administrator on 2017/01/05 0005.
  */
-import App from '../container/App';
+import App from '../container/App'
 
-import Home from '../container/home';
+import Home from '../container/home'
 
-import ActivityBox from '../container/activity/index';
-import ActivityInfo from '../container/activity/activityInfo';
+import ActivityBox from '../container/activity/index'
+import ActivityInfo from '../container/activity/activityInfo'
 
-import CourseBox from '../container/course';
+import CourseBox from '../container/course'
 import Select from '../container/course/select'
 import Two4Class from '../container/course/two4Class'
 import SelectDetail from '../container/course/selectDetail'
 
-import MyInfo from '../container/myInfo';
+import MyInfo from '../container/myInfo'
 import MyCourse from '../container/myInfo/myCourse'
 import BankCard from '../container/bankCard'
+import SetInfo from '../container/myInfo/set'
 
-import Login from '../container/login';
-import CommentList from '../container/comment/commentList';
+import Login from '../container/login'
+import CommentList from '../container/comment/commentList'
 
 
 export const routeConfig = [
@@ -33,12 +34,13 @@ export const routeConfig = [
                 component: CourseBox ,
                 indexRoute: { component: Select },
                 childRoutes: [
-                    { path: 'two4Class', component: Two4Class },
+                    { path: 'two4Class', component: Two4Class }
                 ]
             },
             {path: 'myInfo', component: MyInfo },
             { path: 'myCourse', component: MyCourse },
             { path: 'myBankCard', component: BankCard },
+            { path: 'set', component: SetInfo },
             { path: 'login', component: Login },
             { path: 'comment', component: CommentList },
             { path: 'activity/:activityId', component: ActivityInfo },

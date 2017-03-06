@@ -5,7 +5,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
 import HomeTitle from '../../components/homeTitle/index'
-import MyDialog from '../../components/showPop/myDialog'
+import {Dialog} from 'react-weui';
 
 import { fetchData } from '../../actions/homeAction'
 import { disPatchFetchOrder, showDialog } from '../../actions/publicAction'
@@ -13,6 +13,34 @@ import { disPatchFetchOrder, showDialog } from '../../actions/publicAction'
 import './index.css'
 
 class Icbc extends Component{
+
+    constructor(props){
+        super(props)
+        const {showDialog} = this.props;
+        this.state = {
+            myDialog: {
+                style2: {
+                    title: '提示',
+                    content: '请先绑定白金卡',
+                    buttons: [
+                        {
+                            type: 'default',
+                            label: '取消',
+                            onClick: ()=>{showDialog(false)}
+                        },
+                        {
+                            type: 'primary',
+                            label:  '去绑卡',
+                            onClick: ()=>{
+                                location.hash = '#/myBankCard';
+                                showDialog(false)
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
 
     componentWillMount(){
         const {fetchData} = this.props;
@@ -41,17 +69,18 @@ class Icbc extends Component{
     }
     
     render(){
-        const {icbcBtnList, ciphertext, isDialogShow, showDialog} = this.props;
+        const {icbcBtnList, ciphertext, isDialogShow} = this.props;
         return(
             <div className="icbcBox">
-                <MyDialog
-                    type="2"
-                    title="提示"
-                    content="请先绑定白金卡"
-                    btn2Text="去绑卡"
+                <Dialog
+                    type="ios"
+                    title={ this.state.myDialog.style2.title }
+                    buttons={ this.state.myDialog.style2.buttons }
                     show={isDialogShow}
-                    showDialog={()=>{showDialog(false) }}
-                />
+                >
+                    {this.state.myDialog.style2.content}
+                </Dialog>
+
                 <HomeTitle 
                     title='工行服务'
                     typeStr='icbc'

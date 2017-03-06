@@ -40,8 +40,8 @@ export const appid = '';
 
 
 //通用函数 时间戳转换成 固定格式
-    // isAll：true  输出完整格式 年月日时分秒
-    //isAll：false  输出完整格式 年月日
+     // isAll：true  输出完整格式 年月日时分秒
+    // isAll：false  输出完整格式 年月日
 export const timestampFormat = (timestamp,isAll)=> {
     const y = new Date(timestamp*1000).getFullYear();
     const m = new Date(timestamp*1000).getMonth()+1>9?(new Date(timestamp*1000).getMonth()+1):'0'+(new Date(timestamp*1000).getMonth()+1);
@@ -75,3 +75,58 @@ export const isTokenExpired = (code, callback) =>{
 }
 
 
+
+
+
+
+/*  ******* ActionSheet 和 Dialog  定义  *******
+constructor(props){
+    super(props)
+    const {showDialog, showPayPopup} = this.props;
+    this.state = {
+        myDialog: {
+            style1: {
+                title: '提示' ,
+                content: '请选择课程',
+                buttons: [
+                    {
+                        label: '知道了',
+                        onClick: ()=>{showDialog(false)}
+                    }
+                ]
+            },
+            style2: {
+                title: '提示',
+                buttons: [
+                    {
+                        type: 'default',
+                        label: '取消',
+                        onClick: ()=>{showDialog(false)}
+                    },
+                    {
+                        type: 'primary',
+                        label:  '',
+                        onClick: ()=>{showDialog(false)}
+                    }
+                ]
+            }
+        },
+        myActionSheet: {
+            menus: [{
+                label: '银行卡支付',
+                onClick: this.handleSubmitOrderInfo.bind(this)
+            }, {
+                label: '微信支付',
+                onClick: ()=> { console.log('微信支付')  }
+            }],
+            actions: [
+                {
+                    label: '取消',
+                    onClick: ()=>{showPayPopup(false)}
+                }
+            ]
+        }
+    }
+}
+
+*/

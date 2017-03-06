@@ -67,7 +67,7 @@ const getHomeData =(obj)=>{
             url = port + '/card/icbcbutton';
             break;
         case 3:
-            url = port + '/card/hcpage?currentPage='+obj.page+'&size=100&isDelete=2';
+            url = port + '/card/hcpage?currentPage='+obj.page+'&size=100&isDelete=1';
             break
         default:
             return false
