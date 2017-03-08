@@ -89,5 +89,12 @@ header span{
 }
 
 
+.headBar >.back{
+    position: absolute;
+    left: 0.15rem;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 
 

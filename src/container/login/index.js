@@ -86,8 +86,14 @@ class Login extends Component{
     }
 
     componentDidMount(){
-        if(cookie.load('token'))
+        const {changeTab} = this.props;
+        if(cookie.load('token')){
             hashHistory.push({pathname: '/'})
+        }
+        
+        if(this.props.location.query.isChangePassWord === '1'){
+            changeTab('forget')
+        }
     }
 
     getInputValue(value,type,isNew) {

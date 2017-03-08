@@ -195,9 +195,62 @@
     background: #f2f2f2;
 }
 
+#user .weui-popup ul{
+    margin-top: 0.4rem;
+}
+
+#user .weui-popup ul>li:nth-child(2){
+    border-bottom: 1px #f0f0f0 solid;
+}
+
+#user .weui-popup ul a{
+    color: #646464;
+    width: 100%;
+    display: -webkit-box;
+    text-decoration:none;
+}
+
+#user .feedInfo {
+    margin-top: 0.4rem;
+}
+
+#user .feedInfo h3{
+    text-align: left;
+    font-size: 16px;
+    color: #646464;
+    font-weight: normal;
+    padding: 12px 0.15rem;
+    border-bottom: 1px solid #d9d9d9;
+}
+#user .feedInfo h3+div{
+    margin-top: 0.15rem;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 0 0.15rem;
+}
+
+#user .feedInfo button{
+    position: absolute;
+    bottom: 0;
+    border-radius: 0;
+}
+
+#user .weui-uploader__hd{
+    padding: 12px 0.15rem;
+}
 
 
-/**** #userInfo   设置个人信息  ****/
+
+
+
+
+
+
+
+
+
+
+
+    /**** #userInfo   设置个人信息  ****/
 #userInfo{
 
 }
@@ -282,6 +335,7 @@
 #userInfo button.weui-btn, input.weui-btn{
     position: fixed;
     bottom: 0;
+    border-radius: 0;
 }
 
 
@@ -294,6 +348,11 @@
 
 #userInfo li:first-child{
 
+}
+
+
+#userInfo input{
+    background: none;
 }
 
 

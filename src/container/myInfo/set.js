@@ -5,10 +5,10 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
 import HeaderBar from '../../components/headerNav/headBar'
-import {Dialog, Toast, Popup, Button} from 'react-weui'
+import {Dialog, Toast, Popup, Button, Input} from 'react-weui'
 
 import { dispatchFetchData } from '../../actions/userAction'
-import { upImgFn, showDialog, showFullPopup } from '../../actions/publicAction'
+import { upImgFn, showDialog, showFullPopup, showToastLoading } from '../../actions/publicAction'
 
 import code from '../../img/userInfo/code.png';
 import './index.css'
@@ -62,7 +62,7 @@ class SetInfo extends  Component{
     }
 
     handleChangeInfo(obj, event){
-        const { upImgFn } = this.props;
+        const { upImgFn, showToastLoading } = this.props;
         if(obj.type === 1){
             this.setState({
                 userInfo: {
@@ -82,6 +82,7 @@ class SetInfo extends  Component{
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function(e){
+                showToastLoading(true);
                 upImgFn({
                     type: 1,
                     imgBase: this.result,
@@ -95,6 +96,7 @@ class SetInfo extends  Component{
 
     handleUpdateInfo(){
         const { dispatchFetchData } = this.props;
+        if(!this.state.userInfo.userName ) return
         dispatchFetchData({
             type: 3,
             data: this.state.userInfo
@@ -117,7 +119,7 @@ class SetInfo extends  Component{
                         show={isDialogShow}
                 >
                     { this.state.type === 1 &&
-                        <input type="text"  value={this.state.userInfo.userName} onChange={this.handleChangeInfo.bind(this, {type:1})} />
+                        <Input type="text"  value={this.state.userInfo.userName} onChange={this.handleChangeInfo.bind(this, {type:1})}  />
                     }
                     { this.state.type === 2 &&
                         <div>
@@ -157,8 +159,8 @@ class SetInfo extends  Component{
                         <input id="headPic" type="file"  multiple={false}
                                onChange={this.handleChangeInfo.bind(this, {
                                type: 3,
-                               userName: this.state.userInfo.userName,
-                               gender: this.state.userInfo.gender
+                                   userName: this.state.userInfo.userName,
+                                   gender: this.state.userInfo.gender
                                })}
                         />
                     </li>
@@ -212,13 +214,14 @@ function mapStateToProps(state) {
         isDialogShow: state.publicReducer.isDialogShow,
         isShowToastLoading: state.publicReducer.isShowToastLoading,
         isShowToastSuccess: state.publicReducer.isShowToastSuccess,
-        isFullPopupShow: state.publicReducer.isFullPopupShow,
+        isFullPopupShow: state.publicReducer.isFullPopupShow
     }
 }
 
 export default connect(
     mapStateToProps, {
         dispatchFetchData,
-        showDialog, showFullPopup, upImgFn
+        showDialog, showFullPopup, showToastLoading,
+        upImgFn
     }
 )(SetInfo)

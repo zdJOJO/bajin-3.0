@@ -6,7 +6,7 @@ import cookie from 'react-cookie'
 import {port, isTokenExpired} from '../public/index'
 import {
     GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, 
-    SET_USERINFO_SUCCESS
+    SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_FEEDBACK_IMGLIST
 } from './actionTypes';
 import { showDialog, showToastLoading, showToastSuccess } from '../actions/publicAction'
 
@@ -36,9 +36,23 @@ const setUserInfoSuccess = info => {
     }
 };
 
+//反馈信息成功
+const feedBackSuccess = (list) =>{
+    return{
+        type: FEEDBACK_SUCCESS,
+        list
+    }
+}
 
+const changeFeedBackImgList = (list, postImgList) =>{
+    return{
+        type: CAHNGE_FEEDBACK_IMGLIST,
+        list,
+        postImgList
+    }
+}
 
-
+/******************************/
 
 //获取用户个人信息 GET
 const getUserInfo =()=>{
@@ -112,7 +126,56 @@ const setUserInfo =(obj)=>{
 }
 
 
+//意见反馈列表上传 POST
+const feedBackPost = (obj)=>{
+    return dispatch =>{
+        return fetch( port + '/card/feedback' ,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(obj)
+        }).then( res =>{
+            return res.json();
+        }).then( json =>{
+            if(json.code === '201'){
+                dispatch(feedBackSuccess());
+            }
+        }).catch(e =>{
+            console.log(e)
+        })
+    }
+}
 
+//图片上传
+const upImg = (obj)=>{
+
+    console.log(obj)
+
+    return dispatch=>{
+        if(!obj.feedbackDetail){
+            return
+        }
+        dispatch(showToastLoading(true));
+        return fetch( port+"/card/file/base64.method?fileName=" + Math.floor(Math.random()*1000000)+".png" ,{
+            method: 'POST',
+            body: obj.imgBase
+        }).then( res=>{
+            return res.json();
+        }).then( json =>{
+            console.log(json)
+            obj.feedBackImgList.push({url: json.url});
+            obj.postImgList.push({pic: json.url});
+            dispatch(feedBackPost({
+                feedbackDetail: obj.feedbackDetail,
+                imgList: obj.postImgList
+            }));
+            dispatch(changeFeedBackImgList(obj.feedBackImgList, obj.postImgList))
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+};
 
 
 /*
@@ -120,6 +183,8 @@ const setUserInfo =(obj)=>{
 *  1 -  获取用户信息
 *  2 - 获取银行卡列表
 *  3 - 设置更新用户信息
+*  4 -  提交反馈意见
+*  5 - 图片上传
 * */
 export const dispatchFetchData = (obj)=>{
     return dispatch =>{
@@ -131,6 +196,8 @@ export const dispatchFetchData = (obj)=>{
                 return dispatch(getBankList(obj));
             case 3:
                 return dispatch(setUserInfo(obj));
+            case 5:
+                return dispatch(upImg(obj));
             default:
                 return false
         }
