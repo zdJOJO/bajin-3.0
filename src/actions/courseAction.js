@@ -111,7 +111,7 @@ const initChooseData = (totalPrice,totalNum ,chooseList)=>{
 
 
 //get 获取列表   24堂课列表： type是1,isFather是0   ； 课程列表： type是0,isFather是1
-// type: 0全部 1时修 2视频 3音频
+// type: 0全部 1实修 2视频 3音频
 // isFather: 0-单个  1-集合
 const getCourseList =(page,type)=>{
     let url = type===1 ?  port + '/card/scmv?currentPage='+page+'&size=10&type='+type+'&isFather=0'

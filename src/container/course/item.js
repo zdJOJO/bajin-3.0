@@ -20,7 +20,7 @@ import {
 
 const typeStr = type =>{
     if(type===1){
-        return '时修'
+        return '实修'
     }else if(type===2){
         return '视频'
     }else {

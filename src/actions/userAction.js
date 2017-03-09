@@ -3,13 +3,22 @@
  */
 
 import cookie from 'react-cookie'
-import {port, isTokenExpired} from '../public/index'
+import {port, isTokenExpired, getUserInfoFn} from '../public'
 import {
     GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, 
-    SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_FEEDBACK_IMGLIST
+    SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
+    SET_FEEDBACK_SHOW
 } from './actionTypes';
 import { showDialog, showToastLoading, showToastSuccess } from '../actions/publicAction'
 
+
+// 设置 反馈信息 是否弹出
+export const setFeedBackShow =(feedBackShow)=>{
+    return{
+        type: SET_FEEDBACK_SHOW,
+        feedBackShow
+    }
+}
 
 // 获取 用户个人信息
 const getUserInfoSuccess = (info)=>{
@@ -37,18 +46,17 @@ const setUserInfoSuccess = info => {
 };
 
 //反馈信息成功
-const feedBackSuccess = (list) =>{
+const feedBackSuccess = () =>{
     return{
-        type: FEEDBACK_SUCCESS,
-        list
+        type: FEEDBACK_SUCCESS
     }
 }
 
-const changeFeedBackImgList = (list, postImgList) =>{
+//修改 图片数组
+export const changePostImgList = (list) =>{
     return{
-        type: CAHNGE_FEEDBACK_IMGLIST,
-        list,
-        postImgList
+        type: CAHNGE_POST_IMGLIST,
+        list
     }
 }
 
@@ -109,6 +117,7 @@ const setUserInfo =(obj)=>{
         }).then( json =>{
             isTokenExpired(json.code,function () {
                 if(json.code === '202'){
+                    getUserInfoFn(obj.data);
                     dispatch(setUserInfoSuccess(obj.data));
 
                     dispatch(showDialog(false));
@@ -123,7 +132,7 @@ const setUserInfo =(obj)=>{
             console.log(e)
         })
     }
-}
+};
 
 
 //意见反馈列表上传 POST
@@ -145,17 +154,11 @@ const feedBackPost = (obj)=>{
             console.log(e)
         })
     }
-}
+};
 
 //图片上传
 const upImg = (obj)=>{
-
-    console.log(obj)
-
     return dispatch=>{
-        if(!obj.feedbackDetail){
-            return
-        }
         dispatch(showToastLoading(true));
         return fetch( port+"/card/file/base64.method?fileName=" + Math.floor(Math.random()*1000000)+".png" ,{
             method: 'POST',
@@ -164,13 +167,8 @@ const upImg = (obj)=>{
             return res.json();
         }).then( json =>{
             console.log(json)
-            obj.feedBackImgList.push({url: json.url});
             obj.postImgList.push({pic: json.url});
-            dispatch(feedBackPost({
-                feedbackDetail: obj.feedbackDetail,
-                imgList: obj.postImgList
-            }));
-            dispatch(changeFeedBackImgList(obj.feedBackImgList, obj.postImgList))
+            dispatch(changePostImgList(obj.postImgList))
         }).catch(e=>{
             console.log(e)
         })
@@ -196,6 +194,16 @@ export const dispatchFetchData = (obj)=>{
                 return dispatch(getBankList(obj));
             case 3:
                 return dispatch(setUserInfo(obj));
+            case 4:
+                if(!obj.feedbackDetail){
+                    return
+                }
+                return dispatch(
+                    feedBackPost({
+                        feedbackDetail: obj.feedbackDetail,
+                        imgList: obj.postImgList
+                    })
+                );
             case 5:
                 return dispatch(upImg(obj));
             default:

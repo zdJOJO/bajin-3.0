@@ -16,7 +16,7 @@ import {
     SET_INTERESTING_LIST
 } from '../actions/actionTypes'
 
-import {port} from '.././public/'
+import {port, getUserInfoFn} from '.././public/'
 
 //提示tips的存在时间
 const timeStay = 5000;
@@ -174,12 +174,12 @@ const fetchInfo = (valueObj,type,_subType)=> {
             if(type===1 && json.code==='100'){
                 cookie.save('token', json.message);
                 dispatch(loginSuccess(json.data));
-
+                getUserInfoFn();
                 //直接登录和注册登录 区别
                 if(!_subType &&　valueObj.isNeedBack==='1'){
                     history.back(-1);
                 }else {
-                    hashHistory.push({pathname: '/'});
+                    hashHistory.push({pathname: '/'});   //登陆成功
                 }
             }else if(type===2 && json.code==='201'){
                 dispatch(showToptipSetTimeOut("注册成功，请填写信息" ,1));
@@ -240,7 +240,7 @@ const reSetNewPassword =(valueObj,type) =>{
             },
             body: JSON.stringify({
                 phone: valueObj.phone,
-                password: valueObj.newPasswordOne,
+                password: valueObj.newPasswordOne
             })
         }).then( res =>{
             console.log(res.status);
@@ -534,7 +534,7 @@ export const shouldFetchGetInfo = (valueObj,type ,_subType)=> {
             case 11:
                 console.log(valueObj)
                  if(valueObj.idArray.length===0){
-                     dispatch(showToptipSetTimeOut('请选择您感兴趣的',2))
+                     dispatch(showToptipSetTimeOut('请选择您感兴趣的',2));
                      return
                  }
                 return dispatch(putInterest(valueObj.idArray))

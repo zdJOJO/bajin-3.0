@@ -4,7 +4,8 @@
 
 import {
     GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, SET_USERINFO_SUCCESS,
-    SET_HEADPIC_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_FEEDBACK_IMGLIST
+    SET_HEADPIC_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
+    SET_FEEDBACK_SHOW
 } from '../actions/actionTypes'
 
 
@@ -12,9 +13,9 @@ const initState = {
     name: '',
     bankCardList: [],
     userInfo:{},
-    feedBackImgList: [],   //展示用的图片列表
-    postImgList: []  //上传用的图片列表
-}
+    postImgList: [],  //上传用的图片列表
+    feedBackShow: false
+};
 
 export default function userReducer (state=initState, action) {
     switch (action.type){
@@ -47,12 +48,19 @@ export default function userReducer (state=initState, action) {
                 }
             };
         case FEEDBACK_SUCCESS:
-           return state
-        case CAHNGE_FEEDBACK_IMGLIST:
             return{
                 ...state,
-                feedBackImgList: action.list,
-                postImgList: action.postImgList
+                feedBackShow: false
+            }
+        case CAHNGE_POST_IMGLIST:
+            return{
+                ...state,
+                postImgList: action.list,
+            };
+        case SET_FEEDBACK_SHOW:
+            return{
+                ...state,
+                feedBackShow: action.feedBackShow
             }
         default:
             return state

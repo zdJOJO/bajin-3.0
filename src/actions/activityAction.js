@@ -12,9 +12,9 @@ import {
     POPUP,
     SUBMIT_ACTINFO_SUCCESS,
     SHOW_DIALOG,
-
     ACT_SHOW_MORE,
-    ACT_SHOW_BACK_TOP
+    ACT_SHOW_BACK_TOP,
+    GET_USER_JOINACT_STATUS
 } from './actionTypes';
 
 
@@ -89,6 +89,15 @@ export const actBackTop = isBackTop =>{
     }
 }
 
+// 成功 获取 用户活动报名 状态
+const userActStatusGetSuccess = status =>{
+    return{
+        type: GET_USER_JOINACT_STATUS,
+        status
+    }
+}
+
+
 
 function fetchActList(page,isRefresh) {
     return dispatch =>{
@@ -123,7 +132,6 @@ function fetchActDetail(itemId) {
     }
 }
 
-
 function fetchPostInfo(infoObj) {
     return dispatch=>{
         return fetch( port+"/card/activityDriver/create?token="+cookie.load('token') ,{
@@ -152,6 +160,25 @@ function fetchPostInfo(infoObj) {
 }
 
 
+// get  获取用户本活动报名信息
+const getUserActStatus = (obj)=>{
+    return dispatch =>{
+        return fetch( port + '/card/apply/status/'+obj.activityId+'?token='+cookie.load('token'))
+            .then(res =>{
+                return res.json()
+            })
+            .then( json =>{
+                dispatch(userActStatusGetSuccess(json.data))
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+    }
+}
+
+
+
+
 export const getActList = (page,isRefresh) => {
     return (dispatch, getState) => {
         return dispatch(fetchActList(page,isRefresh))
@@ -168,6 +195,26 @@ export const getActDetail = (itemId) => {
 export const postActInfo = infoObj =>{
     return(dispatch)=>{
         return dispatch(fetchPostInfo(infoObj))
+    }
+};
+
+
+
+/*
+*  obj.type:
+*  1 - 查询用户报名情况
+*
+* */
+export const disPatchActFetch = (obj) => {
+    return dispatch =>{
+        switch (obj.type){
+            case 1:
+                return dispatch(getUserActStatus({
+                    activityId: obj.activityId
+                }));
+            default:
+                return false
+        }
     }
 }
 

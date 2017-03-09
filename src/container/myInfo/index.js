@@ -10,7 +10,7 @@ import Menu from '../../router/menu';
 import HeaderBar from '../../components/headerNav/headBar'
 import { Popup, Popupm, Button, Dialog, TextArea, Uploader } from 'react-weui'
 
-import {dispatchFetchData} from '../../actions/userAction';
+import {dispatchFetchData, setFeedBackShow, changePostImgList} from '../../actions/userAction';
 import { showFullPopup} from '../../actions/publicAction'
 
 import head from '../../img/login/headPic_default.png'
@@ -78,8 +78,8 @@ class MyInfo extends Component{
                 ]
             },
             diaLogShow:  false,
-            feedBackShow: true,
-            feedbackDetail: ''
+            feedbackDetail: '',
+            demoFiles: []
         }
     }
 
@@ -101,7 +101,10 @@ class MyInfo extends Component{
     }
 
     render(){
-        const { userInfo, showFullPopup, isFullPopupShow, dispatchFetchData, feedBackImgList, postImgList } = this.props;
+        const {
+            userInfo, showFullPopup, isFullPopupShow, dispatchFetchData, postImgList,
+            feedBackShow, setFeedBackShow, changePostImgList
+        } = this.props;
         return(
             <div id="user" className="panel panel-default">
 
@@ -132,12 +135,12 @@ class MyInfo extends Component{
 
 
                 <Popup
-                    show={this.state.feedBackShow}
-                    onRequestClose={()=>{this.setState({feedBackShow: false})}}
+                    show={feedBackShow}
+                    onRequestClose={()=>{setFeedBackShow(false)}}
                 >
                     <div style={{height: '100vh', overflow: 'scroll'}}>
                         <div style={{textAlign:'center'}}>
-                            <HeaderBar content="意见反馈" type="3" onClick={()=>{this.setState({feedBackShow: false})}}/>
+                            <HeaderBar content="意见反馈" type="3" onClick={()=>{setFeedBackShow(false)}}/>
                             <div className="feedInfo">
                                 <h3>问题与意见</h3>
                                 <TextArea placeholder="请输入您的意见和建议" rows="5" maxlength="200"
@@ -147,17 +150,19 @@ class MyInfo extends Component{
                                     <Uploader
                                         title="图片 （选填，提供问题截图)"
                                         maxCount={8}
-                                        files={feedBackImgList}
+                                        files={this.state.demoFiles}
                                         onError={msg => alert(msg)}
                                         onChange={(file,e) => {
+                                            let newFiles = [...this.state.demoFiles, {url:file.data}];
+                                            this.setState({
+                                                demoFiles: newFiles
+                                            });
                                             dispatchFetchData({
                                                 type: 5,
                                                 imgBase: file.data,
-                                                feedbackDetail: this.state.feedbackDetail,
-                                                feedBackImgList: feedBackImgList,
                                                 postImgList: postImgList
-                                            })
-                                }}
+                                            });
+                                         }}
                                         onFileClick={
                                             (e, file, i) => {
                                                 console.log('file click', file, i)
@@ -168,7 +173,15 @@ class MyInfo extends Component{
                                         }}
                                     />
                                 </div>
-                                <Button>提交</Button>
+                                <Button
+                                    onClick={()=>{
+                                        dispatchFetchData({
+                                            type: 4,
+                                            feedbackDetail: this.state.feedbackDetail,
+                                            postImgList: postImgList
+                                        })
+                                    }}
+                                >提交</Button>
                             </div>
                         </div>
                     </div>
@@ -208,8 +221,13 @@ class MyInfo extends Component{
                     <MyLi title="银行卡管理" onClick={this.handleClick.bind(this, "#/myBankCard")}/>
                     <MyLi title="意见反馈"  content="告诉我们您的宝贵意见"
                           onClick={()=>{
-                            this.setState({feedBackShow: true})}
-                     } />
+                                setFeedBackShow(true);
+                                changePostImgList([]);
+                                this.setState({
+                                     feedbackDetail: '',
+                                     demoFiles: []
+                                })
+                          }} />
                 </ul>
                 <Menu />
             </div>
@@ -220,12 +238,13 @@ class MyInfo extends Component{
 function mapStateToProps(state) {
     return{
         userInfo:　state.userReducer.userInfo,
-        feedBackImgList: state.userReducer.feedBackImgList,
         postImgList: state.userReducer.postImgList,
+        feedBackShow: state.userReducer.feedBackShow,
+
         isFullPopupShow: state.publicReducer.isFullPopupShow
     }
 }
 
 export default connect(
-    mapStateToProps, {dispatchFetchData, showFullPopup}
+    mapStateToProps, {dispatchFetchData, showFullPopup, setFeedBackShow, changePostImgList}
 )(MyInfo);

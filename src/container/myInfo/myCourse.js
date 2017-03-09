@@ -14,7 +14,7 @@ import {selectList} from '../../public/falseData'
 
 const menuList = [
     {
-        menuName: '时修',
+        menuName: '实修',
         path: ''
     },
     {

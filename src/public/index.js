@@ -77,6 +77,48 @@ export const isTokenExpired = (code, callback) =>{
 
 
 
+// localstorage   存储 数据 （比如： 用户信息）
+export const localstorageFn = {
+    save: (element, value)=>{
+        localStorage.setItem(element, typeof (value) === "object" ? JSON.stringify(value) : value);
+    },
+    load: element =>{
+        return localStorage.element
+    },
+    remove: ()=>{
+        window.localStorage.clear();
+    }
+};
+
+
+//获取 用户信息（ 每次登录之后 都会进行存储 ）
+export const getUserInfoFn = (info)=>{
+    if(!info){
+        let url = port + '/card/user?token=' + cookie.load('token');
+        fetch( url )
+            .then( res=>{
+                return res.json()
+            })
+            .then( json=>{
+                isTokenExpired(json.code, function () {
+                    localstorageFn.save('userInfo', json)
+                })
+            })
+            .catch( e=>{
+                console.log(e)
+            })
+    }else {
+        let userInfo = JSON.parse(window.localStorage.userInfo);
+        userInfo.gender = info.gender,
+        userInfo.headPic = info.headPic,
+        userInfo.userName = info.userName,
+        localstorageFn.save('userInfo', userInfo)
+    }
+
+};
+
+
+
 
 
 

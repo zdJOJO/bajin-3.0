@@ -238,6 +238,27 @@
     padding: 12px 0.15rem;
 }
 
+#user .weui-uploader__input-box{
+    width: 0.6rem;
+    height: 0.6rem;
+    margin: 0 0.15rem;
+}
+
+#user .weui-uploader__files{
+    overflow: hidden;
+    margin: 0!important;
+    padding: 0 0.15rem;
+    width: 2.9rem;
+}
+
+#user .weui-uploader__files li{
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0 0.2rem 0.1rem 0;
+    background-size: 100%;
+    background: no-repeat;
+    padding: 0;
+}
 
 
 

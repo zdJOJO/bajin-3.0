@@ -7,7 +7,8 @@ import {
     DONE_GET_ActList,
     POPUP,
     SUBMIT_ACTINFO_SUCCESS,
-    SHOW_DIALOG
+    SHOW_DIALOG,
+    GET_USER_JOINACT_STATUS
 } from '../actions/actionTypes';
 
 const initState = {
@@ -22,7 +23,8 @@ const initState = {
         pageCount: 0,
         isLoading: true,
         isListNull: false,  //判断每次请求的data列表长度是否为0
-    }
+    },
+    userActStatus: 1   // 用户活动状态
 };
 
 export default function activityReducer(state=initState, action){
@@ -72,7 +74,11 @@ export default function activityReducer(state=initState, action){
                     showToast: action.showToast
                 }
             }
-
+        case GET_USER_JOINACT_STATUS:
+            return{
+                ...state,
+                userActStatus: action.status
+            }
         default:
             return state;
     }

@@ -79,6 +79,12 @@ nav i{
   bottom: 0.46rem;
 }
 
+.weui-popup button{
+  position: absolute;
+  bottom: 0;
+  border-radius: 0;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

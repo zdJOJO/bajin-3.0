@@ -30,7 +30,7 @@ class Home extends Component{
         return(
             <div className="panel panel-default">
                 <div id="home">
-                    <Myswiper pagination="false"  typeStr="icbc" />
+                    <Myswiper pagination="true"  typeStr="icbc" />
                     <Icbc />
                     <div className="totalContentBox">
                         {
