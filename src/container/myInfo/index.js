@@ -84,10 +84,11 @@ class MyInfo extends Component{
     }
 
     componentWillMount(){
-        const {dispatchFetchData} = this.props;
+        const {dispatchFetchData, showFullPopup} = this.props;
         dispatchFetchData({
             type: 1
         })
+        showFullPopup(false)
     }
 
     handleClick(path){
@@ -187,12 +188,8 @@ class MyInfo extends Component{
                     </div>
                 </Popup>
 
-
-
-                <Dialog title={this.state.style2.title} buttons={this.state.style2.buttons} show={this.state.diaLogShow}>
-                   确定要出登录吗?
-                </Dialog>
-
+                
+                <Dialog title={this.state.style2.title} buttons={this.state.style2.buttons} show={this.state.diaLogShow}>确定要出登录吗?</Dialog>
 
                 <div className="headBox">
                     <div>

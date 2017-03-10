@@ -320,3 +320,17 @@
 }
 
 
+
+/*# myCourse*/
+#myCourse video{
+    width: 3.2rem;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -1.6rem;
+}
+
+#myCourse .weui-popup{
+    background: rgba(0, 0, 0, 0.3);
+}

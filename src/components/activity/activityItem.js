@@ -24,7 +24,7 @@ export default class ActivityItem extends Component{
                     <div className="tit-content">
                         <h3>{this.props.activity.activityTitle}</h3>
                         <p className="time">
-                            {timestampFormat(this.props.activity.startTime,true)}-{timestampFormat(this.props.activity.endTime,true)}
+                            {timestampFormat(this.props.activity.startTime,1)}-{timestampFormat(this.props.activity.endTime,1)}
                         </p>
                         {/* <p className="deTile">{this.props.activity.activityAddress}</p>*/}
                         { this.props.activity.activityPrice === 0 &&

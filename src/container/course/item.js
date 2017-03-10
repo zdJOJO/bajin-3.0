@@ -6,6 +6,7 @@ import { hashHistory } from 'react-router';
 import {connect} from 'react-redux';
 
 import {disPatchFn} from '../../actions/courseAction'
+import { timestampFormat } from '../../public'
 
 //import Using ES6 syntax
 import {
@@ -15,6 +16,7 @@ import {
     MediaBoxTitle,
     MediaBoxDescription,
     MediaBoxInfoMeta,
+    Popup, Toast
 } from 'react-weui';
 
 
@@ -26,18 +28,46 @@ const typeStr = type =>{
     }else {
         return '音频'
     }
-}
+};
+
+
+/*
+*  this.props.router - 我的课程 中的引用
+*  this.props.isShow - 24堂课 列表勾选
+*  this.props.url - 视频 、音频
+* */
 
 class CourseItem extends Component{
 
-    handleClick(selectId ,isShow){
-        console.log(selectId)
-        if(!isShow){
+    constructor(props){
+        super(props);
+        this.state = {
+            fullpage_show: false,
+            showLoading: false,
+            videoStyle: '0px'
+        }
+    }
+
+    handleClick(selectId ,isShow, url){
+        console.log(selectId);
+        if(!isShow && !url){
             hashHistory.push({
                 pathname: `/course/${selectId}`,
                 query: {itemType: 29 ,itemId: selectId}
             })
         }
+        
+        if(url){
+            this.videoPlay(this.refs.video);
+        }
+    }
+
+    videoPlay(videoDom) {
+        this.setState({
+            fullpage_show: true,
+            videoStyle: -this.refs.video.offsetHeight/2+'px'
+        })
+        videoDom.play();
     }
 
     chooseItem(course ,event){
@@ -57,8 +87,34 @@ class CourseItem extends Component{
                 className={this.props.router?'router':''}
                 type="appmsg"
                 href="javascript:void(0);"
-                onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow)}
+                onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow,  this.props.url)}
             >
+
+                <Popup
+                    show={this.state.fullpage_show}
+                    onClick={(event)=>{
+                        event.stopPropagation();
+                        this.refs.video.pause();
+                        this.setState({
+                            fullpage_show: false
+                        })
+                    }}
+                >
+                    <Toast icon="loading" show={this.state.showLoading}>Loading...</Toast>
+                    <div style={{height: '100vh', overflow: 'scroll'}}>
+                        <video controls loop
+                               style={{marginTop: this.state.videoStyle}}
+                               onClick={(event)=>{
+                                    event.stopPropagation();
+                                 }}
+                               src={this.props.url}
+                               type="video/mp4"
+                               ref="video"
+                        />
+                    </div>
+                </Popup>
+
+
                 { !this.props.course.isShow &&
                     <MediaBoxHeader>
                         <img src={this.props.course.minPic} role="presentation" />
@@ -81,7 +137,6 @@ class CourseItem extends Component{
                     <MediaBoxDescription>
                         {this.props.router ? '' : '已经更新9期|19人订阅 '}
                     </MediaBoxDescription>
-
                     { !this.props.router &&
                         <MediaBoxDescription>
                             { typeStr(this.props.course.type) }
@@ -92,7 +147,7 @@ class CourseItem extends Component{
                     }
                     { this.props.router==='one' &&
                         <MediaBoxDescription className='router'>
-                            广州 【2017/02/15、9】
+                            {this.props.course.subtitle}{timestampFormat(this.props.course.startTime)}
                         </MediaBoxDescription>
                     }
                     { this.props.router==='two' &&
@@ -105,7 +160,6 @@ class CourseItem extends Component{
                             <i />
                         </MediaBoxDescription>
                     }
-
                 </MediaBoxBody>
             </MediaBox>
         )

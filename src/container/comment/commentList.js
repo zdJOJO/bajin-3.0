@@ -9,14 +9,13 @@ import './index.css';
 import {Dialog} from 'react-weui';
 import HeaderBar from '../../components/headerNav/headBar';
 import CommentItem from '../../components/comment/commentItem';
-import {Button ,LoadMore ,PanelHeader ,Toast} from 'react-weui';
+import {Button ,LoadMore ,PanelHeader ,Toast, Popup} from 'react-weui';
 
-import {getCommentList ,dispatchAction} from '../../actions/commentAction';
+import {getCommentList ,dispatchAction, changeImgList} from '../../actions/commentAction';
 import {showDialog} from '../../actions/publicAction'
 
 import pic from '../../img/pic.png'
 
-// let page = 0;
 class CommentList extends Component{
     constructor(props){
         super(props)
@@ -29,7 +28,9 @@ class CommentList extends Component{
                         onClick: ()=>{showDialog(false)}
                     }
                 ]
-            }
+            },
+            fullpage_show: false,
+            imgFiles: []
         }
     }
 
@@ -73,10 +74,9 @@ class CommentList extends Component{
         )
     }
 
-
     publishComment(){
-        const {  dispatchAction, isFather ,fatherId ,showDialog ,
-            commentContent ,headerStrLength ,headerStr
+        const {  dispatchAction, isFather ,fatherId ,showDialog,
+            commentContent ,headerStrLength ,headerStr, imgList
         } = this.props;
         if(!commentContent){
             showDialog(true)
@@ -101,24 +101,38 @@ class CommentList extends Component{
 
                     isFather: isFather, //0表示父级，1表示子集，
                     fatherId: fatherId,  //如果是子集在上送的时候请添加该字段
-                    imgList: [
-                        {
-                            pic: "http://h.hiphotos.baidu.com/zhidao/pic/item/3ac79f3df8dcd100ad7f666b738b4710b8122f9c.jpg"
-                        },
-                        {
-                            pic: "http://h.hiphotos.baidu.com/zhidao/pic/item/3ac79f3df8dcd100ad7f666b738b4710b8122f9c.jpg"
-                        }
-                    ]
+                    imgList: imgList
                 }
             }
         )
     }
 
+    handleAddImg(e){
+        const { dispatchAction, imgList } = this.props;
+        if(this.state.imgFiles.length === 3){
+            return
+        }
+        let thisComponent = this;
+        let reader = new FileReader();
+        reader.onload = (function (file) {
+            return event => {
+                thisComponent.setState({
+                    imgFiles: thisComponent.state.imgFiles.concat({pic: event.target.result})
+                })
+                dispatchAction(4,{
+                    imgBase: event.target.result,
+                    imgList: imgList
+                })
+            };
+        })(e.target.files[0]);
+        reader.readAsDataURL(e.target.files[0]);
+    }
+
     render(){
         const {
             commentList, getCommentList, currentPage, isLoading, isListNull ,
-            commentContent,
-            isDialogShow, isShowToastLoading, isShowToastSuccess
+            commentContent, fatherId,
+            isDialogShow, isShowToastLoading, isShowToastSuccess, changeImgList
         } = this.props;
         return(
             <div>
@@ -168,12 +182,20 @@ class CommentList extends Component{
                         >点击加载更多评论</Button>
                         }
                         { isLoading &&
-                        <LoadMore loading>Loading</LoadMore>
+                            <LoadMore loading>Loading</LoadMore>
                         }
                     </PanelHeader>
                 </section>
                 <div id="publishCmt">
-                    <div className="img"><img role="presentation" src={pic}/></div>
+                    <div className="img" onClick={()=>{
+                        if(!fatherId){
+                            this.setState({fullpage_show: true})
+                        }else {
+                            return false
+                        }
+                    }}>
+                        <img role="presentation" src={pic}/>
+                    </div>
                     <input type="text"
                            placeholder='请填写评论'
                            value={commentContent}
@@ -183,6 +205,30 @@ class CommentList extends Component{
                             onClick={this.publishComment.bind(this)}
                     >发表</Button>
                 </div>
+                <Popup show={this.state.fullpage_show}>
+                    <HeaderBar content="添加图片" type="3" onClick={
+                        ()=>{
+                            this.setState({
+                                fullpage_show:false,
+                                imgFiles:[]
+                            })
+                            changeImgList([]);
+                        }}/>
+                    <div style={{height: '93vh', overflow: 'hidden', marginTop:'0.4rem'}}>
+                        <input type="file" id="addImg" ref="addImg" multiple onChange={this.handleAddImg.bind(this)}/>
+                        <label htmlFor="addImg" />
+                        <div className="imgList">
+                            {
+                                this.state.imgFiles.map((img,index)=>{
+                                    return(
+                                       <div key={index}><img role="presentation"  src={img.pic}/></div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                    <Button onClick={e=>this.setState({fullpage_show: false})}>完成</Button>
+                </Popup>
             </div>
         )
     }
@@ -202,6 +248,7 @@ function mapStateToProps(state) {
 
         isFather: state.commentReducer.isFather,
         fatherId: state.commentReducer.fatherId,
+        imgList:　state.commentReducer.imgList,
 
         isDialogShow: state.publicReducer.isDialogShow,
         isShowToastLoading: state.publicReducer.isShowToastLoading,
@@ -210,5 +257,5 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-    mapStateToProps,{getCommentList ,dispatchAction ,showDialog}
+    mapStateToProps,{getCommentList ,dispatchAction ,showDialog, changeImgList}
 )(CommentList)

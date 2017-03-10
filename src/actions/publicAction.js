@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/02/21 0021.
  */
 import cookie from 'react-cookie'
+import {hashHistory} from 'react-router'
 
 import {
     SHOW_DIALOG,
@@ -16,8 +17,7 @@ import {
 } from './actionTypes';
 
 import {dispatchFetchData} from './userAction'
-
-import {port} from '.././public/'
+import {port, isTokenExpired} from '.././public/'
 let token = cookie.load('token');
 
 //密文
@@ -63,10 +63,11 @@ export const showToastSuccess = isShowToastSuccess =>{
 
 
 //显示错误提示
-export const showDialog = isDialogShow =>{
+export const showDialog = (isDialogShow, errorStr) =>{
     return{
         type: SHOW_DIALOG,
-        isDialogShow
+        isDialogShow,
+        errorStr
     }
 }
 
@@ -100,7 +101,7 @@ export const setHeadPicSuccess =(pic)=>{
 
 
 //根据订单号 获取密文 GET
-const getOrderCiphertext = obj =>{
+export const getOrderCiphertext = obj =>{
     let url = '';
     if(obj.type === 'scmvOrder'){
         //视频 音频
@@ -108,6 +109,9 @@ const getOrderCiphertext = obj =>{
     }else if(obj.type === 19){
         //工行服务按钮
         url = port + '/card/bank/encryption/'+obj.pickId+'/'+obj.cardNumber+'?token='+token;
+    }else if(obj.type === 1){
+        //活动支付
+        url = port + '/card/bank/encryption/pay/'+obj.cardno+'/'+obj.applyId+'?token='+token;
     }
     return dispatch =>{
         return fetch(url)
@@ -143,7 +147,10 @@ const generateOrder = obj =>{
             price: obj.price,
             scmvOrderMapModels: obj.scmvOrderMapModels
         }
+    }else if(obj.type === 1){
+        data = obj.data
     }
+
     return dispatch =>{
         return fetch(url , {
             method: 'POST',
@@ -154,14 +161,33 @@ const generateOrder = obj =>{
         }).then( res =>{
             return res.json()
         }).then( json =>{
-            console.log('json is:')
-            console.log(json)
-            dispatch(getOrderCiphertext({
-                type: 'scmvOrder',
-                cardno: '3994',
-                scmvOrderId: json.data.id,
-                dom: obj.dom
-            }))
+            console.log('json is:', json);
+            isTokenExpired(json.code, function () {
+                if(json.code==='201'){
+                    if(obj.type === 'scmvOrder'){
+                        dispatch(getOrderCiphertext({
+                            type: 'scmvOrder',
+                            cardno: '3994',
+                            scmvOrderId: json.data.id,
+                            dom: obj.dom
+                        }))
+                    }else if(obj.type === 1){
+                        // if(data.applyPrice===0){
+                        //     console.log('价格是0，直接跳去 报名成功 页面')
+                        // }else {
+                        hashHistory.push({
+                            pathname : '/myBankCard',
+                            query: {
+                                type: 1,
+                                orderId: json.data.id
+                            }
+                        });
+                        // }
+                    }
+                }else {
+                    dispatch( showDialog(true, json.message))
+                }
+            });
         }).catch( e =>{
             console.log(e)
         })

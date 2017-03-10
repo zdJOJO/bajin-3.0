@@ -3,8 +3,8 @@
  */
 
 import {
-    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, SET_USERINFO_SUCCESS,
-    SET_HEADPIC_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
+    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS,
+    SET_USERINFO_SUCCESS, SET_HEADPIC_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
     SET_FEEDBACK_SHOW
 } from '../actions/actionTypes'
 
@@ -14,7 +14,12 @@ const initState = {
     bankCardList: [],
     userInfo:{},
     postImgList: [],  //上传用的图片列表
-    feedBackShow: false
+    feedBackShow: false,
+    myCourse:{
+        voice: [],
+        media: [],
+        course: []
+    }
 };
 
 export default function userReducer (state=initState, action) {
@@ -61,6 +66,17 @@ export default function userReducer (state=initState, action) {
             return{
                 ...state,
                 feedBackShow: action.feedBackShow
+            };
+        case GET_MYCOURSELIST_SUCCESS:
+            return{
+                ...state,
+                myCourse:{
+                    ...state.myCourse,
+                    voice: action.listObj.voice,
+                    media: action.listObj.media,
+                    course: action.listObj.course
+                }
+
             }
         default:
             return state

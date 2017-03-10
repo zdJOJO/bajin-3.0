@@ -203,7 +203,7 @@ export const postActInfo = infoObj =>{
 /*
 *  obj.type:
 *  1 - 查询用户报名情况
-*
+*  2 - 报名
 * */
 export const disPatchActFetch = (obj) => {
     return dispatch =>{

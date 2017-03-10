@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import HeadBar from '../../components/headerNav/headBar'
 import BankCardItem from '../../components/bankCardItem/index'
 import {dispatchFetchData} from '../../actions/userAction'
+import { getOrderCiphertext } from '../../actions/publicAction'
 import none from '../../img/bankList/none.png'
 import './index.css'
 
@@ -22,11 +23,22 @@ class BankCard extends Component{
 
     handleClick(cardNumber) {
         console.log('cardId is: ', cardNumber);
+        const { getOrderCiphertext } = this.props;
+        if(this.props.query.type==='1'){
+            //活动
+            console.log('活动订单id: ', this.props.query.orderId);
+            getOrderCiphertext({
+                type: 1,
+                cardno: cardNumber,
+                applyId:  this.props.query.orderId,
+                dom: this.refs.pay
+            });
+        }
     }
 
 
     render(){
-        const {bankCardList} = this.props;
+        const {bankCardList, ciphertext} = this.props;
         return(
             <div id="bankList">
                 <HeadBar content="我的银行卡" type="2"/>
@@ -55,6 +67,15 @@ class BankCard extends Component{
                        }
                    </div>
                 }
+
+                <form
+                    method="post"
+                    action="http://web.zj.icbc.com.cn/mobile/Pay.do?scene=pay"
+                    ref="pay"
+                >
+                    <input type="hidden" id="merSignMsg" name="merSignMsg" value={ciphertext}/>
+                    <input type="hidden" id="companyCis" name="companyCis" value="bjzx" />
+                </form>
             </div>
         )
     }
@@ -62,10 +83,11 @@ class BankCard extends Component{
 
 function mapStateToProps(state) {
     return{
-        bankCardList: state.userReducer.bankCardList
+        bankCardList: state.userReducer.bankCardList,
+        ciphertext: state.publicReducer.ciphertext
     }
 }
 
 export default connect(
-    mapStateToProps, {dispatchFetchData}
+    mapStateToProps, {dispatchFetchData, getOrderCiphertext}
 )(BankCard) ;

@@ -9,7 +9,7 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    //PUBLISH_COMMENT,
+    CHAGNE_PUBLISH_IMGLIST,
     CHANGE_HEADERSTR,
     CHANGE_COMMENT_VALUE
 } from './actionTypes';
@@ -21,13 +21,6 @@ import {
 String.prototype.trim = function(){
     return this.replace(/(^\s*)|(\s*$)/g, "");
 }
-
-//发表评论
-// const publishComment = ()=> {
-//     return {
-//         type: PUBLISH_COMMENT
-//     }
-// }
 
 
 //改变placeholder
@@ -41,7 +34,7 @@ const changeHeaderStr = (obj) =>{
         isFather,
         fatherId
     }
-}
+};
 
 
 //评论内容
@@ -55,8 +48,15 @@ const commentValue = obj =>{
         isFather,
         fatherId
     }
-}
+};
 
+//评论图片
+export const changeImgList = (list)=>{
+    return{
+        type:　CHAGNE_PUBLISH_IMGLIST,
+        list
+    }
+}
 
 //开始获取
 export const beginGetComment = (page)=> {
@@ -64,7 +64,7 @@ export const beginGetComment = (page)=> {
         type: BEGIN_GET_COMMENT,
         page
     }
-}
+};
 
 //获取成功
 export const doneGetComment = (data,isListNull,isInDetail) => {
@@ -74,7 +74,7 @@ export const doneGetComment = (data,isListNull,isInDetail) => {
         isListNull,
         isInDetail
     }
-}
+};
 
 //获取失败
 export const fallGetCommet = page => {
@@ -82,7 +82,9 @@ export const fallGetCommet = page => {
         type: FAIL_GET_COMMENT,
         page
     }
-}
+};
+
+
 
 
 
@@ -118,9 +120,9 @@ const fetchComment = obj => {
                 dispatch(fallGetCommet(obj.page));
             })
     }
-}
+};
 
-// 发表评论
+// 发表评论  POST
 const fetchPublishCmt = obj =>{
     return dispatch =>{
         let token = cookie.load('token');
@@ -161,7 +163,8 @@ const fetchPublishCmt = obj =>{
             dispatch(showToastSuccess(true))
             setTimeout(()=>{
                 dispatch(showToastSuccess(false))
-            },1200)
+            },1200);
+            dispatch(changeImgList([]));
             dispatch(fetchComment(obj.getCmtObj));
             dispatch(commentValue({
                 str: '',
@@ -173,7 +176,28 @@ const fetchPublishCmt = obj =>{
             dispatch(fallGetCommet())
         })
     }
-}
+};
+
+//上传图片  POST
+const upImg = (obj)=>{
+    return dispatch =>{
+        return fetch( port+"/card/file/base64.method?fileName=" + Math.floor(Math.random()*1000000)+".png" ,
+        {
+            method: 'POST',
+            body: obj.imgBase,
+        })
+            .then( res =>{
+                return res.json()
+            })
+            .then( json=>{
+                obj.imgList.push({pic: json.url});
+                dispatch(changeImgList(obj.imgList))
+            })
+            .catch( e =>{
+                console.log(e)
+            })
+    }
+};
 
 
 
@@ -184,13 +208,14 @@ export const getCommentList = (obj)=> {
     return (dispatch, getState) => {
         return dispatch(fetchComment(obj))
     }
-}
+};
 
 /*
 * type:
 * 1 : 修改placeholder
 * 2 : 发表评论
 * 3 : 获取评论内容
+* 4 : 上传图片
 * */
 export const dispatchAction =(type,obj)=>{
     return dispatch=>{
@@ -207,6 +232,8 @@ export const dispatchAction =(type,obj)=>{
             return dispatch(fetchPublishCmt(obj))
         }else if(type === 3){
             return dispatch(commentValue(obj))
+        }else {
+            return dispatch(upImg(obj))
         }
     }
-}
+};

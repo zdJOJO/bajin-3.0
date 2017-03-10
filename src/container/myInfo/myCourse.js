@@ -8,9 +8,10 @@ import HeaderBar from '../../components/headerNav/headBar'
 import HeaderNav from '../../components/headerNav/index'
 import CourseItem from '../../container/course/item'
 
+import { dispatchFetchData } from '../../actions/userAction'
+
 import '../../container/course/index.css'
 import './index.css'
-import {selectList} from '../../public/falseData'
 
 const menuList = [
     {
@@ -28,8 +29,15 @@ const menuList = [
 ];
 
 class MyCourse extends Component{
+
+    componentWillMount(){
+        const { dispatchFetchData } = this.props;
+        dispatchFetchData({type: 6});
+    }
+
+
     render(){
-        const {currentIndex} = this.props;
+        const {currentIndex, courseList,mediaList,voiceList} = this.props;
         return(
             <div id="myCourse" className="panel panel-default">
                 <div className="headerBox" style={{height: '0.7rem'}}>
@@ -38,49 +46,51 @@ class MyCourse extends Component{
                 </div>
                 <div id="select">
                     { currentIndex === 0 &&
-                    <section className="one">
-                        {
-                            selectList.map((course,index)=>{
-                                return(
-                                    <CourseItem
-                                        key={index}
-                                        course={course}
-                                        router="one"
-                                    />
-                                )
-                            })
-                        }
-                    </section>
+                        <section className="one">
+                            {
+                                courseList.map((course,index)=>{
+                                    return(
+                                        <CourseItem
+                                            key={index}
+                                            course={course}
+                                            router="one"
+                                        />
+                                    )
+                                })
+                            }
+                        </section>
                     }
                     { currentIndex === 1 &&
-                    <section className="two">
-                        {
-                            selectList.map((course,index)=>{
-                                return(
-                                    <CourseItem
-                                        key={index}
-                                        course={course}
-                                        router="two"
-                                    />
-                                )
-                            })
-                        }
-                    </section>
+                        <section className="two">
+                            {
+                                courseList.map((course,index)=>{
+                                    return(
+                                        <CourseItem
+                                            key={index}
+                                            course={course}
+                                            router="two"
+                                            url="http://media.w3.org/2010/05/sintel/trailer.mp4"
+                                        />
+                                    )
+                                })
+                            }
+                        </section>
                     }
                     { currentIndex === 2 &&
-                    <section className="three">
-                        {
-                            selectList.map((course,index)=>{
-                                return(
-                                    <CourseItem
-                                        key={index}
-                                        course={course}
-                                        router="three"
-                                    />
-                                )
-                            })
-                        }
-                    </section>
+                        <section className="three">
+                            {
+                                voiceList.map((course,index)=>{
+                                    return(
+                                        <CourseItem
+                                            key={index}
+                                            course={course}
+                                            router="three"
+                                            url={course.url}
+                                        />
+                                    )
+                                })
+                            }
+                        </section>
                     }
                 </div>
             </div>
@@ -90,10 +100,14 @@ class MyCourse extends Component{
 
 function mapStateToProps(state) {
     return {
-        currentIndex: state.menuReducer.courseNav.index
+        currentIndex: state.menuReducer.courseNav.index,
+
+        voiceList: state.userReducer.myCourse.voice,
+        mediaList: state.userReducer.myCourse.media,
+        courseList: state.userReducer.myCourse.course
     }
 }
 
 export default connect(
-    mapStateToProps,{}
+    mapStateToProps,{ dispatchFetchData }
 )(MyCourse);

@@ -20,8 +20,8 @@
 }
 #backTop.down{
     display: block;
-    animation: pop-down 0.8s;
-    bottom: -50px;
+    animation: pop-down 0.5s;
+    bottom: -75px;
 }
 
 

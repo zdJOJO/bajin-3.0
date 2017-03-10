@@ -27,11 +27,15 @@ export default class CommentItem extends Component{
         }
     }
 
+
+
     render(){
         return(
             <div className="singleCmt">
                 <div className="imgBox">
-                    <img role="presentation" src={this.props.comment.userModel.headPic===null ? headPic : this.props.comment.userModel.headPic}/>
+                    <img role="presentation"
+                         src={this.props.comment.userModel.headPic===null ? headPic : this.props.comment.userModel.headPic}
+                    />
                 </div>
                 <div className="cmtContent">
                     <li className="userName">
@@ -48,6 +52,17 @@ export default class CommentItem extends Component{
                         }
                     </li>
                     <li className="commentContent">{this.props.comment.commentContent}</li>
+                    { this.props.comment.imgList.length > 0 &&
+                        <li className="imgList" onClick={(e)=>{e.stopPropagation()}}>
+                            {
+                                this.props.comment.imgList.map((img, index)=>{
+                                    return(
+                                        <img role="presentation" key={index} src={img.pic}/>
+                                    )
+                                })
+                            }
+                        </li>
+                    }
                     { this.props.comment.commentReplyModels.length>0 &&
                         <div className="reply">
                             <i/>

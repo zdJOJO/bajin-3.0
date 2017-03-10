@@ -6,8 +6,8 @@ import {connect} from 'react-redux';
 
 import { getActDetail ,actShowMore ,actBackTop, disPatchActFetch} from '../../actions/activityAction';
 import { getCommentList } from  '../../actions/commentAction';
-import {disPatchFetchOrder ,showPayPopup, disPatchFetchList} from '../../actions/publicAction'
-import { timestampFormat, localstorageFn } from '../../public';
+import {disPatchFetchOrder ,showPayPopup, disPatchFetchList, showDialog} from '../../actions/publicAction'
+import { timestampFormat } from '../../public';
 
 
 import CommentIn from '../../components/comment/commentIn'
@@ -19,7 +19,7 @@ import HeadBar from '../../components/headerNav/headBar'
 import {
     PanelHeader,
     Button,
-    ActionSheet, Popup
+    ActionSheet, Popup, Dialog
 } from 'react-weui';
 
 import kefu from '../../img/detail/kefu.png';
@@ -29,14 +29,14 @@ import './index.css';
 class ActivityInfo extends Component{
     constructor(props){
         super(props)
-        const { showPayPopup} = this.props;
+        const { showPayPopup, showDialog} = this.props;
         this.state = {
             menus: [{
                 label: '银行卡支付',
                 onClick: this.handleSubmitOrderInfo.bind(this)
             }, {
                 label: '微信支付',
-                onClick: ()=> { console.log('微信支付')  }
+                onClick: ()=> { console.log('微信支付') }
             }],
             actions: [{
                     label: '取消',
@@ -46,9 +46,24 @@ class ActivityInfo extends Component{
             joinInfo:{
                 name: JSON.parse(localStorage.userInfo).userName,
                 phone: JSON.parse(localStorage.userInfo).phone,
-                num: '',
+                num: 1,
                 inviteCode: '',
                 reMark: ''
+            },
+            style2: {
+                title: '提示',
+                buttons: [
+                    {
+                        type: 'default',
+                        label: '知道了',
+                        onClick: ()=>{showDialog(false)}
+                    },
+                    {
+                        type: 'primary',
+                        label: '去绑卡',
+                        onClick: ()=>{showDialog(false); location.hash='#/myBankCard'}
+                    }
+                ]
             }
         }
     }
@@ -71,18 +86,24 @@ class ActivityInfo extends Component{
     }
 
     handleSubmitOrderInfo(){
-        const {activityInfo ,disPatchFetchOrder} = this.props;
+        const {activityInfo ,disPatchFetchOrder, showPayPopup} = this.props;
+        showPayPopup(false);
+        let data = {
+            activityId: activityInfo.activityId,
+            applyName: activityInfo.activityTitle,
+            applyPhone: this.state.joinInfo.phone,
+            applyGender: JSON.parse(window.localStorage.userInfo).gender,
+            applyNumber: this.state.joinInfo.num,
+            applyPrice : activityInfo.activityPrice *  this.state.joinInfo.num,
+            applyRemark: this.state.joinInfo.reMark,
+            //  icbcManger: '{userId}'   //在创建活动是需要带上这个字段，老版本可不带。主要用于客户经理邀约的情况
+        }
+        if(this.state.joinInfo.inviteCode){
+            data.inviteCode = this.state.joinInfo.inviteCode;
+        }
         disPatchFetchOrder({
             type: 1,
-            activityId: activityInfo.activityId,
-            applyName: "棒棒哒",
-            applyGender: "0",
-            applyPhone: "15757115779",
-            applyNumber: "100",
-            applyPrice: "10000",
-            applyRemark: "构造函数测试能否使用",
-            inviteCode: "297988405",
-            icbcManger: '{userId}'   //在创建活动是需要带上这个字段，老版本可不带。主要用于客户经理邀约的情况
+            data: data
         })
     }
 
@@ -101,7 +122,7 @@ class ActivityInfo extends Component{
     render(){
         const {
             activityInfo ,listInDetail ,rowCount,
-            isShowBackTop ,times ,actShowMore ,isShowMoreDetail,
+            isShowBackTop ,times ,actShowMore ,isShowMoreDetail, isDialogShow,errorStr,
             showPayPopup ,isShowPayPopup ,ciphertext, recommendedList,
             userActStatus,
         } = this.props;
@@ -126,7 +147,7 @@ class ActivityInfo extends Component{
                         actStatus = (<Button id="buy" className="default" >已报名</Button>);
                         break;
                     case 2:
-                        actStatus = (<Button id="buy" onClick={e=>this.setState({fullpage_show: true})} >活动已结束</Button>);
+                        actStatus = (<Button id="buy" className="default">活动已结束</Button>);
                         break;
                     case 3:
                         actStatus = (<Button id="buy" className="default">已停止报名</Button>);
@@ -135,7 +156,7 @@ class ActivityInfo extends Component{
                         actStatus = (<Button id="buy" className="default">报名人数已满</Button>);
                         break;
                     case 5:
-                        actStatus = (<Button id="buy">报名</Button>);
+                        actStatus = (<Button id="buy" onClick={e=>this.setState({fullpage_show: true})} >报名</Button>);
                         break;
                 }
             }
@@ -154,98 +175,6 @@ class ActivityInfo extends Component{
                          onScroll={this.handleScroll.bind(this)}
                     >
 
-                        <Popup
-                            show={this.state.fullpage_show}
-                            onRequestClose={e=>this.setState({fullpage_show: false})}
-                        >
-                            <div style={{height: '100vh', overflow: 'scroll'}}>
-                                <HeadBar content="填写报名信息" type="3" onClick={e=>this.setState({fullpage_show: false})}/>
-                                <div className="info">
-                                    <div className="actHead">
-                                        <img role="presentation" src={activityInfo.activityPic}/>
-                                        <div>
-                                            <p className="address">{activityInfo.activityTitle}</p>
-                                            <p className="time"> {
-                                                timestampFormat(activityInfo.startTime,true)+
-                                                ' - ' +timestampFormat(activityInfo.endTime,true)
-                                            }</p>
-                                        </div>
-                                    </div>
-                                    <ul className="infoBox">
-                                        <li>真实姓名:<input type="text" placeholder="请填写真实姓名 (不能为空)"
-                                                            value={this.state.joinInfo.name}
-                                                            onChange={(e)=>{
-                                                                this.setState({
-                                                                    ...this.state,
-                                                                    joinInfo:{
-                                                                        ...this.state.joinInfo,
-                                                                        name: e.target.value
-                                                                    }
-                                                                })
-                                                            }}
-                                        /></li>
-                                        <li>联系电话:<input type="tel" placeholder="请填写电话 (不能为空)"
-                                                        value={this.state.joinInfo.phone}
-                                                        onChange={(e)=>{
-                                                             this.setState({
-                                                              ...this.state,
-                                                                    joinInfo:{
-                                                                         ...this.state.joinInfo,
-                                                                          phone: e.target.value
-                                                                    }
-                                                              })
-                                                        }}
-                                        /></li>
-                                        <li>报名人数: <input type="number" placeholder="请填写参加人数(不能为空)"
-                                                         value={this.state.joinInfo.num}
-                                                         onChange={
-                                                         (e)=>{
-                                                             this.setState({
-                                                                  ...this.state,
-                                                                        joinInfo:{
-                                                                             ...this.state.joinInfo,
-                                                                              num: e.target.value
-                                                                        }
-                                                                  })
-                                                         }}
-                                        />人</li>
-                                        <li>报名费用: <span>{activityInfo.activityPrice===0 ? '会员专享' : '￥'+activityInfo.activityPrice+'元'}</span></li>
-                                    </ul>
-                                    <div className="jobNum">
-                                        <h3>受邀客户请填写:</h3>
-                                        <input type="tel" placeholder="邀约您的客户经理的统一认证柜员号（9位数）"
-                                               onChange={(e)=>{this.setState({...this.state.inviteCode, inviteCode: e.target.value})}}
-                                        />
-                                    </div>
-                                    <h3 className="note">备注:</h3>
-                                    <textarea className="note_q" type="text" placeholder="如有其他需求请在此备注"
-                                              onChange={(e)=>{this.setState({
-                                                    ...this.state,
-                                                    joinInfo:{
-                                                        ...this.state.joinInfo,
-                                                        reMark: e.target.value
-                                                    }
-                                              })}}
-                                    />
-                                </div>
-                                <Button  onClick={()=>{
-                                    let data = {
-                                         activityId: activityInfo.activityId,
-                                         applyName: activityInfo.activityTitle,
-                                         applyPhone: this.state.joinInfo.phone,
-                                         applyGender: JSON.parse(window.localStorage.userInfo).gender,
-                                         applyNumber: this.state.joinInfo.num,
-                                         applyPrice : activityInfo.activityPrice *  this.state.joinInfo.num,
-                                         applyRemark: this.state.joinInfo.reMark
-                                    }
-                                    if(this.state.joinInfo.inviteCode){
-                                         data.inviteCode = this.state.joinInfo.inviteCode;
-                                    }
-                                    console.log(data)
-                                }} >确认</Button>
-                            </div>
-                        </Popup>
-                        {/****************************/}
                         <div className="head">
                             <img src={activityInfo.maxPic} role="presentation"/>
                             <h3>{activityInfo.activityTitle}</h3>
@@ -262,8 +191,8 @@ class ActivityInfo extends Component{
                                     <span className="text">活动时间</span>
                                     <span className="value">
                                         {
-                                            timestampFormat(activityInfo.startTime,true)+
-                                            ' - ' +timestampFormat(activityInfo.endTime,true)
+                                            timestampFormat(activityInfo.startTime,1)+
+                                            ' - ' +timestampFormat(activityInfo.endTime,1)
                                         }
                                     </span>
                                 </li>
@@ -316,13 +245,99 @@ class ActivityInfo extends Component{
                         } />
 
                         <RelateList recommendedList={recommendedList} />
-
-                        <div id="footBuy" className="do">
-                            <img src={kefu} role="presentation" />
-                            <Button id="flow" type="default" plain>关注</Button>
-                            {actStatus}
-                        </div>
                     </div>
+                }
+
+                <div id="footBuy" className="do">
+                    <img src={kefu} role="presentation" />
+                    <Button id="flow" type="default" plain>关注</Button>
+                    {actStatus}
+                </div>
+
+                { activityInfo &&
+                    <Popup
+                            show={this.state.fullpage_show}
+                            onRequestClose={e=>this.setState({fullpage_show: false})}
+                            >
+                            <Dialog title={this.state.style2.title} buttons={this.state.style2.buttons} show={isDialogShow}>
+                            {errorStr}
+                            </Dialog>
+
+                            <div style={{height: '100vh', overflow: 'scroll'}}>
+                            <HeadBar content="填写报名信息" type="3" onClick={e=>this.setState({fullpage_show: false})}/>
+                            <div className="info">
+                            <div className="actHead">
+                            <img role="presentation" src={activityInfo.activityPic}/>
+                            <div>
+                            <p className="address">{activityInfo.activityTitle}</p>
+                            <p className="time"> {
+                            timestampFormat(activityInfo.startTime,1)+
+                            ' - ' +timestampFormat(activityInfo.endTime,1)
+                        }</p>
+                            </div>
+                            </div>
+                            <ul className="infoBox">
+                            <li>真实姓名:<input type="text" placeholder="请填写真实姓名 (不能为空)"
+                            value={this.state.joinInfo.name}
+                            onChange={(e)=>{
+                            this.setState({
+                                ...this.state,
+                                joinInfo:{
+                                    ...this.state.joinInfo,
+                                    name: e.target.value
+                                }
+                            })
+                        }}
+                            /></li>
+                            <li>联系电话:<input type="tel" placeholder="请填写电话 (不能为空)"
+                            value={this.state.joinInfo.phone}
+                            onChange={(e)=>{
+                            this.setState({
+                                ...this.state,
+                                joinInfo:{
+                                    ...this.state.joinInfo,
+                                    phone: e.target.value
+                                }
+                            })
+                        }}
+                            /></li>
+                            <li>报名人数: <input type="number" placeholder="请填写参加人数(不能为空)"
+                            value={this.state.joinInfo.num}
+                            onChange={
+                            (e)=>{
+                                this.setState({
+                                    ...this.state,
+                                    joinInfo:{
+                                        ...this.state.joinInfo,
+                                        num: e.target.value
+                                    }
+                                })
+                            }}
+                            />人</li>
+                            <li>报名费用: <span>{activityInfo.activityPrice===0 ? '会员专享' : '￥'+activityInfo.activityPrice+'元'}</span></li>
+                            </ul>
+                            <div className="jobNum">
+                            <h3>受邀客户请填写:</h3>
+                            <input type="tel" placeholder="邀约您的客户经理的统一认证柜员号（9位数）"
+                            onChange={(e)=>{this.setState({...this.state.inviteCode, inviteCode: e.target.value})}}
+                            />
+                            </div>
+                            <h3 className="note">备注:</h3>
+                            <textarea className="note_q" type="text" placeholder="如有其他需求请在此备注"
+                            onChange={(e)=>{this.setState({
+                            ...this.state,
+                            joinInfo:{
+                                ...this.state.joinInfo,
+                                reMark: e.target.value
+                            }
+                        })}}
+                            />
+                            </div>
+                            <Button  onClick={()=>{
+                            showPayPopup(true);
+                        }} >确认</Button>
+                            </div>
+                    </Popup>
                 }
 
                 <ActionSheet
@@ -332,16 +347,6 @@ class ActivityInfo extends Component{
                     type="ios"
                     onRequestClose={()=>{showPayPopup(false)}}
                 />
-
-                <form
-                    method="post"
-                    action="http://web.zj.icbc.com.cn/mobile/Pay.do?scene=pay"
-                    ref="pay"
-                >
-                    <input type="hidden" id="merSignMsg" name="merSignMsg" value={ciphertext}/>
-                    <input type="hidden" id="companyCis" name="companyCis" value="bjzx" />
-                </form>
-
             </div>
         )
     }
@@ -359,6 +364,8 @@ const mapStateToProps = (state)=> {
         rowCount: state.commentReducer.rowCount,
 
         isShowPayPopup: state.publicReducer.isShowPayPopup,
+        isDialogShow: state.publicReducer.isDialogShow,
+        errorStr:　state.publicReducer.errorStr,
         ciphertext: state.publicReducer.ciphertext,
         recommendedList: state.publicReducer.recommendedList,
 
@@ -371,7 +378,7 @@ export default connect(
     {
         getActDetail ,getCommentList,
         actShowMore ,actBackTop,
-        showPayPopup ,disPatchFetchOrder ,disPatchFetchList,
+        showPayPopup ,showDialog, disPatchFetchOrder ,disPatchFetchList,
         disPatchActFetch
     }
 )(ActivityInfo)

@@ -5,7 +5,7 @@
 import cookie from 'react-cookie'
 import {port, isTokenExpired, getUserInfoFn} from '../public'
 import {
-    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, 
+    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS,
     SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
     SET_FEEDBACK_SHOW
 } from './actionTypes';
@@ -59,6 +59,16 @@ export const changePostImgList = (list) =>{
         list
     }
 }
+
+
+//获取个人课程列表
+const getMyCourseListSuccess = (listObj)=>{
+    return{
+        type: GET_MYCOURSELIST_SUCCESS,
+        listObj
+    }
+}
+
 
 /******************************/
 
@@ -176,6 +186,26 @@ const upImg = (obj)=>{
 };
 
 
+// 我的课程列表
+const getMyCourseList =()=>{
+    return dispatch =>{
+        return fetch( port + '/card/scmvOrder/self?token='+cookie.load('token')+'&tp=' + parseInt(new Date().getTime()/1000))
+            .then( res =>{
+                return res.json()
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(getMyCourseListSuccess(json.data))
+                });
+            })
+            .catch(e=>{
+                console.log(e)
+            })
+    }
+}
+
+
+
 /*
 *  type:
 *  1 -  获取用户信息
@@ -183,6 +213,7 @@ const upImg = (obj)=>{
 *  3 - 设置更新用户信息
 *  4 -  提交反馈意见
 *  5 - 图片上传
+*  6 - 我的课程
 * */
 export const dispatchFetchData = (obj)=>{
     return dispatch =>{
@@ -206,6 +237,8 @@ export const dispatchFetchData = (obj)=>{
                 );
             case 5:
                 return dispatch(upImg(obj));
+            case 6:
+                return  dispatch(getMyCourseList());
             default:
                 return false
         }

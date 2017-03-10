@@ -24,7 +24,8 @@ const initState = {
     isShowToastSuccess: false,
     swipeIndex: 0,  //首页滑动
     recommendedList: [] ,//  产品内部推荐列表
-    isFullPopupShow: false   //满屏幕的popup
+    isFullPopupShow: false,   //满屏幕的popup
+    errorStr: ''
 };
 
 export default function publicReducer(state=initState, action){
@@ -32,7 +33,8 @@ export default function publicReducer(state=initState, action){
         case SHOW_DIALOG:
             return{
                 ...state,
-                isDialogShow: action.isDialogShow
+                isDialogShow: action.isDialogShow,
+                errorStr: action.errorStr || ''
             }
         case SHOW_PAY_POPUP:
             return{

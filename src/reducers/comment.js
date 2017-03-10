@@ -5,7 +5,7 @@ import {
     BEGIN_GET_COMMENT,
     DONE_GET_COMMENT ,
     FAIL_GET_COMMENT ,
-    // PUBLISH_COMMENT,
+    CHAGNE_PUBLISH_IMGLIST,
     CHANGE_HEADERSTR,
     CHANGE_COMMENT_VALUE
 } from '../actions/actionTypes';
@@ -22,7 +22,8 @@ const initState = {
     commentContent: '',
     listInDetail: [],  // 详情内的评论列表
     isFather: 0, // 回复评论时， 0-表示父级，1-表示子集.
-    fatherId: 0 // 点击回复那条评论的id, 不点击为0 （ 如果是子集在上送的时候请添加该字段）
+    fatherId: 0, // 点击回复那条评论的id, 不点击为0 （ 如果是子集在上送的时候请添加该字段）
+    imgList: [] // 发表评论时的 图片列表
 };
 
 export default function commentReducer(state=initState ,action){
@@ -71,6 +72,12 @@ export default function commentReducer(state=initState ,action){
                     isFather: action.isFather,
                     fatherId: action.fatherId
                 }
+            }
+            break
+        case CHAGNE_PUBLISH_IMGLIST:
+            return{
+                ...state,
+                imgList: action.list
             }
         default:
             return state;

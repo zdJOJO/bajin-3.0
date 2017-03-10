@@ -32,31 +32,32 @@ export const token = cookie.load('token');
 // 路由根目录。
 export const rootPath =()=>{
     return dev ? '/test' : '/bcard';
-}
+};
 
 
-//
-export const appid = '';
-
-
-//通用函数 时间戳转换成 固定格式
-     // isAll：true  输出完整格式 年月日时分秒
-    // isAll：false  输出完整格式 年月日
-export const timestampFormat = (timestamp,isAll)=> {
+/* 通用函数 时间戳转换成 固定格式
+*  type 取值：
+*   1 -  输出完整格式 年月日时分秒  2011.12.31 2:30:30
+*   2 - 输出完整格式 年月日  2011.12.31
+*   3 - 输出完整格式 年月日  2012/03/15
+* */
+export const timestampFormat = (timestamp, type)=> {
     const y = new Date(timestamp*1000).getFullYear();
     const m = new Date(timestamp*1000).getMonth()+1>9?(new Date(timestamp*1000).getMonth()+1):'0'+(new Date(timestamp*1000).getMonth()+1);
     const d = new Date(timestamp*1000).getDate()>9?new Date(timestamp*1000).getDate():'0'+new Date(timestamp*1000).getDate();
     const h = new Date(timestamp*1000).getHours()>9?new Date(timestamp*1000).getHours():'0'+new Date(timestamp*1000).getHours();
     const f = new Date(timestamp*1000).getMinutes()>9?new Date(timestamp*1000).getMinutes():'0'+new Date(timestamp*1000).getMinutes();
     // const s = new Date(timestamp*1000).getSeconds()>9?new Date(timestamp*1000).getSeconds():'0'+new Date(timestamp*1000).getSeconds();
-    if(isAll){
+    if(type===1){
         if((h === '00' || h === '23')&&( f === '00' || f === '59')){
             return (y+'.'+m+'.'+d);
         }else {
             return (y+'.'+m+'.'+d+' '+h+':'+f);
         }
-    }else {
+    }else if(type===2){
         return (y+'.'+m+'.'+d);
+    }else {
+        return ('【'+y+'/'+m+'/'+d+'】');
     }
 };
 
@@ -73,7 +74,7 @@ export const isTokenExpired = (code, callback) =>{
     }else {
         callback();
     }
-}
+};
 
 
 
