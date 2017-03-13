@@ -44,7 +44,4 @@ class Content extends Component{
     }
 }
 
-
-
-
 export default connect()(Content);

@@ -91,9 +91,16 @@ header span{
 
 .headBar >.back{
     position: absolute;
-    left: 0.15rem;
     font-size: 25px;
     font-weight: bold;
+    display: inline-block;
+    width: 0.2rem;
+    height: 0.2rem;
+    background: url("../../img/back.svg") no-repeat;
+    background-size: 100%;
+    left: 0.15rem;
+    top: 50%;
+    margin-top: -0.1rem;
 }
 
 

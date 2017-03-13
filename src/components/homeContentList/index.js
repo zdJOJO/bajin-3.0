@@ -2,6 +2,7 @@
  * Created by Administrator on 2017/02/28 0028.
  */
 import React,{Component} from 'react';
+import {hashHistory} from 'react-router'
 
 import './index.css'
 
@@ -10,6 +11,19 @@ class HomeContentList extends Component{
 
     handlerScroll(e){
         e.preventDefault();
+    }
+
+    handleGo(type, id){
+        id = 7 ;
+        if(type === 3){
+            hashHistory.push({
+                pathname: `/good/${id}`,
+                query: {
+                    itemType: 3,
+                    itemId: id
+                }
+            });
+        }
     }
 
     render(){
@@ -22,11 +36,11 @@ class HomeContentList extends Component{
                 {
                     this.props.list.map( (item, index)=>{
                         return(
-                            <li key={index}>
+                            <li key={index} onClick={this.handleGo.bind(this, this.props.type, item.id)}>
                                 <div className="imgBox">
                                     <img role="presentation" src={item.pic}/>
                                 </div>
-                                { (this.props.type === 1 ||this.props.type === 2) &&
+                                { (this.props.type === 1 || this.props.type === 2) &&
                                     <span>{item.title}</span>
                                 }
                                 { this.props.type === 3 &&

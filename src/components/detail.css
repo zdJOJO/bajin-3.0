@@ -155,6 +155,7 @@
 
 #selectDetail .body>.detailInfo>.content{
     z-index: -2;
+    padding: 0 0.1rem;
 }
 
 #selectDetail .body>.detailInfo>.content img{

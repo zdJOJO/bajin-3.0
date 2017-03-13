@@ -313,7 +313,15 @@
 
 }
 
-#footBuy>img{
+/*#footBuy>img{*/
+    /*width: 0.22rem;*/
+    /*height: 0.22rem;*/
+    /*margin: 0.06rem 0.45rem 0;*/
+/*}*/
+#footBuy i{
+    display: block;
+    background: url("../../img/detail/kefu.png") no-repeat;
+    background-size: 100%;
     width: 0.22rem;
     height: 0.22rem;
     margin: 0.06rem 0.45rem 0;

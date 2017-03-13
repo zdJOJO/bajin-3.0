@@ -28,10 +28,7 @@ export default class CommentIn extends Component{
             return parseInt(preTime/3600/24/365,10)+"年前";
         }
     }
-
-    handleClick(){
-        console.log('查看更多的评论')
-    }
+    
 
     render(){
         return(
@@ -80,10 +77,10 @@ export default class CommentIn extends Component{
                  }}
                 >
                     { this.props.commentObj.rowCount === 0 &&
-                        <PanelHeader onClick={this.handleClick.bind(this)}>点击去抢沙发</PanelHeader>
+                        <PanelHeader>点击去抢沙发</PanelHeader>
                     }
                     { this.props.commentObj.rowCount > 0 &&
-                        <PanelHeader onClick={this.handleClick.bind(this)}>
+                        <PanelHeader>
                             查看全部{this.props.commentObj.rowCount}条评论
                         </PanelHeader>
                     }

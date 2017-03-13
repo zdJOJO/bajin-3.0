@@ -5,7 +5,8 @@
 import cookie from 'react-cookie'
 import {port, isTokenExpired, getUserInfoFn} from '../public'
 import {
-    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS,
+    GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS, GET_MYGIFTSLIST_SUCCESS,
+    GET_GIFTDETAIL_SUCCESS,
     SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
     SET_FEEDBACK_SHOW
 } from './actionTypes';
@@ -18,7 +19,7 @@ export const setFeedBackShow =(feedBackShow)=>{
         type: SET_FEEDBACK_SHOW,
         feedBackShow
     }
-}
+};
 
 // 获取 用户个人信息
 const getUserInfoSuccess = (info)=>{
@@ -50,7 +51,7 @@ const feedBackSuccess = () =>{
     return{
         type: FEEDBACK_SUCCESS
     }
-}
+};
 
 //修改 图片数组
 export const changePostImgList = (list) =>{
@@ -58,7 +59,7 @@ export const changePostImgList = (list) =>{
         type: CAHNGE_POST_IMGLIST,
         list
     }
-}
+};
 
 
 //获取个人课程列表
@@ -67,11 +68,27 @@ const getMyCourseListSuccess = (listObj)=>{
         type: GET_MYCOURSELIST_SUCCESS,
         listObj
     }
-}
+};
 
 
-/******************************/
+//礼包中心获取成功
+const getMyGiftsListSuccess = (list) =>{
+    return{
+        type: GET_MYGIFTSLIST_SUCCESS,
+        list
+    }
+};
 
+//详情获取成功
+const getGiftDetailSuccess =(info)=>{
+    return{
+        type: GET_GIFTDETAIL_SUCCESS,
+        info
+    }
+};
+
+
+/*****************************************/
 //获取用户个人信息 GET
 const getUserInfo =()=>{
     let url = port + '/card/user?token=' + cookie.load('token');
@@ -95,7 +112,7 @@ const getUserInfo =()=>{
 // 获取银行卡列表  GET
 const getBankList =()=>{
     return dispatch =>{
-        return fetch( port + '/card/card?token=' + cookie.load('token'))
+        return fetch( port + '/card/card?token=' + cookie.load('token') )
             .then( res =>{
                 return res.json()
             })
@@ -166,7 +183,8 @@ const feedBackPost = (obj)=>{
     }
 };
 
-//图片上传
+
+//图片上传  POST
 const upImg = (obj)=>{
     return dispatch=>{
         dispatch(showToastLoading(true));
@@ -186,7 +204,7 @@ const upImg = (obj)=>{
 };
 
 
-// 我的课程列表
+// 我的课程列表 GET
 const getMyCourseList =()=>{
     return dispatch =>{
         return fetch( port + '/card/scmvOrder/self?token='+cookie.load('token')+'&tp=' + parseInt(new Date().getTime()/1000))
@@ -202,9 +220,41 @@ const getMyCourseList =()=>{
                 console.log(e)
             })
     }
-}
+};
 
 
+// 礼品中心
+const getMyGiftList = (obj)=>{
+    return dispatch =>{
+        return fetch('')
+            .then( res=>{
+                return res.json();
+            })
+            .then( json =>{
+                dispatch(getMyGiftsListSuccess(json.data))
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+
+
+//礼包详情
+const getGiftDetail = (obj)=>{
+    return dispatch =>{
+        return fetch('')
+            .then( res=>{
+                return res.json();
+            })
+            .then( json =>{
+                dispatch(getGiftDetailSuccess(json.data))
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
 
 /*
 *  type:
@@ -213,14 +263,15 @@ const getMyCourseList =()=>{
 *  3 - 设置更新用户信息
 *  4 -  提交反馈意见
 *  5 - 图片上传
-*  6 - 我的课程
+*  6 - 我的课程列表
+*  7 - 礼包中心列表
+*  8- 礼包详情
 * */
 export const dispatchFetchData = (obj)=>{
     return dispatch =>{
         switch (obj.type){
             case 1:
                 return dispatch(getUserInfo(obj));
-                return
             case 2:
                 return dispatch(getBankList(obj));
             case 3:
@@ -239,6 +290,10 @@ export const dispatchFetchData = (obj)=>{
                 return dispatch(upImg(obj));
             case 6:
                 return  dispatch(getMyCourseList());
+            case 7:
+                return dispatch(getMyGiftList(obj));
+            case 8:
+                return dispatch(getGiftDetail(obj));
             default:
                 return false
         }

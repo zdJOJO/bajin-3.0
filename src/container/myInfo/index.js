@@ -85,10 +85,18 @@ class MyInfo extends Component{
 
     componentWillMount(){
         const {dispatchFetchData, showFullPopup} = this.props;
-        dispatchFetchData({
-            type: 1
-        })
-        showFullPopup(false)
+
+        showFullPopup(false);
+        
+        if(cookie.load('token')){
+            dispatchFetchData({
+                type: 1
+            });
+        }else {
+            hashHistory.push({
+                pathname: '/login'
+            })
+        }
     }
 
     handleClick(path){
@@ -213,7 +221,7 @@ class MyInfo extends Component{
                         }
                     </li>
                     <MyLi title="我的课程" onClick={this.handleClick.bind(this, "#/myCourse")}/>
-                    <MyLi title="我的礼包"/>
+                    <MyLi title="我的礼包" onClick={this.handleClick.bind(this, "#/myGift")}/>
                     <MyLi title="我的收藏"/>
                     <MyLi title="银行卡管理" onClick={this.handleClick.bind(this, "#/myBankCard")}/>
                     <MyLi title="意见反馈"  content="告诉我们您的宝贵意见"

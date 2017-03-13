@@ -161,7 +161,7 @@ class SelectDetail extends Component{
                 </div>
 
                 <div id="footBuy" className="do">
-                    <img src={kefu} role="presentation" />
+                    <i/>
                     <Button id="flow" type="default" plain>关注</Button>
                     <Button id="buy" 
                             onClick={()=>{showPayPopup(true)}}

@@ -16,6 +16,7 @@ import my_active from '../img/menu/my_active.png'
 
 import {handleChangeTab ,changeSub} from '../actions/menuAction'
 
+
 const menu = [
     {
         menuName: '首页',
@@ -51,7 +52,7 @@ class Menu extends Component{
          }else if(location.hash==='#/course'||location.hash==='#/course/select'||location.hash==='#/course/two4Class'){
              handleChangeTab(2);
              if(location.hash==='#/course/two4Class'){
-                 changeSub('course',1)
+                 changeSub('course',1);
              }
          }else if(location.hash==='#/myInfo'){
              handleChangeTab(3);

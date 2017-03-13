@@ -77,7 +77,7 @@ class ActivityInfo extends Component{
             page: 0,
             isListNull: false,
             isInDetail: true
-        })
+        });
         disPatchFetchList(this.props.location.query.itemId);
         disPatchActFetch({
             type: 1,
@@ -249,7 +249,7 @@ class ActivityInfo extends Component{
                 }
 
                 <div id="footBuy" className="do">
-                    <img src={kefu} role="presentation" />
+                    <i/>
                     <Button id="flow" type="default" plain>关注</Button>
                     {actStatus}
                 </div>

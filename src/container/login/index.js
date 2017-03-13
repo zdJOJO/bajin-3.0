@@ -198,6 +198,7 @@ class Login extends Component{
                 }
                 { tab==="login" &&
                     <div className="login">
+                        <i className="backHome" onClick={()=>{ location.hash = '/'} }/>
                         <img  role="presentation" src={logo} />
                         <div className="content">
                             <LoginInput typeStr="tel" placeholder="请输入手机号" getValue={this.getInputValue.bind(this)}/>

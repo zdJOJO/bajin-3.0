@@ -13,6 +13,13 @@ import { upImgFn, showDialog, showFullPopup, showToastLoading } from '../../acti
 import code from '../../img/userInfo/code.png';
 import './index.css'
 
+const sexNumberWord =(num)=>{
+    return{
+        str: num===1 ? '男' : '女'
+    }
+};
+
+
 class SetInfo extends  Component{
 
     constructor(props){
@@ -199,13 +206,6 @@ class SetInfo extends  Component{
         )
     }
 }
-
-const sexNumberWord =(num)=>{
-    return{
-        str: num===1 ? '男' : '女'
-    }
-};
-
 
 function mapStateToProps(state) {
     return{

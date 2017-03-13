@@ -11,7 +11,7 @@ export const handleChangeTab = index => {
         type: CHANGE_MENU_TAB,
         index
     }
-}
+};
 
 export const changeSub =(typeStr,index)=>{
     return {
@@ -19,4 +19,4 @@ export const changeSub =(typeStr,index)=>{
         typeStr,
         index
     }
-}
+};

@@ -3,6 +3,7 @@
  */
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
+import cookie from 'react-cookie';
 
 import Menu from '../../router/menu'
 import Myswiper from '../swiper/index'
@@ -22,7 +23,11 @@ class Home extends Component{
             type: 3,
             page: 1
         });
-        dispatchFetchData({type: 2})
+
+        // 如果存在token，就去请求银行卡列表
+        if(cookie.load('token')){
+            dispatchFetchData({type: 2});
+        }
     }
 
     render(){

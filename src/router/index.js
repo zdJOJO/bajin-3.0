@@ -15,11 +15,13 @@ import SelectDetail from '../container/course/selectDetail'
 
 import MyInfo from '../container/myInfo'
 import MyCourse from '../container/myInfo/myCourse'
+import MyGift from '../container/myInfo/myGift'
 import BankCard from '../container/bankCard'
 import SetInfo from '../container/myInfo/set'
 
-import Login from '../container/login'
+import GoodDetail from '../container/good'
 import CommentList from '../container/comment/commentList'
+import Login from '../container/login'
 
 
 export const routeConfig = [
@@ -37,14 +39,20 @@ export const routeConfig = [
                     { path: 'two4Class', component: Two4Class }
                 ]
             },
-            {path: 'myInfo', component: MyInfo },
+
+            { path: 'myInfo', component: MyInfo },
             { path: 'myCourse', component: MyCourse },
             { path: 'myBankCard', component: BankCard },
+            { path: 'myGift', component: MyGift },
             { path: 'set', component: SetInfo },
-            { path: 'login', component: Login },
+
+
             { path: 'comment', component: CommentList },
             { path: 'activity/:activityId', component: ActivityInfo },
-            { path: 'course/:selectId', component: SelectDetail }
+            { path: 'course/:selectId', component: SelectDetail },
+            { path: 'good/:goodId', component: GoodDetail },
+
+            { path: 'login', component: Login }
         ]
     }
 ]

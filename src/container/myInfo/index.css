@@ -377,5 +377,97 @@
 }
 
 
+/**** #myGift  个人礼包中心  ****/
+#myGift{
+    padding-top: 0.4rem;
+}
+
+#myGift>.list{
+    width: 100%;
+    border-top: 1px #e5e5e5 solid;
+}
+
+#myGift>.list>.itemGift{
+    float: left;
+    width: 1.59rem;
+    height: 1.59rem;
+    position: relative;
+}
+
+#myGift>.list>.itemGift:nth-child(odd){
+    border: 1px #e5e5e5 solid;
+    border-top: none;
+}
+
+#myGift>.list>.itemGift:nth-child(even){
+    border-bottom: 1px  #e5e5e5  solid;
+}
+
+#myGift>.list>.itemGift>img{
+    width: 0.84rem;
+    height: 0.63rem;
+    background: #ddbb52;
+    border-radius: 3px;
+    margin: 0.3rem 0 0.135rem 0 ;
+    vertical-align: middle
+}
+
+#myGift>.list>.itemGift>.status{
+    position: absolute;
+    top: 0.09rem;
+    left: 0.08rem;
+    font-size: 12px;
+    color: #b9984f;
+}
+#myGift>.list>.itemGift>.status.status-1{
+    color: #909090;
+}
+#myGift>.list>.itemGift>.status.status-2{
+    color: #dc7f7f;
+}
+
+#myGift>.list>.itemGift>div{
+    width: 90%;
+    padding: 0 0.08rem;
+    text-align: left;
+    float: left;
+}
+
+#myGift>.list>.itemGift .giftName{
+    display: block;
+    color: #323232;
+    font-size: 16px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#myGift>.list>.itemGift .time{
+    display: block;
+    color: #909090;
+    font-size: 12px;
+}
+
+#myGift .actDetail>.back{
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
+    background: url("../../img/back-white.svg") no-repeat 50%;
+    background-size: 60%;
+    position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
