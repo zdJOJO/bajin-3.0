@@ -17,7 +17,7 @@ import MyInfo from '../container/myInfo'
 import MyCourse from '../container/myInfo/myCourse'
 import MyGift from '../container/myInfo/myGift'
 import BankCard from '../container/bankCard'
-import SetInfo from '../container/myInfo/set'
+import MyAddress from '../container/myInfo/address'
 
 import GoodDetail from '../container/good'
 import CommentList from '../container/comment/commentList'
@@ -44,7 +44,7 @@ export const routeConfig = [
             { path: 'myCourse', component: MyCourse },
             { path: 'myBankCard', component: BankCard },
             { path: 'myGift', component: MyGift },
-            { path: 'set', component: SetInfo },
+            { path: 'myAddress', component: MyAddress },
 
 
             { path: 'comment', component: CommentList },

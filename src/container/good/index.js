@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import CommentIn from '../../components/comment/commentIn'
 import {
     PanelHeader,
-    Button,
+    Button,LoadMore,
     ActionSheet, Popup, Dialog
 } from 'react-weui';
 
@@ -81,52 +81,57 @@ class GoodDetail extends Component {
         };
         return(
             <div id="goodDetail" className="panel panel-default">
-                <div id="selectDetail" className="actDetail" style={{bottom: 0}}>
-                    <div className="head">
-                        <img src="http://card2016.oss-cn-hangzhou.aliyuncs.com/96e8c797405338a8f5f236bd96a7203a.jpg" role="presentation" />
-                        <h3>{goodDetail.goodsTitle}</h3>
-                        <div>
-                            <div className="weui-panel__hd">
-                                <span className="act gifDetail" style={style}>{goodDetail.goodsSubtitle}</span>
+                { goodDetail &&
+                    <div id="selectDetail" className="actDetail" style={{bottom: 0}}>
+                        <div className="head">
+                            <img src={goodDetail.maxPic} role="presentation" />
+                            <h3>{goodDetail.goodsTitle}</h3>
+                            <div>
+                                <div className="weui-panel__hd">
+                                    <span className="act gifDetail" style={style}>{goodDetail.goodsSubtitle}</span>
+                                </div>
+                                <div className="weui-panel__hd"></div>
                             </div>
-                            <div className="weui-panel__hd"></div>
+                            <div className="sku">
+                                <p className="price">
+                                    <span>尊享价</span>
+                                    <span>￥{chooseSku.skuPrice?chooseSku.skuPrice.toFixed(2):'0000.00'}</span>
+                                    <span>市场价:￥{chooseSku.marketPrice?chooseSku.marketPrice.toFixed(2):'0000.00'}</span>
+                                </p>
+                                <p className="hasChoose"
+                                   onClick={()=>{this.setState({showSku: true})}}
+                                >已选: {chooseSku.skuGague} × {this.state.number}</p>
+                            </div>
                         </div>
-                        <div className="sku">
-                            <p className="price">
-                                <span>尊享价</span>
-                                <span>￥{chooseSku.skuPrice?chooseSku.skuPrice.toFixed(2):'0000.00'}</span>
-                                <span>市场价:￥{chooseSku.marketPrice?chooseSku.marketPrice.toFixed(2):'0000.00'}</span>
-                            </p>
-                            <p className="hasChoose"
-                               onClick={()=>{this.setState({showSku: true})}}
-                            >已选: {chooseSku.skuGague} × {this.state.number}</p>
-                        </div>
-                    </div>
-                    <CommentIn commentObj={
-                            {
-                                itemType: 3,
-                                itemId: goodDetail.goodsId,
-                                rowCount: rowCount,
-                                commentList: listInDetail
+                        <CommentIn commentObj={
+                                {
+                                    itemType: 3,
+                                    itemId: goodDetail.goodsId,
+                                    rowCount: rowCount,
+                                    commentList: listInDetail
+                                }
                             }
-                        }
-                    />
-                    <div className="body" style={{borderBottom: 'none'}}>
-                        <h3 className="tab">
-                            <span className={this.state.index === 1 ? 'active' : ''} onClick={()=>{this.setState({index: 1})}}>商品详情</span>
-                            <span className={this.state.index === 2 ? 'active' : ''} onClick={()=>{this.setState({index: 2})}}>产品参数</span>
-                        </h3>
-                        <div className="detailInfo">
-                            { this.state.index === 1 &&
+                        />
+                        <div className="body" style={{borderBottom: 'none'}}>
+                            <h3 className="tab">
+                                <span className={this.state.index === 1 ? 'active' : ''} onClick={()=>{this.setState({index: 1})}}>商品详情</span>
+                                <span className={this.state.index === 2 ? 'active' : ''} onClick={()=>{this.setState({index: 2})}}>产品参数</span>
+                            </h3>
+                            <div className="detailInfo">
+                                { this.state.index === 1 &&
                                 <div className="content" dangerouslySetInnerHTML={{__html:goodDetail.goodsDetail}}></div>
-                            }
-                            {  this.state.index === 2 &&
+                                }
+                                {  this.state.index === 2 &&
                                 <div className="content" dangerouslySetInnerHTML={{__html:goodDetail.goodsGauge}}></div>
-                            }
+                                }
 
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                { !goodDetail &&
+                    <LoadMore loading>Loading...</LoadMore>
+                }
 
                 <Popup
                     show={this.state.showSku}
@@ -197,7 +202,7 @@ function mapStateToProps(state) {
         chooseSku: state.detailReducer.chooseSku,
 
         listInDetail: state.commentReducer.listInDetail,
-        rowCount: state.commentReducer.rowCount,
+        rowCount: state.commentReducer.rowCount
     }
 }
 

@@ -4,7 +4,6 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
-import HeaderBar from '../../components/headerNav/headBar'
 import {Dialog, Toast, Popup, Button, Input} from 'react-weui'
 
 import { dispatchFetchData } from '../../actions/userAction'
@@ -46,25 +45,24 @@ class SetInfo extends  Component{
                         onClick: this.handleUpdateInfo.bind(this)
                     }
                 ]
-            }
+            },
+            codeShow: false  //我的二维码显示
         }
     }
 
-    componentWillMount(){
-        const { userInfo } = this.props;
-        // if(!userInfo.userName)
-        //     history.back(-1);
-    }
-
     handleClick(type){
-        const { showDialog, showFullPopup } = this.props;
+        const { showDialog } = this.props;
         if(type===1 || type===2){
             showDialog(true);
             this.setState({
                 type: type
             })
         }else if(type===3){
-            showFullPopup(true)
+            this.setState({
+                codeShow: true
+            })
+        }else if(type===4){
+           location.hash = '#/myAddress'
         }
     }
 
@@ -112,14 +110,11 @@ class SetInfo extends  Component{
 
     render(){
         const {
-            showFullPopup,
-            isDialogShow,isShowToastSuccess, isShowToastLoading, isFullPopupShow,
+            isDialogShow,isShowToastSuccess, isShowToastLoading,
             userInfo
         } = this.props;
         return(
             <div id="userInfo">
-                <HeaderBar content="个人信息" type="2"/>
-
                 <Dialog type="ios" 
                         title={this.state.style2.title} 
                         buttons={this.state.style2.buttons} 
@@ -141,9 +136,10 @@ class SetInfo extends  Component{
                 <Toast icon="success-no-circle" show={isShowToastSuccess}>更新成功</Toast>
                 <Toast icon="loading" show={isShowToastLoading}>Loading...</Toast>
 
+                {/**** 二维码 ***/}
                 <Popup
-                    show={isFullPopupShow}
-                    onRequestClose={()=>{showFullPopup(false)}}
+                    show={this.state.codeShow}
+                    onRequestClose={()=>{this.setState({codeShow: false})}}
                 >
                     <div style={{height: '100vh', overflow: 'scroll'}}>
                         <div style={{textAlign:'center'}}>
@@ -151,13 +147,13 @@ class SetInfo extends  Component{
                                 <img role="presentation" src={userInfo.qrcode} />
                             </div>
                         </div>
-                        <Button onClick={()=>{showFullPopup(false)}}>知道了</Button>
+                        <Button onClick={()=>{this.setState({codeShow: false})}}>知道了</Button>
                     </div>
                 </Popup>
 
-                <ul>
+                <ul style={{marginTop: '0'}}>
                     <li>
-                        <label htmlFor="headPic">
+                        <label htmlFor="headPic" style={{background: 'none'}}>
                              <span className="first">
                                 <img role="presentation" src={userInfo.headPic} />
                              </span>
@@ -171,7 +167,7 @@ class SetInfo extends  Component{
                                })}
                         />
                     </li>
-                    <li onClick={this.handleClick.bind(this,1)}>
+                    <li onClick={this.handleClick.bind(this,1)} >
                         <span className="first">昵称</span>
                         <span className="last">{this.state.userInfo.userName}</span>
                     </li>
@@ -183,11 +179,11 @@ class SetInfo extends  Component{
                         <span className="first">绑定手机号</span>
                         <span className="last phone">{userInfo.phone}</span>
                     </li>
-                    <li>
+                    <li onClick={this.handleClick.bind(this,4)} >
                         <span className="first">收货地址</span>
                         <span className="last">点击查看</span>
                     </li>
-                    <li  onClick={this.handleClick.bind(this,3)}>
+                    <li onClick={this.handleClick.bind(this,3)}>
                         <span className="first">我的二维码</span>
                         <span className="last">
                              <img role="presentation" src={code}/>

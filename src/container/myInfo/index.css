@@ -263,22 +263,14 @@
 
 
 
-
-
-
-
-
-
-
-
     /**** #userInfo   设置个人信息  ****/
 #userInfo{
-
+    position: fixed;
+    top: 0.4rem;
 }
 
 #userInfo ul{
-    position: fixed;
-    top: 0.4rem;
+
 }
 
 #userInfo li{
@@ -460,11 +452,123 @@
 
 
 
+/**** #myAddress  地址管理  ****/
+#myAddress{
+    padding-top: 0.4rem;
+    color: #323232;
+}
+
+#myAddress ul{
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    position: fixed;
+    height: 4.93rem;
+}
 
 
+#myAddress li{
+    border-bottom: 8px #f0f0f0 solid;
+    text-align: left;
+}
+
+#myAddress li>p{
+    padding: 0.1rem 0.15rem;
+    font-size: 14px;
+}
+
+#myAddress .receiverName{
+    font-size: 16px;
+    padding-bottom: 0;
+}
+
+#myAddress .receiverName>span:first-child{
+    padding-right: 0.3rem;
+}
+
+#myAddress .receiverAddress{
+    color: #909090;
+    border-bottom: 1px #ebebeb solid;
+}
+
+#myAddress .edit{
+    position: relative;
+    height: 0.18rem;
+}
+
+#myAddress .edit>span{
+    position: absolute;
+}
+
+#myAddress .edit>span:before{
+    display: block;
+    position: absolute;
+    width: 0.2rem;
+    height: 0.2rem;
+    content: ' ';
+    left: -0.22rem;
+    top: 0;
+}
+
+#myAddress .edit>span:first-child{
+    left: 0.35rem;
+}
+
+#myAddress .edit>.default{
+    color: #B9984F;
+}
+#myAddress .edit>.default:before{
+    background: url("../../img/userInfo/choose.png") no-repeat;
+    background-size: 80%;
+}
+
+#myAddress .edit>.unDefault{
+    color: #ACACAC;
+}
+#myAddress .edit>.unDefault:before{
+    background: url("../../img/userInfo/unChoose.png") no-repeat;
+    background-size: 80%;
+}
+
+#myAddress .edit>.editAddress{
+    right: 1rem;
+}
+#myAddress .edit>.editAddress:before{
+    background: url("../../img/userInfo/edit.svg") no-repeat;
+    background-size: 80%;
+}
+
+#myAddress .edit>.deleteAddress{
+    right: 0.25rem;
+}
+#myAddress .edit>.deleteAddress:before{
+    background: url("../../img/userInfo/delete.svg") no-repeat;
+    background-size: 80%;
+}
+
+#myAddress button{
+    position: fixed;
+    bottom: 0;
+    border-radius: 0;
+}
 
 
+#myAddress .weui-popup ul{
+    padding: 0 0.15rem;
+    margin-top: 0.4rem;
+}
+#myAddress .weui-popup li{
+    border-bottom: 1px #f0f0f0 solid;
+    line-height: 0.5rem;
+}
 
+#myAddress .weui-popup li input{
+    color: #323232;
+}
+
+#myAddress .weui-popup  textarea{
+    padding: 0.1rem 0 0 0;
+    color: #323232;
+}
 
 
 

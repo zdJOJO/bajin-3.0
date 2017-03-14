@@ -6,7 +6,7 @@ import cookie from 'react-cookie'
 import {port, isTokenExpired, getUserInfoFn} from '../public'
 import {
     GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS, GET_MYGIFTSLIST_SUCCESS,
-    GET_GIFTDETAIL_SUCCESS,
+    GET_GIFTDETAIL_SUCCESS, GET_ADDRESSLIST_SUCCESS, SET_DEFAULTADDRESS_SUCCESS,
     SET_USERINFO_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
     SET_FEEDBACK_SHOW
 } from './actionTypes';
@@ -84,6 +84,14 @@ const getGiftDetailSuccess =(info)=>{
     return{
         type: GET_GIFTDETAIL_SUCCESS,
         info
+    }
+};
+
+//获取地址列表成功
+const getMyAddressListSuccess = (list)=>{
+    return{
+        type: GET_ADDRESSLIST_SUCCESS,
+        list
     }
 };
 
@@ -239,7 +247,6 @@ const getMyGiftList = (obj)=>{
     }
 };
 
-
 //礼包详情
 const getGiftDetail = (obj)=>{
     return dispatch =>{
@@ -256,6 +263,72 @@ const getGiftDetail = (obj)=>{
     }
 };
 
+
+//地址列表 GET
+const getMyAddressList = ()=>{
+    return dispatch =>{
+        return fetch( port + '/card/receiver?token='+cookie.load('token')+'&currentPage=1' )
+            .then( res=>{
+                return res.json();
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(getMyAddressListSuccess(json.list))
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+
+//  创建新地址、   更新、设置默认地址   PUT/POST
+const setDefaultAddress = (addressObj, isCreate, isEdit)=>{
+    let url = '', method='PUT', data = {};
+    if(isCreate && !isEdit){
+        url = port + '/card/receiver?token='+cookie.load('token');
+        data = addressObj;
+        method = 'POST';
+    }else{
+        url = port + '/card/receiver/'+addressObj.receiveId+'?token='+cookie.load('token');
+        data = {
+            isDefault: addressObj.isDefault,
+            city: addressObj.city,
+            detilAddress: addressObj.detilAddress,
+            district: addressObj.district,
+            province: addressObj.province,
+            receiveId: parseInt(addressObj.receiveId),
+            receiverName: addressObj.receiverName,
+            receiverPhone: addressObj.receiverPhone
+        };
+    }
+
+    if(!isCreate && !isEdit){
+        data.isDefault = 1
+    }
+
+    return dispatch=>{
+        return fetch( url ,{
+            method: method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then( res=>{
+            return res.json();
+        }).then( json =>{
+            isTokenExpired(json.code, function () {
+                dispatch(getMyAddressList());
+            });
+        }).catch(e=>{
+            console.log(e)
+        })
+    }
+};
+
+
+
+
 /*
 *  type:
 *  1 -  获取用户信息
@@ -266,6 +339,9 @@ const getGiftDetail = (obj)=>{
 *  6 - 我的课程列表
 *  7 - 礼包中心列表
 *  8- 礼包详情
+*  9 - 获取地址列表
+*  10 -  创建新地址、 设置默认地址  、编辑地址
+*  11 - 删除地址
 * */
 export const dispatchFetchData = (obj)=>{
     return dispatch =>{
@@ -294,6 +370,10 @@ export const dispatchFetchData = (obj)=>{
                 return dispatch(getMyGiftList(obj));
             case 8:
                 return dispatch(getGiftDetail(obj));
+            case 9:
+                return dispatch(getMyAddressList());
+            case 10:
+                return dispatch(setDefaultAddress(obj.data, obj.isCreate, obj.isEdit));
             default:
                 return false
         }

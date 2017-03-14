@@ -11,7 +11,8 @@ import {
     SHOW_BACK_TOP,
     POP_LEFT_BUYBAR,
     CHOOSE_ITEM,
-    INIT_CHOOSEDATA
+    INIT_CHOOSEDATA,
+    GET_REAL_VEDIOURL
 } from './actionTypes'
 
 
@@ -109,6 +110,18 @@ const initChooseData = (totalPrice,totalNum ,chooseList)=>{
 }
 
 
+//获取真是 url
+const getRealUrlSuccess = (url, videoStyle)=>{
+    return{
+        type: GET_REAL_VEDIOURL,
+        url,
+        videoStyle
+    }
+}
+
+
+
+/************************/
 
 //get 获取列表   24堂课列表： type是1,isFather是0   ； 课程列表： type是0,isFather是1
 // type: 0全部 1实修 2视频 3音频
@@ -131,7 +144,7 @@ const getCourseList =(page,type)=>{
                 console.log(e)
             })
     }
-}
+};
 
 
 //get 课程详情 http://121.196.232.233/card/scmv/{id}?
@@ -151,7 +164,7 @@ const getCourseDetail = (_id)=>{
                 console.log(e)
             })
     }
-}
+};
 
 
 
@@ -182,7 +195,27 @@ const upDateList = obj =>{
             id: obj.course.id
         }))
     }
-}
+};
+
+
+
+//获取 视频真实的url  GET
+const getRealUrl  = (key, videoDom)=>{
+    return dispatch =>{
+        return fetch( port + '/card/scmv/resource?key=' + key )
+            .then(res => {
+                return res.json()
+            })
+            .then( data => {
+                dispatch(getRealUrlSuccess(data.url));
+                videoDom.play();
+            })
+            .catch(e =>{
+                dispatch(fallGet())
+                console.log(e)
+            })
+    }
+};
 
 
 /*
@@ -225,17 +258,20 @@ export const fetchInfo = (type ,page ,_id) => {
 * 1 - 显示购买的bar
 * 2 - 选择勾选购买的产品
 * 3 - 初始化 购买数量和总价格
+* 4 - 获取 视频 真是的 url
 * */
 export const disPatchFn = (obj)=>{
     return dispatch =>{
         switch (obj.type){
             case 1:
-                return dispatch(pupLeftBuyBar(obj))
+                return dispatch(pupLeftBuyBar(obj));
             case 2:
-                return dispatch(upDateList(obj))
+                return dispatch(upDateList(obj));
             case 3:
                 let chooseList = [];
-                return dispatch(initChooseData(0 ,0,chooseList))
+                return dispatch(initChooseData(0 ,0,chooseList));
+            case 4:
+                return dispatch(getRealUrl(obj.key, obj.videoDom));
             default:
                 return true
         }

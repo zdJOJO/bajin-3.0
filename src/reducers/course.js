@@ -11,6 +11,7 @@ import {
     POP_LEFT_BUYBAR,
     CHOOSE_ITEM,
     INIT_CHOOSEDATA,
+    GET_REAL_VEDIOURL
 } from '../actions/actionTypes';
 
 
@@ -36,7 +37,9 @@ const initState = {
     isShowBackTop: -1, // -1默认 0-显示 1-隐藏
     times: 0, // 滚动条超过一屏幕时候 滚动次数
     showIOS1: false, //显示隐藏错误提示
-}
+
+    realUrl: ''   //视频真实的url
+};
 
 export default function courseReducer(state=initState, action){
     switch (action.type){
@@ -124,6 +127,11 @@ export default function courseReducer(state=initState, action){
                     totalNum: action.chooseList.length,
                     totalPrice: action.totalPrice
                 }
+            };
+        case GET_REAL_VEDIOURL:
+            return{
+                ...state,
+                realUrl: action.url
             }
         default:
             return state;

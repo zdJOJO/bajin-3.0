@@ -4,7 +4,7 @@
 
 import {
     GET_USERINFO_SUCCESS, GET_BANKLIST_SUCCESS, GET_MYCOURSELIST_SUCCESS, GET_MYGIFTSLIST_SUCCESS,
-    GET_GIFTDETAIL_SUCCESS,
+    GET_GIFTDETAIL_SUCCESS, GET_ADDRESSLIST_SUCCESS,
     SET_USERINFO_SUCCESS, SET_HEADPIC_SUCCESS, FEEDBACK_SUCCESS, CAHNGE_POST_IMGLIST,
     SET_FEEDBACK_SHOW
 } from '../actions/actionTypes'
@@ -22,7 +22,8 @@ const initState = {
         course: []
     },   //我的课程列表
     myGift: [],   //我的礼品中心
-    giftDetail: {}  //礼包中心详情
+    giftDetail: {},  //礼包中心详情
+    addressList: []  //收货地址
 };
 
 export default function userReducer (state=initState, action) {
@@ -91,6 +92,11 @@ export default function userReducer (state=initState, action) {
                 ...state,
                 giftDetail: action.info
             };
+        case  GET_ADDRESSLIST_SUCCESS:
+            return{
+                ...state,
+                addressList: action.list
+            }
         default:
             return state
     }

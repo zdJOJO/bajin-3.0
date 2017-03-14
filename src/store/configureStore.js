@@ -11,11 +11,14 @@ import { dev } from '../public/index';
 const loggerMiddleware = createLogger();
 
 // 创建一个中间件集合
-const middleware = dev ? [thunk] : [thunk, loggerMiddleware];
+//const middleware = dev ? [thunk] : [thunk, loggerMiddleware];
+const middleware = [thunk];
 
 // 利用compose增强store，这个 store 与 applyMiddleware
-const finalCreateStore = compose(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;   //reduxTool
+const finalCreateStore = composeEnhancers(
     applyMiddleware(...middleware),
-)(createStore)
+)(createStore);
+
 
 export default finalCreateStore;

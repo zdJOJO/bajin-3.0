@@ -332,11 +332,10 @@
 /*# myCourse*/
 #myCourse video{
     width: 3.2rem;
-    height: auto;
     position: absolute;
     left: 50%;
-    top: 50%;
     margin-left: -1.6rem;
+    max-height: 80%;
 }
 
 #myCourse .weui-popup{

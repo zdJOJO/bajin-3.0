@@ -8,6 +8,7 @@ import {hashHistory} from 'react-router'
 
 import Menu from '../../router/menu';
 import HeaderBar from '../../components/headerNav/headBar'
+import Set from './set';
 import { Popup, Popupm, Button, Dialog, TextArea, Uploader } from 'react-weui'
 
 import {dispatchFetchData, setFeedBackShow, changePostImgList} from '../../actions/userAction';
@@ -79,7 +80,8 @@ class MyInfo extends Component{
             },
             diaLogShow:  false,
             feedbackDetail: '',
-            demoFiles: []
+            demoFiles: [],
+            personalSetShow: false   //个人设置
         }
     }
 
@@ -117,6 +119,7 @@ class MyInfo extends Component{
         return(
             <div id="user" className="panel panel-default">
 
+                {/**** 系统设置 ***/}
                 <Popup
                     show={isFullPopupShow}
                     onRequestClose={()=>{showFullPopup(false)}}
@@ -142,7 +145,18 @@ class MyInfo extends Component{
                     </div>
                 </Popup>
 
+                {/**** 个人设置 ***/}
+                <Popup
+                    show={this.state.personalSetShow}
+                    onRequestClose={()=>{this.setState({personalSetShow: false})}}
+                >
+                    <div style={{height: '100vh', overflow: 'scroll'}}>
+                        <HeaderBar  content="个人信息" type="3" onClick={()=>{this.setState({personalSetShow: false})}} />
+                        <Set />
+                    </div>
+                </Popup>
 
+                {/**** 意见反馈 ***/}
                 <Popup
                     show={feedBackShow}
                     onRequestClose={()=>{setFeedBackShow(false)}}
@@ -201,7 +215,10 @@ class MyInfo extends Component{
 
                 <div className="headBox">
                     <div>
-                        <img role="presentation" src={userInfo.headPic || head} onClick={this.handleClick.bind(this, '#/set')}/>
+                        <img role="presentation" src={userInfo.headPic || head}
+                             // onClick={this.handleClick.bind(this, '#/set')}
+                             onClick={()=>{this.setState({personalSetShow: true})}}
+                        />
                         <span className="userName">{userInfo.userName}</span>
                         <span className="certified">已认证</span>
                     </div>

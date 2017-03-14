@@ -44,11 +44,12 @@ class CourseItem extends Component{
         this.state = {
             fullpage_show: false,
             showLoading: false,
-            videoStyle: '0px'
+            realUrl: ''
         }
     }
 
     handleClick(selectId ,isShow, url){
+        const { disPatchFn } = this.props;
         console.log(selectId);
         if(!isShow && !url){
             hashHistory.push({
@@ -58,16 +59,15 @@ class CourseItem extends Component{
         }
         
         if(url){
-            this.videoPlay(this.refs.video);
+            disPatchFn({
+                type: 4,
+                key: url,
+                videoDom: this.refs.video
+            });
+            this.setState({
+                fullpage_show: true
+            });
         }
-    }
-
-    videoPlay(videoDom) {
-        this.setState({
-            fullpage_show: true,
-            videoStyle: -this.refs.video.offsetHeight/2+'px'
-        })
-        videoDom.play();
     }
 
     chooseItem(course ,event){
@@ -82,6 +82,7 @@ class CourseItem extends Component{
     }
 
     render(){
+        const { realUrl } = this.props ;
         return(
             <MediaBox
                 className={this.props.router?'router':''}
@@ -103,11 +104,10 @@ class CourseItem extends Component{
                     <Toast icon="loading" show={this.state.showLoading}>Loading...</Toast>
                     <div style={{height: '100vh', overflow: 'scroll'}}>
                         <video controls loop
-                               style={{marginTop: this.state.videoStyle}}
                                onClick={(event)=>{
                                     event.stopPropagation();
                                  }}
-                               src={this.props.url}
+                               src={realUrl}
                                type="video/mp4"
                                ref="video"
                         />
@@ -169,7 +169,9 @@ class CourseItem extends Component{
 const mapStateToProps = state=>{
     return{
         ...state,
-        chooseList: state.courseReducer.two4Class.chooseList
+        chooseList: state.courseReducer.two4Class.chooseList,
+
+        realUrl: state.courseReducer.realUrl
     }
 }
 

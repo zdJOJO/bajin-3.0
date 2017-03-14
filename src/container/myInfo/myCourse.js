@@ -63,13 +63,13 @@ class MyCourse extends Component{
                     { currentIndex === 1 &&
                         <section className="two">
                             {
-                                courseList.map((course,index)=>{
+                                mediaList.map((course,index)=>{
                                     return(
                                         <CourseItem
                                             key={index}
                                             course={course}
                                             router="two"
-                                            url="http://media.w3.org/2010/05/sintel/trailer.mp4"
+                                            url={course.url}
                                         />
                                     )
                                 })

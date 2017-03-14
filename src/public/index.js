@@ -16,10 +16,11 @@ import cookie from 'react-cookie'
 
 //dev位boolean类型
 // true--正式环境， false--测试环境
-const dev = false;
+export const dev = false;
 
 // 接口
 export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
+//export const port = 'http://192.168.1.10:8080';
 
 //cookie
 export const token = cookie.load('token');
@@ -117,7 +118,6 @@ export const getUserInfoFn = (info)=>{
     }
 
 };
-
 
 
 
