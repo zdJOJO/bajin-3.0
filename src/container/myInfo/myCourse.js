@@ -7,8 +7,12 @@ import {connect} from 'react-redux';
 import HeaderBar from '../../components/headerNav/headBar'
 import HeaderNav from '../../components/headerNav/index'
 import CourseItem from '../../container/course/item'
+import {
+    Popup, Toast
+} from 'react-weui';
 
 import { dispatchFetchData } from '../../actions/userAction'
+import {disPatchFn} from '../../actions/courseAction'
 
 import '../../container/course/index.css'
 import './index.css'
@@ -30,21 +34,71 @@ const menuList = [
 
 class MyCourse extends Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+            fullpage_show: false
+        }
+    }
+
     componentWillMount(){
         const { dispatchFetchData } = this.props;
         dispatchFetchData({type: 6});
     }
 
+    handleClick(url){
+        const {disPatchFn} = this.props;
+        disPatchFn({
+            type: 4,
+            key: url,
+            videoDom: this.refs.video
+        });
+        this.setState({
+            fullpage_show: true
+        });
+    }
+
 
     render(){
-        const {currentIndex, courseList,mediaList,voiceList} = this.props;
+        const {currentIndex, courseList, mediaList, voiceList, realUrl} = this.props;
+        const style = {
+            position: 'fixed',
+            width: '100%',
+            height: '4.6rem',
+            zIndex: '1000',
+            top: '0.7rem'
+        };
         return(
             <div id="myCourse" className="panel panel-default">
                 <div className="headerBox" style={{height: '0.7rem'}}>
                     <HeaderBar content="我的课程" type="2"/>
                     <HeaderNav menuList={menuList} isRouter="0" />
                 </div>
-                <div id="select">
+
+                <Popup
+                    show={this.state.fullpage_show}
+                    onClick={(event)=>{
+                        event.stopPropagation();
+                        this.refs.video.pause();
+                        this.setState({
+                            fullpage_show: false
+                        })
+                    }}
+                >
+                    <Toast icon="loading" show={this.state.showLoading}>Loading...</Toast>
+                    <div style={{height: '100vh', overflow: 'scroll'}}>
+                        <video controls loop
+                               onClick={(event)=>{
+                                    event.stopPropagation();
+                                 }}
+                               src={realUrl}
+                               type="video/mp4"
+                               ref="video"
+                        />
+                    </div>
+                </Popup>
+
+                <div id="select" style={{...style}} >
                     { currentIndex === 0 &&
                         <section className="one">
                             {
@@ -65,12 +119,14 @@ class MyCourse extends Component{
                             {
                                 mediaList.map((course,index)=>{
                                     return(
-                                        <CourseItem
-                                            key={index}
-                                            course={course}
-                                            router="two"
-                                            url={course.url}
-                                        />
+                                        <div  key={index}  style={{zIndex: '10'}}
+                                              onClick={this.handleClick.bind(this, course.url)}>
+                                            <CourseItem
+                                                course={course}
+                                                router="two"
+                                                url={course.url}
+                                            />
+                                        </div>
                                     )
                                 })
                             }
@@ -104,10 +160,12 @@ function mapStateToProps(state) {
 
         voiceList: state.userReducer.myCourse.voice,
         mediaList: state.userReducer.myCourse.media,
-        courseList: state.userReducer.myCourse.course
+        courseList: state.userReducer.myCourse.course,
+
+        realUrl: state.courseReducer.realUrl
     }
 }
 
 export default connect(
-    mapStateToProps,{ dispatchFetchData }
+    mapStateToProps,{ dispatchFetchData, disPatchFn}
 )(MyCourse);

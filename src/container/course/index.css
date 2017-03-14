@@ -8,6 +8,12 @@
     position: inherit;
 }
 
+#select{
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+
 /*** 精选 ***/
 #select .weui-panel__hd{
     padding: 5px 15px 0;
@@ -339,5 +345,5 @@
 }
 
 #myCourse .weui-popup{
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
 }

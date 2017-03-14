@@ -463,6 +463,7 @@
     -webkit-overflow-scrolling: touch;
     position: fixed;
     height: 4.93rem;
+    width: 100%;
 }
 
 

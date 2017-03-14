@@ -112,7 +112,7 @@ class MyAddress extends Component{
                         <HeaderBar content={this.state.isEdit?"编辑地址":'添加新地址'}  type="3"
                                    onClick={()=>{this.setState({fullShow: false, isEdit: false})}}
                         />
-                        <ul>
+                        <ul style={{padding: '0.1rem', width: '3.0rem'}}>
                             <li><Input type="text" placeholder="姓名(请输入真实姓名)"
                                        value={this.state.name}
                                        onChange={(e)=>{this.setState({name: e.target.value})}}/></li>

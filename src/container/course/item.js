@@ -42,31 +42,16 @@ class CourseItem extends Component{
     constructor(props){
         super(props);
         this.state = {
-            fullpage_show: false,
-            showLoading: false,
-            realUrl: ''
+            showLoading: false
         }
     }
 
     handleClick(selectId ,isShow, url){
-        const { disPatchFn } = this.props;
-        console.log(selectId);
         if(!isShow && !url){
             hashHistory.push({
                 pathname: `/course/${selectId}`,
                 query: {itemType: 29 ,itemId: selectId}
             })
-        }
-        
-        if(url){
-            disPatchFn({
-                type: 4,
-                key: url,
-                videoDom: this.refs.video
-            });
-            this.setState({
-                fullpage_show: true
-            });
         }
     }
 
@@ -82,39 +67,13 @@ class CourseItem extends Component{
     }
 
     render(){
-        const { realUrl } = this.props ;
         return(
             <MediaBox
                 className={this.props.router?'router':''}
                 type="appmsg"
                 href="javascript:void(0);"
-                onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow,  this.props.url)}
+                onClick={this.handleClick.bind(this,this.props.course.id, this.props.course.isShow, this.props.url)}
             >
-
-                <Popup
-                    show={this.state.fullpage_show}
-                    onClick={(event)=>{
-                        event.stopPropagation();
-                        this.refs.video.pause();
-                        this.setState({
-                            fullpage_show: false
-                        })
-                    }}
-                >
-                    <Toast icon="loading" show={this.state.showLoading}>Loading...</Toast>
-                    <div style={{height: '100vh', overflow: 'scroll'}}>
-                        <video controls loop
-                               onClick={(event)=>{
-                                    event.stopPropagation();
-                                 }}
-                               src={realUrl}
-                               type="video/mp4"
-                               ref="video"
-                        />
-                    </div>
-                </Popup>
-
-
                 { !this.props.course.isShow &&
                     <MediaBoxHeader>
                         <img src={this.props.course.minPic} role="presentation" />
@@ -169,9 +128,7 @@ class CourseItem extends Component{
 const mapStateToProps = state=>{
     return{
         ...state,
-        chooseList: state.courseReducer.two4Class.chooseList,
-
-        realUrl: state.courseReducer.realUrl
+        chooseList: state.courseReducer.two4Class.chooseList
     }
 }
 
