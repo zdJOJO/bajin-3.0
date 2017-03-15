@@ -3,6 +3,7 @@
  */
 import React,{Component} from 'react';
 
+import { icbcUrl } from '../../public'
 import './index.css'
 
 export default class HomeTitle extends Component {
@@ -14,11 +15,12 @@ export default class HomeTitle extends Component {
         return(
             <h3 className="title">
                 <div><span className="content-text">{this.props.title}</span></div>
-                <span className="lookMore"
-                      onClick={this.handleClick.bind(this, this.props.title)}
+                <a className="lookMore"
+                   onClick={this.handleClick.bind(this, this.props.title)}
+                   href={icbcUrl}
                 >
                     查看更多 >
-                </span>
+                </a>
             </h3>
         )
     }

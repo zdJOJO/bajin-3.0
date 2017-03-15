@@ -81,7 +81,7 @@ class GoodDetail extends Component {
         };
         return(
             <div id="goodDetail" className="panel panel-default">
-                { goodDetail &&
+                { goodDetail && skuList &&
                     <div id="selectDetail" className="actDetail" style={{bottom: 0}}>
                         <div className="head">
                             <img src={goodDetail.maxPic} role="presentation" />

@@ -49,7 +49,7 @@ class Two4Class extends Component{
                     onClick: this.handleSubmitOrderInfo.bind(this)
                 }, {
                     label: '微信支付',
-                    onClick: ()=> { console.log('微信支付')  }
+                    onClick: this.handleSubmitOrderInfo.bind(this, 'wxPay')
                 }],
                 actions: [
                     {
@@ -74,7 +74,7 @@ class Two4Class extends Component{
         disPatchFn({type: 3})
     }
 
-    handleSubmitOrderInfo(){
+    handleSubmitOrderInfo(_wxPay){
         // isFontPrice:  0表示不是定金
         const {disPatchFetchOrder ,totalPrice ,totalNum ,chooseList } = this.props;
         let scmvOrderMapModels =  new Array(chooseList.length);
@@ -87,13 +87,23 @@ class Two4Class extends Component{
             } ;
         }
 
-        disPatchFetchOrder({
-            type: 'scmvOrder',
-            sum: totalNum,
-            price: totalPrice,
-            scmvOrderMapModels: scmvOrderMapModels,
-            dom: this.refs.pay
-        })
+        if(_wxPay==='wxPay'){
+            disPatchFetchOrder({
+                type: 'scmvOrder',
+                sum: totalNum,
+                price: totalPrice,   //微信支付 交定金
+                scmvOrderMapModels: scmvOrderMapModels,
+                wxPay: true
+            });
+        }else {
+            disPatchFetchOrder({
+                type: 'scmvOrder',
+                sum: totalNum,
+                price: totalPrice,
+                scmvOrderMapModels: scmvOrderMapModels,
+                dom: this.refs.pay
+            });
+        }
     }
 
     handleClick(totalNum){

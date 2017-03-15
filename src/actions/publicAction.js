@@ -18,6 +18,8 @@ import {
 
 import {dispatchFetchData} from './userAction'
 import {port, isTokenExpired} from '.././public/'
+import {hex_md5} from '../public/md5'
+import {wxConfig} from '../public/wx/wxConfig'
 let token = cookie.load('token');
 
 //密文
@@ -135,12 +137,15 @@ export const getOrderCiphertext = obj =>{
 const generateOrder = obj =>{
     let url = '';
     let data = {};
+
+    //url
     if(obj.type === 'scmvOrder'){
         url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000, 10)
     }else if(obj.type === 1){
         url = port + '/card/apply?token=' + token
     }
 
+    // data
     if(obj.type === 'scmvOrder'){
         data = {
             sum: obj.sum,
@@ -164,25 +169,35 @@ const generateOrder = obj =>{
             console.log('json is:', json);
             isTokenExpired(json.code, function () {
                 if(json.code==='201'){
-                    if(obj.type === 'scmvOrder'){
-                        dispatch(getOrderCiphertext({
-                            type: 'scmvOrder',
-                            cardno: '3994',
-                            scmvOrderId: json.data.id,
-                            dom: obj.dom
-                        }))
-                    }else if(obj.type === 1){
-                        // if(data.applyPrice===0){
-                        //     console.log('价格是0，直接跳去 报名成功 页面')
-                        // }else {
-                        hashHistory.push({
-                            pathname : '/myBankCard',
-                            query: {
-                                type: 1,
-                                orderId: json.data.id
-                            }
-                        });
-                        // }
+                    if(obj.wxPay){
+                        /* 微信支付 */
+                        dispatch(getWxParam({
+                            orderId: json.data.id,
+                            ip: window.returnCitySN.cip,
+                            type: obj.type
+                        }));
+                    }else {
+                        /* 银行卡支付 */
+                        if(obj.type === 'scmvOrder'){
+                            dispatch(getOrderCiphertext({
+                                type: 'scmvOrder',
+                                cardno: '3994',
+                                scmvOrderId: json.data.id,
+                                dom: obj.dom
+                            }));
+                        }else if(obj.type === 1){
+                            // if(data.applyPrice===0){
+                            //     console.log('价格是0，直接跳去 报名成功 页面')
+                            // }else {
+                            hashHistory.push({
+                                pathname : '/myBankCard',
+                                query: {
+                                    type: 1,
+                                    orderId: json.data.id
+                                }
+                            });
+                            // }
+                        }
                     }
                 }else {
                     dispatch( showDialog(true, json.message))
@@ -192,7 +207,52 @@ const generateOrder = obj =>{
             console.log(e)
         })
     }
-}
+};
+
+
+
+
+/*
+ *   微信支付 生成订单参数
+ *   活动： port + "/card/weixin/getRepay?orderId=" + applyid + "&token=" + token + "&type=0&ipAddress=" + ip
+ *   其他： port + "/card/weixin/getRepay?orderId=" + obj.orderId + "&token=" + cookie.load('token') + "&type=0&ipAddress=" + obj.ip;
+ * */
+const getWxParam = (obj)=>{
+    let url = port + "/card/weixin/getRepay?orderId=" + obj.orderId + "&token=" + cookie.load('token') + `&type=${obj.type===1?1:0}&ipAddress=` + obj.ip;
+    return dispatch =>{
+        return fetch(url)
+            .then( res=>{
+                return res.json();
+            })
+            .then( result =>{
+                console.log(result);
+                let appid =  String(result.appId);
+                let nonceStr = String(result.nonceStr);
+                let packageStr = String(result.package);
+                let timeStamp = String(new Date().getTime());
+                let stringA = "appId=" + appid + "&nonceStr=" + nonceStr + "&package=" + packageStr + "&signType=MD5&timeStamp=" + timeStamp ;
+                let stringSignTemp = stringA + "&key=29798840529798840529798840529798";
+                let paySign = hex_md5(stringSignTemp).toUpperCase();   //全部大写
+
+                let data = {
+                    appid: appid,
+                    nonceStr: nonceStr,
+                    package: packageStr,
+                    timeStamp: timeStamp,
+                    paySign: paySign,
+                    url: location.href+'/'
+                };
+                let wxParamObjOne = data;
+                wxParamObjOne.typeStr = 'wxPay';
+                if(result){
+                    wxConfig(wxParamObjOne);
+                }
+            })
+            .catch( e=>{
+                console.log(e)
+            })
+    }
+};
 
 
 //获取相关列表 GET
@@ -283,3 +343,18 @@ export const upImgFn = (obj) =>{
         return dispatch(upImg(obj))
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

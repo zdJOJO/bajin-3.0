@@ -20,7 +20,7 @@ export const dev = false;
 
 // 接口
 export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
-//export const port = 'http://192.168.1.10:8080';
+export const icbcUrl = dev ? 'http://www.winthen.com/test/ICBC_index.html' : 'http://test.winthen.com/bcard/ICBC_index.html' ;
 
 //cookie
 export const token = cookie.load('token');

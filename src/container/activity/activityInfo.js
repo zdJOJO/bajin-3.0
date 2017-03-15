@@ -36,7 +36,7 @@ class ActivityInfo extends Component{
                 onClick: this.handleSubmitOrderInfo.bind(this)
             }, {
                 label: '微信支付',
-                onClick: ()=> { console.log('微信支付') }
+                onClick: this.handleSubmitOrderInfo.bind(this, 'wxPay')
             }],
             actions: [{
                     label: '取消',
@@ -85,7 +85,7 @@ class ActivityInfo extends Component{
         })
     }
 
-    handleSubmitOrderInfo(){
+    handleSubmitOrderInfo(_wxPay){
         const {activityInfo ,disPatchFetchOrder, showPayPopup} = this.props;
         showPayPopup(false);
         let data = {
@@ -101,10 +101,18 @@ class ActivityInfo extends Component{
         if(this.state.joinInfo.inviteCode){
             data.inviteCode = this.state.joinInfo.inviteCode;
         }
-        disPatchFetchOrder({
-            type: 1,
-            data: data
-        })
+        disPatchFetchOrder(
+            _wxPay === 'wxPay' ?
+            {
+                type: 1,
+                data: data
+            } :
+            {
+                type: 1,
+                data: data,
+                wxPay: true
+            }
+        )
     }
 
     handleScroll(e){
@@ -123,7 +131,7 @@ class ActivityInfo extends Component{
         const {
             activityInfo ,listInDetail ,rowCount,
             isShowBackTop ,times ,actShowMore ,isShowMoreDetail, isDialogShow,errorStr,
-            showPayPopup ,isShowPayPopup ,ciphertext, recommendedList,
+            showPayPopup ,isShowPayPopup, recommendedList,
             userActStatus,
         } = this.props;
 
@@ -137,7 +145,7 @@ class ActivityInfo extends Component{
                 }
                 switch (userActStatus){
                     /*
-                     *   1;  //已报名
+                    *1;  //已报名
                      2;  //活动已结束
                      3; //已停止报名
                      4; //报名人数已满

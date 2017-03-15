@@ -3,18 +3,11 @@
  */
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-
 import HomeContentList from '../../components/homeContentList'
 import HomeTitle from '../../components/homeTitle'
 
 class Content extends Component{
-
-
-    componentDidMount(){
-        if(this.props.type===2)
-            console.log(this.props.list)
-    }
-
+    
     render(){
         return(
             <div className={this.props.type===2 ? 'contentBox type2' : 'contentBox'}>

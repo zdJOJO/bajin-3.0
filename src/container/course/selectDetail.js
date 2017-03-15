@@ -39,7 +39,7 @@ class SelectDetail extends Component{
                 onClick: this.handleSubmitOrderInfo.bind(this)
             }, {
                 label: '微信支付',
-                onClick: ()=> { console.log('微信支付')  }
+                onClick: this.handleSubmitOrderInfo.bind(this, 'wxPay')
             }],
             actions: [
                 {
@@ -64,7 +64,7 @@ class SelectDetail extends Component{
         disPatchFetchList(this.props.location.query.itemId);
     }
 
-    handleSubmitOrderInfo(){
+    handleSubmitOrderInfo(_wxPay){
         // isFontPrice:  0表示不是定金
         const {disPatchFetchOrder ,courseDetail} = this.props;
         let scmvOrderMapModels =  [{
@@ -73,13 +73,23 @@ class SelectDetail extends Component{
             price: courseDetail.price,
             isFontPrice: 0
         }];
-        disPatchFetchOrder({
-            type: 'scmvOrder',
-            sum: 1,
-            price: courseDetail.price,
-            scmvOrderMapModels: scmvOrderMapModels,
-            dom: this.refs.pay
-        })
+        if(_wxPay==='wxPay'){
+            disPatchFetchOrder({
+                type: 'scmvOrder',
+                sum: 1,
+                price: courseDetail.price,
+                scmvOrderMapModels: scmvOrderMapModels,
+                wxPay: true
+            })
+        }else {
+            disPatchFetchOrder({
+                type: 'scmvOrder',
+                sum: 1,
+                price: courseDetail.price,
+                scmvOrderMapModels: scmvOrderMapModels,
+                dom: this.refs.pay
+            })
+        }
     }
 
     handleClick(clickType){
