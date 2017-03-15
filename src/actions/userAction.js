@@ -107,6 +107,7 @@ const getUserInfo =()=>{
             })
             .then( json=>{
                 isTokenExpired(json.code, function () {
+                    getUserInfoFn(json);
                     dispatch( getUserInfoSuccess(json))
                 })
             })
@@ -152,9 +153,7 @@ const setUserInfo =(obj)=>{
         }).then( json =>{
             isTokenExpired(json.code,function () {
                 if(json.code === '202'){
-                    getUserInfoFn(obj.data);
-                    dispatch(setUserInfoSuccess(obj.data));
-
+                    dispatch(getUserInfo());
                     dispatch(showDialog(false));
                     dispatch(showToastLoading(false));
                     dispatch(showToastSuccess(true));
@@ -327,6 +326,26 @@ const setDefaultAddress = (addressObj, isCreate, isEdit)=>{
 };
 
 
+//删除收货地址 http://121.196.232.233/card/receiver/{receiverId}?token=e7120d7a-456b-4471-8f86-ac638b348a53
+const deleteAddress = (receiveId)=>{
+    return dispatch =>{
+        return fetch( port + '/card/receiver/'+receiveId+'?token='+cookie.load('token'),{
+            method: 'DELETE'
+        } )
+            .then( res=>{
+                return res.json();
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(getMyAddressList());
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+
 
 
 /*
@@ -374,6 +393,8 @@ export const dispatchFetchData = (obj)=>{
                 return dispatch(getMyAddressList());
             case 10:
                 return dispatch(setDefaultAddress(obj.data, obj.isCreate, obj.isEdit));
+            case 11:
+                return dispatch(deleteAddress(obj.receiveId));
             default:
                 return false
         }

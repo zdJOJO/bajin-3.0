@@ -23,13 +23,13 @@ class SetInfo extends  Component{
 
     constructor(props){
         super(props);
-        const { showDialog, userInfo } = this.props;
+        const { showDialog } = this.props;
         this.state = {
             type: 0,
             userInfo:{
-                userName: userInfo.userName,
-                gender: userInfo.gender,
-                headPic: userInfo.headPic
+                userName: this.props.userInfo.userName,
+                gender: this.props.userInfo.gender,
+                headPic: this.props.userInfo.headPic
             },
             style2: {
                 title: '更新用户信息',
@@ -70,16 +70,18 @@ class SetInfo extends  Component{
         const { upImgFn, showToastLoading } = this.props;
         if(obj.type === 1){
             this.setState({
-                userInfo: {
-                    ...this.state.userInfo,
-                    userName: event.target.value
+                userInfo:{
+                    userName: event.target.value,
+                    gender: this.props.userInfo.gender,
+                    headPic: this.props.userInfo.headPic
                 }
             })
         }else if(obj.type === 2){
             this.setState({
-                userInfo: {
-                    ...this.state.userInfo,
-                    gender: parseInt(event.target.value)
+                userInfo:{
+                    userName: this.props.userInfo.userName,
+                    gender: parseInt(event.target.value),
+                    headPic: this.props.userInfo.headPic
                 }
             })
         }else {
@@ -101,7 +103,7 @@ class SetInfo extends  Component{
 
     handleUpdateInfo(){
         const { dispatchFetchData } = this.props;
-        if(!this.state.userInfo.userName ) return
+        if(!this.state.userInfo.userName ) return;
         dispatchFetchData({
             type: 3,
             data: this.state.userInfo
@@ -110,8 +112,7 @@ class SetInfo extends  Component{
 
     render(){
         const {
-            isDialogShow,isShowToastSuccess, isShowToastLoading,
-            userInfo
+            isDialogShow,isShowToastSuccess, isShowToastLoading
         } = this.props;
         return(
             <div id="userInfo">
@@ -121,7 +122,10 @@ class SetInfo extends  Component{
                         show={isDialogShow}
                 >
                     { this.state.type === 1 &&
-                        <Input type="text"  value={this.state.userInfo.userName} onChange={this.handleChangeInfo.bind(this, {type:1})}  />
+                        <Input type="text"
+                               value={this.state.userInfo.userName}
+                               onChange={this.handleChangeInfo.bind(this, {type:1})}
+                        />
                     }
                     { this.state.type === 2 &&
                         <div>
@@ -144,7 +148,7 @@ class SetInfo extends  Component{
                     <div style={{height: '100vh', overflow: 'scroll'}}>
                         <div style={{textAlign:'center'}}>
                             <div className="qrcodeBox">
-                                <img role="presentation" src={userInfo.qrcode} />
+                                <img role="presentation" src={this.props.userInfo.qrcode} />
                             </div>
                         </div>
                         <Button onClick={()=>{this.setState({codeShow: false})}}>知道了</Button>
@@ -155,29 +159,29 @@ class SetInfo extends  Component{
                     <li>
                         <label htmlFor="headPic" style={{background: 'none'}}>
                              <span className="first">
-                                <img role="presentation" src={userInfo.headPic} />
+                                <img role="presentation" src={this.props.userInfo.headPic} />
                              </span>
                             <span className="last">修改个人头像</span>
                         </label>
                         <input id="headPic" type="file"  multiple={false}
                                onChange={this.handleChangeInfo.bind(this, {
                                type: 3,
-                                   userName: this.state.userInfo.userName,
-                                   gender: this.state.userInfo.gender
+                                   userName: this.props.userInfo.userName,
+                                   gender: this.props.userInfo.gender
                                })}
                         />
                     </li>
                     <li onClick={this.handleClick.bind(this,1)} >
                         <span className="first">昵称</span>
-                        <span className="last">{this.state.userInfo.userName}</span>
+                        <span className="last">{this.props.userInfo.userName}</span>
                     </li>
                     <li onClick={this.handleClick.bind(this,2)}>
                         <span className="first">性别</span>
-                        <span className="last">{sexNumberWord(this.state.userInfo.gender).str}</span>
+                        <span className="last">{sexNumberWord(this.props.userInfo.gender).str}</span>
                     </li>
                     <li>
                         <span className="first">绑定手机号</span>
-                        <span className="last phone">{userInfo.phone}</span>
+                        <span className="last phone">{this.props.userInfo.phone}</span>
                     </li>
                     <li onClick={this.handleClick.bind(this,4)} >
                         <span className="first">收货地址</span>
@@ -205,8 +209,6 @@ class SetInfo extends  Component{
 
 function mapStateToProps(state) {
     return{
-        userInfo:　state.userReducer.userInfo,
-
         isDialogShow: state.publicReducer.isDialogShow,
         isShowToastLoading: state.publicReducer.isShowToastLoading,
         isShowToastSuccess: state.publicReducer.isShowToastSuccess,

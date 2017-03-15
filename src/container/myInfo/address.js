@@ -17,6 +17,7 @@ class MyAddress extends Component{
 
     constructor(props){
         super(props);
+        const { dispatchFetchData }=this.props;
         this.state = {
             fullShow: false,
             isEdit: false,
@@ -27,13 +28,42 @@ class MyAddress extends Component{
             phone: '',
             city_value: '',
             detailAddress: '',
-            isDefault: 0
+            isDefault: 0,
+
+            style2: {
+                title: '提示',
+                buttons: [
+                    {
+                        type: 'default',
+                        label: '取消',
+                        onClick: this.hideDialog.bind(this)
+                    },
+                    {
+                        type: 'primary',
+                        label: '确定',
+                        onClick: ()=>{
+                            dispatchFetchData({
+                                type: 11,
+                                receiveId: this.state.receiveId
+                            })
+                            this.setState({deleteAddressShow: false})
+                        }
+                    }
+                ]
+            },
+            deleteAddressShow: false
         }
     }
 
     componentWillMount(){
         const { dispatchFetchData } = this.props;
         dispatchFetchData({type: 9})
+    }
+
+    hideDialog(){
+        this.setState({
+            deleteAddressShow: false
+        })
     }
 
     handleSetDefault(address, isCreate, isEdit){
@@ -84,7 +114,14 @@ class MyAddress extends Component{
                                                     }
                                               )}}
                                         >编辑</span>
-                                        <span className="deleteAddress">删除</span>
+                                        <span className="deleteAddress"
+                                              onClick={()=>{
+                                                this.setState({
+                                                    deleteAddressShow: true,
+                                                    receiveId: address.receiveId
+                                                })
+                                              }}
+                                        >删除</span>
                                     </p>
                                 </li>
                             )
@@ -104,6 +141,8 @@ class MyAddress extends Component{
                     })
                 }}>添加新地址</Button>
 
+
+                {/**** 添加、编辑 地址****/}
                 <Popup
                     show={this.state.fullShow}
                     onRequestClose={()=>{this.setState({fullShow: false})}}
@@ -161,6 +200,14 @@ class MyAddress extends Component{
                         show={this.state.city_show}
                     />
                 </Popup>
+
+                {/**** 删除收货地址 ****/}
+                <Dialog title={this.state.style2.title}
+                        buttons={this.state.style2.buttons}
+                        show={this.state.deleteAddressShow}>
+                    确定删除该收货地址吗？
+                </Dialog>
+
             </div>
         )
     }

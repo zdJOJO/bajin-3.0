@@ -8,7 +8,7 @@ import {hashHistory} from 'react-router'
 
 import Menu from '../../router/menu';
 import HeaderBar from '../../components/headerNav/headBar'
-import Set from './set';
+import SetInfo from './set';
 import { Popup, Popupm, Button, Dialog, TextArea, Uploader } from 'react-weui'
 
 import {dispatchFetchData, setFeedBackShow, changePostImgList} from '../../actions/userAction';
@@ -152,7 +152,9 @@ class MyInfo extends Component{
                 >
                     <div style={{height: '100vh', overflow: 'scroll'}}>
                         <HeaderBar  content="个人信息" type="3" onClick={()=>{this.setState({personalSetShow: false})}} />
-                        <Set />
+                        { userInfo.userId &&
+                            <SetInfo  userInfo={userInfo}  />
+                        }
                     </div>
                 </Popup>
 

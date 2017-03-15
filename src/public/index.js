@@ -111,14 +111,13 @@ export const getUserInfoFn = (info)=>{
             })
     }else {
         let userInfo = JSON.parse(window.localStorage.userInfo);
-        userInfo.gender = info.gender,
-        userInfo.headPic = info.headPic,
-        userInfo.userName = info.userName,
-        localstorageFn.save('userInfo', userInfo)
+        userInfo.gender = info.gender;
+        userInfo.headPic = info.headPic;
+        userInfo.userName = info.userName;
+        localstorageFn.save('userInfo', userInfo);
     }
 
 };
-
 
 
 

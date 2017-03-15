@@ -96,7 +96,7 @@ export const setHeadPicSuccess =(pic)=>{
         type: SET_HEADPIC_SUCCESS,
         pic
     }
-}
+};
 
 
 
@@ -220,7 +220,7 @@ const upImg = (valueObj)=>{
     return dispatch=>{
         return fetch( port+"/card/file/base64.method?fileName=" + Math.floor(Math.random()*1000000)+".png" ,{
             method: 'POST',
-            body: valueObj.imgBase,
+            body: valueObj.imgBase
         }).then( res=>{
             return res.json()
         }).then( json=>{
@@ -275,10 +275,11 @@ export const disPatchFetchList = id =>{
 // 上传 图片
 export const upImgFn = (obj) =>{
     return dispatch =>{
-        if(obj.size > 1000*1024){
+        if(obj.size > 1000*1024*5){
             // dispatch(showToptipSetTimeOut('上传图片不要大于1MB,请重新上传',2));
+            console.log('上传图片不要大于5MB,请重新上传');
             return
         }
         return dispatch(upImg(obj))
     }
-}
+};

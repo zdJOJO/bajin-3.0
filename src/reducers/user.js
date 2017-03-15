@@ -40,21 +40,11 @@ export default function userReducer (state=initState, action) {
             };
         case SET_USERINFO_SUCCESS:
             return{
-                ...state,
-                userInfo: {
-                    ...state.userInfo,
-                    gender: action.info.gender,
-                    headPic:  action.info.headPic,
-                    userName: action.info.userName
-                }
+                ...state
             };
         case SET_HEADPIC_SUCCESS:
             return{
-                ...state,
-                userInfo: {
-                    ...state,
-                    headPic: action.pic
-                }
+                ...state
             };
         case FEEDBACK_SUCCESS:
             return{
@@ -64,7 +54,7 @@ export default function userReducer (state=initState, action) {
         case CAHNGE_POST_IMGLIST:
             return{
                 ...state,
-                postImgList: action.list,
+                postImgList: action.list
             };
         case SET_FEEDBACK_SHOW:
             return{
