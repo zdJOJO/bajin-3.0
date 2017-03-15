@@ -85,7 +85,7 @@ class MyInfo extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount(){
         const {dispatchFetchData, showFullPopup} = this.props;
 
         showFullPopup(false);

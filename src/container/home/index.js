@@ -17,7 +17,7 @@ import './index.css'
 
 class Home extends Component{
 
-    componentWillMount(){
+    componentDidMount (){
         const {fetchData, dispatchFetchData} = this.props;
         fetchData({
             type: 3,

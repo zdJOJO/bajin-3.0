@@ -55,7 +55,7 @@ class MyAddress extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const { dispatchFetchData } = this.props;
         dispatchFetchData({type: 9})
     }

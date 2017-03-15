@@ -50,7 +50,7 @@ class SelectDetail extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const { fetchInfo ,getCommentList ,disPatchFetchList } = this.props;
         fetchInfo(-1 ,-1 ,this.props.location.query.itemId);
         fetchInfo(-2,-1)

@@ -42,7 +42,7 @@ class Icbc extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const {fetchData} = this.props;
         fetchData({
             type: 2,

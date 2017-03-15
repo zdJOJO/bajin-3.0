@@ -13,6 +13,7 @@ import detailReducer from './detail'
 import loginReducer from './login'
 import homeReducer from './home'
 import userReducer from './user'
+import orderReducer from './order'
 
 export default combineReducers({
     publicReducer,
@@ -23,5 +24,6 @@ export default combineReducers({
     detailReducer,
     loginReducer,
     homeReducer,
-    userReducer
+    userReducer,
+    orderReducer
 })

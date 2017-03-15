@@ -12,7 +12,7 @@ import {fetchInfo} from '../../actions/courseAction'
 
 
 class Select extends Component{
-    componentWillMount(){
+    componentDidMount (){
         const {fetchInfo} = this.props;
         fetchInfo(0,1)
     }

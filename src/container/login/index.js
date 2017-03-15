@@ -77,7 +77,7 @@ class Login extends Component{
         };
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const {shouldFetchGetInfo} = this.props;
         shouldFetchGetInfo({
             currentPage: 1,

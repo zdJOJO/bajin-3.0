@@ -61,7 +61,7 @@ class Two4Class extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const {fetchInfo ,disPatchFn ,two4ClassList, totalPrice ,totalNum,} = this.props;
         fetchInfo(1,1);
         disPatchFn({

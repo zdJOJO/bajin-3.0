@@ -30,7 +30,7 @@ class GoodDetail extends Component {
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const { fetchInfo, getCommentList } = this.props;
         fetchInfo({
             type: 1,

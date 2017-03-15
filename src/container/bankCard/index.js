@@ -14,7 +14,7 @@ import './index.css'
 
 class BankCard extends Component{
 
-    componentWillMount(){
+    componentDidMount (){
         const {dispatchFetchData} = this.props;
         dispatchFetchData({
             type: 2

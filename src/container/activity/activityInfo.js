@@ -68,7 +68,7 @@ class ActivityInfo extends Component{
         }
     }
 
-    componentWillMount() {
+    componentDidMount () {
         const { getActDetail ,getCommentList ,disPatchFetchList, disPatchActFetch } = this.props;
         getActDetail(this.props.location.query.itemId);
         getCommentList({

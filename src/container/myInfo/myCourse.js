@@ -41,7 +41,7 @@ class MyCourse extends Component{
         }
     }
 
-    componentWillMount(){
+    componentDidMount (){
         const { dispatchFetchData } = this.props;
         dispatchFetchData({type: 6});
     }

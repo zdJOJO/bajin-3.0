@@ -20,7 +20,8 @@ export const dev = false;
 
 // 接口
 export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
-export const icbcUrl = dev ? 'http://www.winthen.com/test/ICBC_index.html' : 'http://test.winthen.com/bcard/ICBC_index.html' ;
+export const icbcUrl = dev ? 'http://www.winthen.com/test/ICBC_index.html?token='+cookie.load('token')
+    : 'http://test.winthen.com/bcard/ICBC_index.html?token='+cookie.load('token') ;
 
 //cookie
 export const token = cookie.load('token');
@@ -29,11 +30,12 @@ export const token = cookie.load('token');
 *
 * 注意在使用react-router时候，若是使用了browserHistory，需要配置nginx
 *
-* */
+
 // 路由根目录。
 export const rootPath =()=>{
     return dev ? '/test' : '/bcard';
 };
+*/
 
 
 /* 通用函数 时间戳转换成 固定格式
