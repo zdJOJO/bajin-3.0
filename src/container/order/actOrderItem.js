@@ -7,7 +7,7 @@ import {timestampFormat} from '../../public'
 class ActOrderItem extends Component{
     render(){
         return(
-            <div className="actOrderItem">
+            <div className="actOrderItem" onClick={ this.props.onClick } >
                 <img role="presentation" src={this.props.order.activity.activityPic}/>
                 <div className="detail">
                     <h4>{this.props.order.activity.activityTitle}</h4>

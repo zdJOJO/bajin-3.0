@@ -35,7 +35,7 @@
 #order .head>.tab a{
     font-size: 15px;
     display: inline-block;
-    flex: 0.33;
+    flex: 0.5;
 }
 #order .head>.tab a.active{
     color: #323232;
@@ -80,12 +80,11 @@
 }
 #order .orderList>.none>h3{
     font-size: 16px;
+    text-align: center;
 }
 #order .orderList>.none>a{
     text-decoration: none;
     font-size: 15px;
-    height: 0.05rem;
-    line-height: 0.05rem;
     color: #b9984f;
     border-bottom: none;
     margin: 0.03rem 0 0.04rem 0;
@@ -268,6 +267,10 @@
     border-bottom: none;
 }
 
+#order .weui-panel__hd>.weui-btn:after{
+    border: none;
+}
+
 @media screen and (max-width: 320px){
     #order .orderList{
         top: 1.2rem;
@@ -281,6 +284,148 @@
 }
 
 
+/*订单详情*/
+#order .actOrderDetail{
+    margin-top: 0.4rem;
+}
 
+#order .actOrderDetail ul{
+    margin-top: 0.15rem;
+}
 
+#order .actOrderDetail li{
+    border-bottom: 1px solid #ccc;
+    padding: 0.1rem 0.1rem;
+    font-size: 14px;
+    text-align: left;
+}
 
+#order .actOrderDetail li>span:last-child{
+    color: #999;
+    font-size: 15px;
+    padding-left: 0.2rem;
+}
+/***/
+#order .goodOrderDetail{
+    font-size: 14px;
+    color: #323232;
+    margin-top: 0.4rem;
+    overflow-x: hidden;
+}
+
+#order .goodOrderDetail>div{
+    border-bottom: 10px #f0f0f0 solid;
+}
+
+#order .goodOrderDetail h3{
+    font-size: 14px;
+    border-bottom: 1px #ebebeb solid;
+    height: 0.3rem;
+    line-height: 0.3rem;
+}
+
+#order .goodOrderDetail li{
+    text-align: left;
+    height: 0.3rem;
+    line-height: 0.3rem;
+    padding-left: 0.15rem;
+}
+
+#order .goodOrderDetail li:first-child{
+    padding-top: 0.05rem;
+}
+#order .goodOrderDetail li:last-child{
+    padding-bottom: 0.05rem;
+    position: relative;
+}
+
+#order .goodOrderDetail li:last-child>button{
+    position: absolute;
+    height: 0.2rem;
+    bottom: 0;
+    right: 0.15rem;
+    top: 50%;
+    margin-top: -0.1rem;
+    border-radius: 0;
+}
+
+#order .goodOrderDetail li>span.two{
+    color: #909090;
+    padding-left: 0.2rem;
+}
+
+#order .goodInfo>.itemGood{
+    overflow: hidden;
+    padding: 0.15rem 0 0.1rem 0.15rem;
+    width: 3rem;
+}
+
+#order .goodInfo>.itemGood img{
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.1rem;
+    float: left;
+}
+#order .goodInfo>.itemGood div{
+    float: left;
+}
+#order .goodInfo>.itemGood div>p{
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 2.2rem;
+}
+
+#order .goodInfo>.itemGood div>p:first-child{
+    font-size: 15px;
+}
+#order .goodInfo>.itemGood div>p:nth-child(2){
+    font-size: 14px;
+    color: #909090;
+}
+#order .goodInfo>.itemGood div>p:last-child{
+    color: #b9984f;
+    font-size: 13px;
+    margin-top: 0.12rem;
+    width: 2.05rem;
+    padding-right: 0.15rem;
+}
+#order .goodInfo>.itemGood div>p:last-child>span{
+    color: #323232;
+    float: right;
+}
+
+#order .other>.remarkCnt{
+    text-align: left;
+    border-bottom: 10px #f0f0f0 solid;
+    min-height: 0.4rem;
+    padding: 0.1rem 0.15rem;
+}
+
+#order .other h3{
+    height: 0.4rem;
+    line-height: 0.4rem;
+    border-bottom: 1px #ebebeb solid;
+    padding-right: 0.15rem;
+}
+#order .other h3>span:last-child{
+    color: #909090;
+    float: right;
+}
+
+#order .other{
+    margin-bottom: 0.35rem;
+}
+
+#order .other p:last-child{
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: right;
+    padding-right: 0.15rem;
+}
+
+#order .goodOrderDetail>button{
+    position: fixed;
+    bottom: 0;
+}

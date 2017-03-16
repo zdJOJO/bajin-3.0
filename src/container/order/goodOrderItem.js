@@ -4,7 +4,7 @@
 import React,{Component} from 'react';
 
 import { Button } from 'react-weui'
-import {timestampFormat} from '../../public'
+
 class GoodOrderItem extends Component{
 
     transFormStatus(status){   // 1-待付款 2-已付款（待发货） 3-已发货
@@ -20,7 +20,7 @@ class GoodOrderItem extends Component{
 
     render(){
         return(
-            <div className="goodOrderItem">
+            <div className="goodOrderItem" onClick={()=>{this.props.onClick()}}>
                 <h4><span>订单编号: {this.props.order.orderModel.orderId}</span><i>{this.transFormStatus(this.props.order.orderModel.orderState)}</i></h4>
                 <div>
                     <img role="presentation" src={this.props.order.detailOrderModels[0].hotPic} />
@@ -33,8 +33,22 @@ class GoodOrderItem extends Component{
                 </div>
                 <div>
                     <span>总价：<i>￥{this.props.order.detailOrderModels[0].skuPrice * this.props.order.detailOrderModels[0].count}</i></span>
-                    <Button size="small" className="payNow">立即支付</Button>
-                    <Button type="default" size="small" className="cancel">取消订单</Button>
+                    { this.props.order.orderModel.orderState === 1 &&
+                        <Button size="small" className="payNow"
+                                onClick={(e)=>{
+                                e.stopPropagation();
+                                this.props.buy();
+                            }}
+                        >立即支付</Button>
+                    }
+                    { this.props.order.orderModel.orderState === 1 &&
+                        <Button type="default" size="small" className="cancel"
+                                onClick={(e)=>{
+                                    e.stopPropagation();
+                                    this.props.delelte();
+                                }}
+                        >取消订单</Button>
+                    }
                 </div>
             </div>
         )

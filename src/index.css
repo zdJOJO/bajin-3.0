@@ -35,3 +35,7 @@ ul, li{
   /*bottom: 0.46rem;*/
   /*-webkit-overflow-scrolling: touch;*/
 }
+
+.weui-popup>div{
+  -webkit-overflow-scrolling: touch;
+}
