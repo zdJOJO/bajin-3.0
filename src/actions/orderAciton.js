@@ -50,7 +50,7 @@ const getOrderAddressSuccess = (address)=>{
 const getOrderList = obj =>{
     let url = '';
     if(obj.orderTab === 0){
-        url = port + '/card/apply?currentPage='+obj.page+'&token='+cookie.load('token') ;
+        url = `${port}/card/apply?currentPage=${obj.page}&token=${cookie.load('token')}`;
     }else if(obj.orderTab === 1){
         url = `${port}/card/order/v2?currentPage=${obj.page}&orderState=${obj.status}&token=${cookie.load('token')}`;
     }else {

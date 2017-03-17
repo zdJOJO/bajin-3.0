@@ -14,8 +14,8 @@ class HomeContentList extends Component{
     }
 
     handleGo(type, id){
-        id = 7 ;
         if(type === 3){
+            id = 7 ;
             hashHistory.push({
                 pathname: `/good/${id}`,
                 query: {

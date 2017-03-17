@@ -77,16 +77,15 @@ class Login extends Component{
         };
     }
 
-    componentDidMount (){
-        const {shouldFetchGetInfo} = this.props;
+
+    componentDidMount(){
+        const {shouldFetchGetInfo, changeTab} = this.props;
+
         shouldFetchGetInfo({
             currentPage: 1,
             size: 10
-        } ,9)
-    }
+        } ,9);
 
-    componentDidMount(){
-        const {changeTab} = this.props;
         if(cookie.load('token')){
             hashHistory.push({pathname: '/'})
         }

@@ -4,9 +4,10 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 
-import { Button, Dialog,Toast } from 'react-weui'
+import { Button, Dialog, ActionSheet } from 'react-weui'
 
 import {fetchOrderList} from '../../actions/orderAciton'
+
 
 // 1-待付款 2-已付款（待发货） 3-已发货
 const transFormState = (orderState) =>{
@@ -22,8 +23,12 @@ const transFormState = (orderState) =>{
 class GoodOrderDetail extends Component{
     constructor(props){
         super(props);
-        const {  fetchOrderList, orderTab, orderStatus } = this.props;
+        const {
+            fetchOrderList, orderTab, orderStatus
+        } = this.props;
         this.state = {
+            isShowDelete: false,
+
             style2: {
                 title: '提示',
                 buttons: [
@@ -43,17 +48,16 @@ class GoodOrderDetail extends Component{
                                 page: 1,
                                 orderId: this.props.goodOrder.orderModel.orderId
                             });
-                            this.setState({isShowDelete: false})
+                            this.setState({isShowDelete: false});
+                            this.props.hideDetail()
                         }
                     }
                 ]
-            },
-            isShowDelete: false
+            }
         }
     }
 
     render(){
-        const { isShowDeleteSuccess } = this.props;
         return(
             <div className="goodOrderDetail">
 
@@ -65,6 +69,7 @@ class GoodOrderDetail extends Component{
                 >
                     确定要删除该订单吗？
                 </Dialog>
+                
 
                 <div className="orderInfo">
                     <h3>订单信息</h3>
@@ -82,7 +87,9 @@ class GoodOrderDetail extends Component{
                             <span className="two">{transFormState(this.props.goodOrder.orderModel.orderState)}</span>
                             { this.props.goodOrder.orderModel.orderState === 1 &&
                                 <Button size="small" type="default"
-                                        onClick={ ()=>{ this.setState({isShowDelete: true}) } }
+                                        onClick={ ()=>{
+                                            this.setState({isShowDelete: true});
+                                        } }
                                 >取消订单</Button>
                             }
                         </li>
@@ -136,7 +143,6 @@ class GoodOrderDetail extends Component{
                     <p>实付款: ￥{this.props.goodOrder.orderModel.orderCount}</p>
                 </div>
 
-                <Button>去付款</Button>
             </div>
         )
     }
@@ -145,7 +151,6 @@ class GoodOrderDetail extends Component{
 
 function mapStateToProps(state) {
     return{
-        isShowDeleteSuccess: state.orderReducer.isShowDeleteSuccess,
         orderTab: state.orderReducer.orderTab,
         orderStatus:  state.orderReducer.orderStatus
     }

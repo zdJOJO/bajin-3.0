@@ -8,7 +8,7 @@
 import {
     SHOW_DIALOG,
     SHOW_PAY_POPUP ,
-    POST_CIPHERTEXT,
+    GET_CIPHERTEXT_SUCCESS,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
     CHANGE_SWIPE_INDEX,
@@ -41,7 +41,7 @@ export default function publicReducer(state=initState, action){
                 ...state,
                 isShowPayPopup: action.isShowPayPopup
             }
-        case POST_CIPHERTEXT:
+        case GET_CIPHERTEXT_SUCCESS:
             return{
                 ...state,
                 ciphertext: action.text

@@ -11,7 +11,7 @@ const initState = {
     isHideMore: false,
     isLoading: false,
     isShowDeleteSuccess: false, //删除成功
-    orderTab: 0,   // 0-活动  1-臻品  2-课程
+    orderTab: 0,   // 0-活动  1-臻品 
     orderStatus: 0,  // 0-全部 1-待付款 2-已付款（待发货） 3-已发货
     orderList: [],
     receiveAddress: {}  //每个订单的收货地址

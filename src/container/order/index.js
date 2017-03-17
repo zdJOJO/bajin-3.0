@@ -3,14 +3,16 @@
  */
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
+import {hashHistory} from 'react-router'
 
 import HeaderBar from '../../components/headerNav/headBar'
 import ActOrderItem from './actOrderItem'
 import GoodOrderItem from './goodOrderItem'
 import GoodOrderDetail from './goodOrderDetail'
-import { Popup, Button, Dialog, PanelHeader,LoadMore, Toast } from 'react-weui'
+import { Popup, Button, Dialog, PanelHeader,LoadMore, Toast, ActionSheet } from 'react-weui'
 
 import {fetchOrderList} from '../../actions/orderAciton'
+import { getWxParam } from '../../actions/publicAction'
 
 import './index.css'
 
@@ -20,6 +22,7 @@ class MyOrder extends Component{
 
     constructor(props){
         super(props);
+        const { getWxParam } = this.props;
         this.state = {
             page: 1,
             style2: {
@@ -40,18 +43,61 @@ class MyOrder extends Component{
             isShowDelete: false,
             orderDetailShow:　false,
             orderId: 0,
-            orderDetail: {}
+            orderDetail: {},
+
+            payShow: false,  //支付
+            menus: [{
+                label: '银行卡支付',
+                onClick: ()=> {
+                    console.log('银行卡支付');
+                    hashHistory.push({
+                        pathname: `/myBankCard`,
+                        query: {
+                            type: 3,
+                            orderId: this.state.orderId
+                        }
+                    });
+                }
+            }, {
+                label: '微信支付',
+                onClick: ()=> {
+                    console.log('微信支付');
+                    getWxParam({
+                        orderId: this.state.orderId,
+                        ip: window.returnCitySN.cip,
+                        type: 0
+                    })
+                }
+            }],
+            actions: [
+                {
+                    label: '取消',
+                    onClick: ()=>{ this.setState({payShow: false}) }
+                }
+            ]
+
         }
     }
 
     componentDidMount(){
         const {  fetchOrderList, orderTab, orderStatus } = this.props;
-        fetchOrderList({
-            type: 3,
-            orderTab: orderTab,
-            orderStatus: orderStatus,
-            page: this.state.page
-        })
+
+        if(!this.props.location.query){
+            fetchOrderList({
+                type: 3,
+                orderTab: orderTab,
+                status: orderStatus,
+                page: this.state.page
+            });
+        }else {
+            // 0-全部 1-待付款  2-已付款 3-已发货 4-待评价
+            fetchOrderList({
+                type: 3,
+                orderTab: 1,
+                status: parseInt(this.props.location.query.state),
+                page: 1
+            });
+        }
     }
     
     handleDelete(id){
@@ -73,8 +119,11 @@ class MyOrder extends Component{
         }
     }
     
-    handleBuy(){
-        this.setState({orderDetailShow: true})
+    handleBuy(order){
+        this.setState({
+            orderDetail: order,
+            orderDetailShow: true
+        })
     }
 
     render(){
@@ -134,10 +183,11 @@ class MyOrder extends Component{
                     show={this.state.orderDetailShow}
                     onRequestClose={()=>{this.setState({orderDetailShow: false})}}
                 >
-                    <div style={{height: '100vh', overflow: 'scroll'}}>
-                        <HeaderBar content="订单详情" type="3" onClick={()=>{this.setState({orderDetailShow: false})}}/>
-                        {/*活动订单详情*/}
-                        { orderTab===0 && this.state.orderDetail.activityId &&
+                    <div>
+                        <div style={{height: '100vh', overflowY: 'scroll'}}>
+                            <HeaderBar content="订单详情" type="3" onClick={()=>{this.setState({orderDetailShow: false})}}/>
+                            {/*活动订单详情*/}
+                            { orderTab===0 && this.state.orderDetail.activityId &&
                             <div className="actOrderDetail">
                                 <ActOrderItem order={this.state.orderDetail}/>
                                 <ul>
@@ -167,12 +217,29 @@ class MyOrder extends Component{
                                     </li>
                                 </ul>
                             </div>
+                            }
+                            {/*臻品订单详情*/}
+                            { orderTab===1 && this.state.orderDetail.orderModel &&
+                                <GoodOrderDetail
+                                    receiveAddress={receiveAddress}
+                                    goodOrder={this.state.orderDetail}
+                                    hideDetail={ ()=>{this.setState({orderDetailShow: false})} }
+                                />
+                            }
+                        </div>
+
+                        { orderStatus === 1 &&
+                            <Button
+                                onClick={()=>{this.setState({payShow: true})}}
+                            >去付款</Button>
                         }
-                        {/*臻品订单详情*/}
-                        { orderTab===1 && this.state.orderDetail.orderModel &&
-                            <GoodOrderDetail
-                                receiveAddress={receiveAddress}
-                                goodOrder={this.state.orderDetail}
+                        { orderStatus === 1 &&
+                            <ActionSheet
+                                menus={this.state.menus}
+                                actions={this.state.actions}
+                                show={this.state.payShow}
+                                type="ios"
+                                onRequestClose={e=>this.setState({payShow: false})}
                             />
                         }
                     </div>
@@ -215,7 +282,7 @@ class MyOrder extends Component{
                                                 <GoodOrderItem
                                                     order={order}
                                                        delelte={this.handleDelete.bind(this, order.orderModel.orderId)}
-                                                       buy={this.handleBuy.bind(this)}
+                                                       buy={this.handleBuy.bind(this, order)}
                                                        onClick={ ()=>{
                                                            this.setState({
                                                               orderDetail: order,
@@ -278,6 +345,6 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps, {
-       fetchOrderList
+       fetchOrderList, getWxParam
     }
 )(MyOrder)

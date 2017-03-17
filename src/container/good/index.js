@@ -133,57 +133,60 @@ class GoodDetail extends Component {
                     <LoadMore loading>Loading...</LoadMore>
                 }
 
-                <Popup
-                    show={this.state.showSku}
-                    onRequestClose={e=>this.setState({showSku: false})}
-                >
-                    <div className="skuList">
-                        <div className="head">
-                            <img src="http://card2016.oss-cn-hangzhou.aliyuncs.com/96e8c797405338a8f5f236bd96a7203a.jpg" role="presentation" />
-                            <div>
-                                <p>￥{chooseSku.skuPrice?chooseSku.skuPrice.toFixed(2):'0000.00'}</p>
-                                <p>限量{chooseSku.stockNumber}件</p>
+                { goodDetail && skuList &&
+                    <Popup
+                        show={this.state.showSku}
+                        onRequestClose={e=>this.setState({showSku: false})}
+                    >
+                        <div className="skuList">
+                            <div className="head">
+                                <img src="http://card2016.oss-cn-hangzhou.aliyuncs.com/96e8c797405338a8f5f236bd96a7203a.jpg" role="presentation" />
+                                <div>
+                                    <p>￥{chooseSku.skuPrice?chooseSku.skuPrice.toFixed(2):'0000.00'}</p>
+                                    <p>限量{chooseSku.stockNumber}件</p>
+                                    <p>
+                                        <span>已选择</span>
+                                        <span>{chooseSku.skuGague}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="second">
+                                <p className="title">规格</p>
+                                <ul>
+                                    {
+                                        skuList.map((sku, index)=>{
+                                            return(
+                                                <li key={index} className={ this.state.currentChoose===index ? 'active' : '' }
+                                                    onClick={
+                                                        ()=>{
+                                                            this.setState({
+                                                                currentChoose: index,
+                                                                number: 1
+                                                            })
+                                                            changeChooseSku(sku)
+                                                        }
+                                                    }
+                                                >
+                                                    {sku.skuGague}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                            <div className="third">
+                                <p className="title">数量</p>
                                 <p>
-                                    <span>已选择</span>
-                                    <span>{chooseSku.skuGague}</span>
+                                    <i className="reduce" onClick={this.handleChangeNumber.bind(this, 1)}>－</i>
+                                    <i className="number">{this.state.number}</i>
+                                    <i className="plus" onClick={this.handleChangeNumber.bind(this, 0)}>＋</i>
                                 </p>
                             </div>
                         </div>
-                        <div className="second">
-                            <p className="title">规格</p>
-                            <ul>
-                                {
-                                    skuList.map((sku, index)=>{
-                                        return(
-                                            <li key={index} className={ this.state.currentChoose===index ? 'active' : '' }
-                                                onClick={
-                                                    ()=>{
-                                                        this.setState({
-                                                            currentChoose: index,
-                                                            number: 1
-                                                        })
-                                                        changeChooseSku(sku)
-                                                    }
-                                                }
-                                            >
-                                                {sku.skuGague}
-                                            </li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                        </div>
-                        <div className="third">
-                            <p className="title">数量</p>
-                            <p>
-                                <i className="reduce" onClick={this.handleChangeNumber.bind(this, 1)}>－</i>
-                                <i className="number">{this.state.number}</i>
-                                <i className="plus" onClick={this.handleChangeNumber.bind(this, 0)}>＋</i>
-                            </p>
-                        </div>
-                    </div>
-                    <Button>确定</Button>
-                </Popup>
+                        <Button>确定</Button>
+                    </Popup>
+                }
+
 
                 <div id="footBuy" className="do">
                     <i />

@@ -73,7 +73,9 @@ class MyInfo extends Component{
                         label: '退出登录',
                         onClick: ()=>{
                             cookie.remove('token');
-                            location.hash = '/#login'
+                            hashHistory.push({
+                                pathname: '/login'
+                            })
                         }
                     }
                 ]
@@ -99,6 +101,15 @@ class MyInfo extends Component{
                 pathname: '/login'
             })
         }
+    }
+
+    handleGotoOrder(index){
+        if(index===3)
+            return;
+        hashHistory.push({
+            pathname: '/myOrder',
+            query: {state: index+1}
+        })
     }
 
     handleClick(path){
@@ -218,7 +229,6 @@ class MyInfo extends Component{
                 <div className="headBox">
                     <div>
                         <img role="presentation" src={userInfo.headPic || head}
-                             // onClick={this.handleClick.bind(this, '#/set')}
                              onClick={()=>{this.setState({personalSetShow: true})}}
                         />
                         <span className="userName">{userInfo.userName}</span>
@@ -227,12 +237,17 @@ class MyInfo extends Component{
                     <span className="setBtn" onClick={()=>{showFullPopup(true)}} />
                 </div>
                 <ul>
-                    <MyLi title="我的订单" content="查看全部订单"/>
+                    <MyLi title="我的订单" content="查看全部订单"
+                          onClick={this.handleGotoOrder.bind(this, -1)}
+                    />
                     <li className="menu">
                         {
                             this.state.orderList.map((order,index)=>{
                                 return(
-                                    <p className={'oreder'+index} key={index}>
+                                    <p className={ `oreder${index}` }
+                                       key={index}
+                                       onClick={this.handleGotoOrder.bind(this, index)}
+                                    >
                                         <span>{order.statuStr}</span>
                                     </p>
                                 )

@@ -36,7 +36,7 @@ const initState = {
     isShowMoreDetail: false,  //是否展示更多
     isShowPayPopup: false,  //弹出支付层
 
-    goodDetail: {}  ,         //  臻品详情
+    goodDetail: {},         //  臻品详情
     skuList: [],   //某臻品的规格
     chooseSku: {}
 };

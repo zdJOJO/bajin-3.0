@@ -24,13 +24,21 @@ class BankCard extends Component{
     handleClick(cardNumber) {
         console.log('cardId is: ', cardNumber);
         const { getOrderCiphertext } = this.props;
-        if(this.props.query.type==='1'){
+        if(this.props.location.query.type==='1'){
             //活动
-            console.log('活动订单id: ', this.props.query.orderId);
+            console.log('活动订单id: ', this.props.location.query.orderId);
             getOrderCiphertext({
                 type: 1,
                 cardno: cardNumber,
-                applyId:  this.props.query.orderId,
+                applyId:  this.props.location.query.orderId,
+                dom: this.refs.pay
+            });
+        }else if(this.props.location.query.type==='3'){
+            //臻品
+            getOrderCiphertext({
+                type: 3,
+                cardno: cardNumber,
+                orderId:  this.props.location.query.orderId,
                 dom: this.refs.pay
             });
         }

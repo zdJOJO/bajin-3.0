@@ -7,7 +7,7 @@ import {hashHistory} from 'react-router'
 import {
     SHOW_DIALOG,
     SHOW_PAY_POPUP ,
-    POST_CIPHERTEXT,
+    GET_CIPHERTEXT_SUCCESS,
     SHOW_TOAST_LOADING,
     SHOW_TOAST_SUCCESS,
     CHANGE_SWIPE_INDEX,
@@ -23,9 +23,9 @@ import {wxConfig} from '../public/wx/wxConfig'
 let token = cookie.load('token');
 
 //密文
-const postCiphertext = text =>{
+const getCiphertextSuccess = text =>{
     return{
-        type: POST_CIPHERTEXT,
+        type: GET_CIPHERTEXT_SUCCESS,
         text
     }
 }
@@ -114,7 +114,11 @@ export const getOrderCiphertext = obj =>{
     }else if(obj.type === 1){
         //活动支付
         url = port + '/card/bank/encryption/pay/'+obj.cardno+'/'+obj.applyId+'?token='+token;
+    }else if(obj.type === 3){
+        //臻品订单支付
+        url = `${port}/card/bank/goods/pay/${obj.cardno}/${obj.orderId}?token=${token}`;
     }
+
     return dispatch =>{
         return fetch(url)
             .then( res =>{
@@ -123,14 +127,14 @@ export const getOrderCiphertext = obj =>{
             })
             .then( text =>{
                 console.log(text);
-                dispatch(postCiphertext(text));
+                dispatch(getCiphertextSuccess(text));
                 obj.dom.submit();
             })
             .catch( e =>{
                 console.log(e)
             })
     }
-}
+};
 
 
 //生成订单 POST
@@ -140,9 +144,9 @@ const generateOrder = obj =>{
 
     //url
     if(obj.type === 'scmvOrder'){
-        url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000, 10)
+        url = port + '/card/scmvOrder/create?token=' + token + '&tp=' + parseInt(new Date().getTime()/1000, 10);
     }else if(obj.type === 1){
-        url = port + '/card/apply?token=' + token
+        url = port + '/card/apply?token=' + token;
     }
 
     // data
@@ -181,7 +185,7 @@ const generateOrder = obj =>{
                         if(obj.type === 'scmvOrder'){
                             dispatch(getOrderCiphertext({
                                 type: 'scmvOrder',
-                                cardno: '3994',
+                                cardno: '3994',  //现在默认是3994， 其实是要先去银行卡列表页面选择银行卡支付
                                 scmvOrderId: json.data.id,
                                 dom: obj.dom
                             }));
@@ -214,10 +218,10 @@ const generateOrder = obj =>{
 
 /*
  *   微信支付 生成订单参数
- *   活动： port + "/card/weixin/getRepay?orderId=" + applyid + "&token=" + token + "&type=0&ipAddress=" + ip
+ *   活动： port + "/card/weixin/getRepay?orderId=" + applyid + "&token=" + token + "&type=1&ipAddress=" + ip
  *   其他： port + "/card/weixin/getRepay?orderId=" + obj.orderId + "&token=" + cookie.load('token') + "&type=0&ipAddress=" + obj.ip;
  * */
-const getWxParam = (obj)=>{
+export const getWxParam = (obj)=>{
     let url = port + "/card/weixin/getRepay?orderId=" + obj.orderId + "&token=" + cookie.load('token') + `&type=${obj.type===1?1:0}&ipAddress=` + obj.ip;
     return dispatch =>{
         return fetch(url)
@@ -226,25 +230,25 @@ const getWxParam = (obj)=>{
             })
             .then( result =>{
                 console.log(result);
-                let appid =  String(result.appId);
-                let nonceStr = String(result.nonceStr);
-                let packageStr = String(result.package);
-                let timeStamp = String(new Date().getTime());
-                let stringA = "appId=" + appid + "&nonceStr=" + nonceStr + "&package=" + packageStr + "&signType=MD5&timeStamp=" + timeStamp ;
-                let stringSignTemp = stringA + "&key=29798840529798840529798840529798";
-                let paySign = hex_md5(stringSignTemp).toUpperCase();   //全部大写
-
-                let data = {
-                    appid: appid,
-                    nonceStr: nonceStr,
-                    package: packageStr,
-                    timeStamp: timeStamp,
-                    paySign: paySign,
-                    url: location.href+'/'
-                };
-                let wxParamObjOne = data;
-                wxParamObjOne.typeStr = 'wxPay';
                 if(result){
+                    let appid =  String(result.appId);
+                    let nonceStr = String(result.nonceStr);
+                    let packageStr = String(result.package);
+                    let timeStamp = String(new Date().getTime());
+                    let stringA = "appId=" + appid + "&nonceStr=" + nonceStr + "&package=" + packageStr + "&signType=MD5&timeStamp=" + timeStamp ;
+                    let stringSignTemp = stringA + "&key=29798840529798840529798840529798";
+                    let paySign = hex_md5(stringSignTemp).toUpperCase();   //全部大写
+
+                    let data = {
+                        appid: appid,
+                        nonceStr: nonceStr,
+                        package: packageStr,
+                        timeStamp: timeStamp,
+                        paySign: paySign,
+                        url: location.href+'/'
+                    };
+                    let wxParamObjOne = data;
+                    wxParamObjOne.typeStr = 'wxPay';
                     wxConfig(wxParamObjOne);
                 }
             })
