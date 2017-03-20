@@ -13,11 +13,12 @@ import {
     CHANGE_SWIPE_INDEX,
     GET_RECOMMENDED_LIST_SUCCESS,
     SHOW_FULL_POPUP,
-    SET_HEADPIC_SUCCESS
+    SET_HEADPIC_SUCCESS,
+    ADD_COLLECTED, CANCLE_COLLECTED, GET_COllECTIONLIST_SUCCESS
 } from './actionTypes';
 
 import {dispatchFetchData} from './userAction'
-import {port, isTokenExpired} from '.././public/'
+import {port, isTokenExpired, toastSetTimeOut} from '.././public/'
 import {hex_md5} from '../public/md5'
 import {wxConfig} from '../public/wx/wxConfig'
 let token = cookie.load('token');
@@ -28,7 +29,7 @@ const getCiphertextSuccess = text =>{
         type: GET_CIPHERTEXT_SUCCESS,
         text
     }
-}
+};
 
 
 //弹出满屏popup
@@ -37,7 +38,7 @@ export const showFullPopup = isFullPopupShow =>{
         type: SHOW_FULL_POPUP,
         isFullPopupShow
     }
-}
+};
 
 
 //弹出支付层
@@ -46,7 +47,7 @@ export const showPayPopup = isShowPayPopup =>{
         type: SHOW_PAY_POPUP,
         isShowPayPopup
     }
-}
+};
 
 
 //TOAST提示（正在发表评论、发表评论成功）
@@ -55,13 +56,14 @@ export const showToastLoading = isShowToastLoading =>{
         type: SHOW_TOAST_LOADING,
         isShowToastLoading
     }
-}
-export const showToastSuccess = isShowToastSuccess =>{
+};
+export const showToastSuccess = (isShowToastSuccess,toastStr) =>{
     return{
         type: SHOW_TOAST_SUCCESS,
-        isShowToastSuccess
+        isShowToastSuccess,
+        toastStr
     }
-}
+};
 
 
 //显示错误提示
@@ -71,7 +73,7 @@ export const showDialog = (isDialogShow, errorStr) =>{
         isDialogShow,
         errorStr
     }
-}
+};
 
 
 // swiper index
@@ -80,7 +82,7 @@ export const changeSwipeIndex = swipeIndex =>{
         type: CHANGE_SWIPE_INDEX,
         swipeIndex
     }
-}
+};
 
 
 //获取相关列表获取成功
@@ -89,7 +91,7 @@ export const getRecommendedListSuccess = list =>{
         type: GET_RECOMMENDED_LIST_SUCCESS,
         list
     }
-}
+};
 
 
 //设置 个人头像
@@ -100,7 +102,29 @@ export const setHeadPicSuccess =(pic)=>{
     }
 };
 
+//添加收藏、 取消收藏
+const addCollectSuccess = (isCollection,collectId)=>{
+    return{
+        type: ADD_COLLECTED,
+        isCollection,
+        collectId
+    }
+};
+const cancleCollectSuccess = (isCollection)=>{
+    return{
+        type: CANCLE_COLLECTED,
+        isCollection
+    }
+};
 
+const getCollectionListSuccess = (list)=>{
+    return{
+        type: GET_COllECTIONLIST_SUCCESS,
+        list
+    }
+};
+
+/********************************************/
 
 //根据订单号 获取密文 GET
 export const getOrderCiphertext = obj =>{
@@ -214,8 +238,6 @@ const generateOrder = obj =>{
 };
 
 
-
-
 /*
  *   微信支付 生成订单参数
  *   活动： port + "/card/weixin/getRepay?orderId=" + applyid + "&token=" + token + "&type=1&ipAddress=" + ip
@@ -274,7 +296,7 @@ const getRecommendedList = id =>{
                 console.log(e);
             })
     }
-}
+};
 
 
 //  上传图片/上传头像  post
@@ -306,6 +328,131 @@ const upImg = (valueObj)=>{
 };
 
 
+//收藏 GET
+const collectFn = (obj)=>{
+    return dispatch =>{
+        return fetch(`${port}/card/collect/item?token=${cookie.load('token')}&itemId=${obj.itemId}&itemType=${obj.itemType}`)
+            .then( res =>{
+                return res.json()
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    if(json.code === '205'){
+                        //未收藏
+                        dispatch(cancleCollectSuccess(false));
+                    }else {
+                        //已收藏
+                        dispatch(addCollectSuccess(true, json.data.collectId));
+                    }
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+// 添加收藏  POST
+const addCollectFn = (obj)=>{
+    return dispatch =>{
+        return fetch( `${port}/card/collect?token=${cookie.load('token')}` , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                itemId: obj.itemId,
+                itemType: obj.itemType
+            })
+        } )
+            .then( res =>{
+                return res.json()
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(collectFn({
+                        itemType: obj.itemType,
+                        itemId: obj.itemId
+                    }));
+                    dispatch(showToastSuccess(true,'收藏成功'));
+                    setTimeout(()=>{
+                        dispatch(showToastSuccess(false,'收藏成功'));
+                    },1000)
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+//取消收藏 DELETE
+const cancleCollectFn = (obj)=>{
+    return dispatch =>{
+        return fetch( `${port}/card/collect/${obj.collectId}?token=${cookie.load('token')}`, {
+            method: 'DELETE'
+        } )
+            .then( res =>{
+                return res.json()
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(collectFn({
+                        itemType: obj.itemType,
+                        itemId: obj.itemId
+                    }));
+                    dispatch(showToastSuccess(true,'已取消收藏'));
+                    setTimeout(()=>{
+                        dispatch(showToastSuccess(false,'已取消收藏'));
+                    },1000)
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+//获取列表  GET
+const getCollectionList = ()=>{
+    return dispatch =>{
+        return fetch(``)
+            .then( res =>{
+                return res.json()
+            })
+            .then( json =>{
+                isTokenExpired(json.code, function () {
+                    dispatch(getCollectionListSuccess(json.list));
+                });
+            })
+            .catch(e =>{
+                console.log(e)
+            })
+    }
+};
+
+
+/* * 收藏  type:
+ *  1 - 查询收藏
+ *  2 - 添加收藏
+ *  3 - 取消收藏
+ *  4 - 获取列表
+ * */
+export const fetchCollect =(obj)=>{
+    return dispatch =>{
+        switch (obj.type){
+            case 1:
+                return  dispatch( collectFn(obj) );
+            case 2:
+                return  dispatch( addCollectFn(obj) );
+            case 3:
+                return  dispatch( cancleCollectFn(obj) );
+            case 4:
+                return dispatch(getCollectionList());
+            default:
+                return false
+        }
+    }
+};
+
+
 /*
 *type:
 * 1 ： 活动支付
@@ -325,7 +472,7 @@ export const disPatchFetchOrder =(obj)=>{
                 return false;
         }
     }
-}
+};
 
 
 /* 详情内 相关推荐列表  */
@@ -336,7 +483,7 @@ export const disPatchFetchList = id =>{
 };
 
 
-// 上传 图片
+/* 上传 图片 */
 export const upImgFn = (obj) =>{
     return dispatch =>{
         if(obj.size > 1000*1024*5){
@@ -347,7 +494,6 @@ export const upImgFn = (obj) =>{
         return dispatch(upImg(obj))
     }
 };
-
 
 
 

@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import { getActDetail ,actShowMore ,actBackTop, disPatchActFetch} from '../../actions/activityAction';
 import { getCommentList } from  '../../actions/commentAction';
-import {disPatchFetchOrder ,showPayPopup, disPatchFetchList, showDialog} from '../../actions/publicAction'
+import {disPatchFetchOrder ,showPayPopup, disPatchFetchList, showDialog, fetchCollect} from '../../actions/publicAction'
 import { timestampFormat } from '../../public';
 
 
@@ -19,16 +19,15 @@ import HeadBar from '../../components/headerNav/headBar'
 import {
     PanelHeader,
     Button,
-    ActionSheet, Popup, Dialog
+    ActionSheet, Popup, Dialog, Toast
 } from 'react-weui';
 
-import kefu from '../../img/detail/kefu.png';
 import '../../components/detail.css';
 import './index.css';
 
 class ActivityInfo extends Component{
     constructor(props){
-        super(props)
+        super(props);
         const { showPayPopup, showDialog} = this.props;
         this.state = {
             menus: [{
@@ -69,8 +68,13 @@ class ActivityInfo extends Component{
     }
 
     componentDidMount () {
-        const { getActDetail ,getCommentList ,disPatchFetchList, disPatchActFetch } = this.props;
+        const {
+            getActDetail ,getCommentList ,disPatchFetchList, disPatchActFetch,
+            fetchCollect
+        } = this.props;
+
         getActDetail(this.props.location.query.itemId);
+
         getCommentList({
             itemType: this.props.location.query.itemType,
             itemId:  this.props.location.query.itemId,
@@ -78,11 +82,36 @@ class ActivityInfo extends Component{
             isListNull: false,
             isInDetail: true
         });
-        disPatchFetchList(this.props.location.query.itemId);
+
         disPatchActFetch({
             type: 1,
             activityId: this.props.location.query.itemId
-        })
+        });
+
+        disPatchFetchList(this.props.location.query.itemId);
+        fetchCollect({
+            type: 1,
+            itemType: this.props.location.query.itemType,
+            itemId: this.props.location.query.itemId
+        });
+    }
+
+    handleCollect(isCollection, collectId){
+        const { fetchCollect  } = this.props;
+        if(isCollection){
+            fetchCollect({
+                type: 3,
+                itemType: this.props.location.query.itemType,
+                itemId: this.props.location.query.itemId,
+                collectId: collectId
+            });
+        }else {
+            fetchCollect({
+                type: 2,
+                itemType: this.props.location.query.itemType,
+                itemId: this.props.location.query.itemId
+            });
+        }
     }
 
     handleSubmitOrderInfo(_wxPay){
@@ -123,14 +152,13 @@ class ActivityInfo extends Component{
         }else {
             actBackTop(1)
         }
-        console.log(this.refs.bodyBox.scrollHeight)
-        console.log(scrollTop)
     }
 
     render(){
         const {
             activityInfo ,listInDetail ,rowCount,
-            isShowBackTop ,times ,actShowMore ,isShowMoreDetail, isDialogShow,errorStr,
+            isShowBackTop ,times ,actShowMore ,isShowMoreDetail, isDialogShow,errorStr, isCollection,collectId,
+            isShowToastSuccess,  toastStr,
             showPayPopup ,isShowPayPopup, recommendedList,
             userActStatus,
         } = this.props;
@@ -177,12 +205,13 @@ class ActivityInfo extends Component{
                     dom={this.refs.bodyBox}
                 />
 
+                <Toast icon="success-no-circle" show={isShowToastSuccess}>{toastStr}</Toast>
+
                 { activityInfo &&
                     <div id="selectDetail" className="actDetail"
                          ref="bodyBox"
                          onScroll={this.handleScroll.bind(this)}
                     >
-
                         <div className="head">
                             <img src={activityInfo.maxPic} role="presentation"/>
                             <h3>{activityInfo.activityTitle}</h3>
@@ -258,7 +287,10 @@ class ActivityInfo extends Component{
 
                 <div id="footBuy" className="do">
                     <i/>
-                    <Button id="flow" type="default" plain>关注</Button>
+                    <Button id="flow" type="default"
+                            onClick={this.handleCollect.bind(this, isCollection, collectId)}
+                            plain
+                    >{ isCollection ? '取消关注' : '关注' }</Button>
                     {actStatus}
                 </div>
 
@@ -371,11 +403,15 @@ const mapStateToProps = (state)=> {
         listInDetail: state.commentReducer.listInDetail,
         rowCount: state.commentReducer.rowCount,
 
+        isShowToastSuccess: state.publicReducer.isShowToastSuccess,
+        toastStr: state.publicReducer.toastStr,
         isShowPayPopup: state.publicReducer.isShowPayPopup,
         isDialogShow: state.publicReducer.isDialogShow,
         errorStr:　state.publicReducer.errorStr,
         ciphertext: state.publicReducer.ciphertext,
         recommendedList: state.publicReducer.recommendedList,
+        isCollection: state.publicReducer.isCollection,
+        collectId:  state.publicReducer.collectId,
 
         userActStatus: state.activityReducer.userActStatus
     }
@@ -386,7 +422,7 @@ export default connect(
     {
         getActDetail ,getCommentList,
         actShowMore ,actBackTop,
-        showPayPopup ,showDialog, disPatchFetchOrder ,disPatchFetchList,
+        showPayPopup ,showDialog, disPatchFetchOrder ,disPatchFetchList, fetchCollect,
         disPatchActFetch
     }
 )(ActivityInfo)

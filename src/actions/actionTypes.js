@@ -22,6 +22,10 @@ export const SHOW_PAY_POPUP = 'SHOW_PAY_POPUP';     //付款提示
 export const GET_CIPHERTEXT_SUCCESS = 'GET_CIPHERTEXT_SUCCESS';     //支付
 export const CHANGE_SWIPE_INDEX = 'CHANGE_SWIPE_INDEX';   //滚动分页
 export const GET_RECOMMENDED_LIST_SUCCESS = 'GET_RECOMMENDED_LIST_SUCCESS';  //推荐列表获取成功
+    //是否被收藏
+export const ADD_COLLECTED = 'ADD_COLLECTED';
+export const CANCLE_COLLECTED = 'CANCLE_COLLECTED';
+export const GET_COllECTIONLIST_SUCCESS = 'GET_COllECTIONLIST_SUCCESS';
 
 
 //登录 注册

@@ -23,9 +23,6 @@ export const port = dev ? 'http://www.winthen.com' : "http://test.winthen.com" ;
 export const icbcUrl = dev ? 'http://www.winthen.com/test/ICBC_index.html?token='+cookie.load('token')
     : 'http://test.winthen.com/bcard/ICBC_index.html?token='+cookie.load('token') ;
 
-//cookie
-export const token = cookie.load('token');
-
 /*
 *
 * 注意在使用react-router时候，若是使用了browserHistory，需要配置nginx
@@ -120,8 +117,6 @@ export const getUserInfoFn = (info)=>{
     }
 
 };
-
-
 
 
 /*  ******* ActionSheet 和 Dialog  定义  *******

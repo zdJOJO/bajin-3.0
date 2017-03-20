@@ -12,18 +12,14 @@ import '../../components/detail.css';
 import {
     PanelHeader,
     Button,
-    ActionSheet
+    ActionSheet,Toast
 } from 'react-weui';
 
 import {fetchInfo ,showMoreCourseDetail} from '../../actions/courseAction'
-import {disPatchFetchOrder ,showPayPopup ,disPatchFetchList} from '../../actions/publicAction'
+import {disPatchFetchOrder ,showPayPopup ,disPatchFetchList, fetchCollect} from '../../actions/publicAction'
 import {getCommentList} from '../../actions/commentAction'
 
-import {wx_jssdk_api} from '../../public/wx/wxConfig'
-
-
 import more from '../../img/more.svg';
-import kefu from '../../img/detail/kefu.png';
 import vedio from '../../img/detail/vedio.png';
 import down from '../../img/detail/down.png';
 
@@ -31,7 +27,7 @@ import down from '../../img/detail/down.png';
 class SelectDetail extends Component{
 
     constructor(props){
-        super(props)
+        super(props);
         const { showPayPopup} = this.props;
         this.state = {
             menus: [{
@@ -51,9 +47,9 @@ class SelectDetail extends Component{
     }
 
     componentDidMount (){
-        const { fetchInfo ,getCommentList ,disPatchFetchList } = this.props;
+        const { fetchInfo ,getCommentList ,disPatchFetchList, fetchCollect } = this.props;
         fetchInfo(-1 ,-1 ,this.props.location.query.itemId);
-        fetchInfo(-2,-1)
+        fetchInfo(-2,-1);
         getCommentList({
             itemType: this.props.location.query.itemType,
             itemId:  this.props.location.query.itemId,
@@ -62,6 +58,29 @@ class SelectDetail extends Component{
             isInDetail: true
         });
         disPatchFetchList(this.props.location.query.itemId);
+        fetchCollect({
+            type: 1,
+            itemType: this.props.location.query.itemType,
+            itemId:  this.props.location.query.itemId
+        })
+    }
+
+    handleCollect(isCollection, collectId){
+        const { fetchCollect  } = this.props;
+        if(isCollection){
+            fetchCollect({
+                type: 3,
+                collectId: collectId,
+                itemType: this.props.location.query.itemType,
+                itemId:  this.props.location.query.itemId
+            });
+        }else {
+            fetchCollect({
+                type: 2,
+                itemType: this.props.location.query.itemType,
+                itemId: this.props.location.query.itemId
+            });
+        }
     }
 
     handleSubmitOrderInfo(_wxPay){
@@ -116,8 +135,8 @@ class SelectDetail extends Component{
     render(){
         const {
             courseDetail, isShowMoreDetail, showMoreCourseDetail, isShowBackTop, times,
-            showPayPopup, isShowPayPopup, recommendedList,
-            ciphertext,
+            showPayPopup, isShowPayPopup, recommendedList, isCollection, collectId,
+            ciphertext, isShowToastSuccess, toastStr,
             listInDetail, rowCount
         } = this.props;
         return(
@@ -126,6 +145,9 @@ class SelectDetail extends Component{
                     className={ (isShowBackTop===1&&times>0) ? "down" : (isShowBackTop===0 ? 'up' : '') }
                     dom={this.refs.bodyBox}
                 />
+
+                <Toast icon="success-no-circle" show={isShowToastSuccess}>{toastStr}</Toast>
+
                 <div id="selectDetail" onScroll={this.handleScroll.bind(this)} ref="bodyBox">
                     <div className="head">
                         <img src={courseDetail.maxPic} role="presentation"/>
@@ -167,13 +189,15 @@ class SelectDetail extends Component{
                         } />
 
                     <RelateList recommendedList={recommendedList} />
-                    
                 </div>
 
                 <div id="footBuy" className="do">
                     <i/>
-                    <Button id="flow" type="default" plain>关注</Button>
-                    <Button id="buy" 
+                    <Button id="flow" type="default"
+                            onClick={this.handleCollect.bind(this, isCollection, collectId)}
+                            plain
+                    >{ isCollection ? '取消关注' : '关注' }</Button>
+                    <Button id="buy"
                             onClick={()=>{showPayPopup(true)}}
                     >购买</Button>
                 </div>
@@ -209,8 +233,13 @@ function mapStateToProps(state) {
         isShowBackTop: state.courseReducer.isShowBackTop,
         times: state.courseReducer.times,
 
+        isShowToastSuccess: state.publicReducer.isShowToastSuccess,
+        toastStr: state.publicReducer.toastStr,
+
         isShowPayPopup: state.publicReducer.isShowPayPopup,
         recommendedList: state.publicReducer.recommendedList,
+        isCollection: state.publicReducer.isCollection,
+        collectId:  state.publicReducer.collectId,
 
         listInDetail: state.commentReducer.listInDetail,
         rowCount: state.commentReducer.rowCount,
@@ -224,6 +253,6 @@ export default connect(
         disPatchFetchOrder,
         showPayPopup,
         getCommentList,
-        disPatchFetchList
+        disPatchFetchList, fetchCollect
     }
 )(SelectDetail);

@@ -19,6 +19,7 @@ import MyGift from '../container/myInfo/myGift'
 import BankCard from '../container/bankCard'
 import MyAddress from '../container/myInfo/address'
 import MyOrder from '../container/order'
+import MyCollection from '../container/myInfo/collection'
 
 import GoodDetail from '../container/good'
 import CommentList from '../container/comment/commentList'
@@ -47,6 +48,7 @@ export const routeConfig = [
             { path: 'myGift', component: MyGift },
             { path: 'myAddress', component: MyAddress },
             { path: 'myOrder', component: MyOrder },
+            { path: 'myCollection', component: MyCollection },
 
 
             { path: 'comment', component: CommentList },

@@ -14,7 +14,7 @@ class RelateList extends Component{
         return(
             <div className="relate">
                 <PanelHeader>相关推荐</PanelHeader>
-                { this.props.recommendedList.length===0 &&
+                { this.props.recommendedList.length===0  &&
                     <div className="nullList">暂无推荐</div>
                 }
                 { this.props.recommendedList.length > 0 &&

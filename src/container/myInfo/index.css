@@ -573,6 +573,14 @@
 
 
 
+/**** #collect 我的收藏  ****/
+#collect .collectionList{
+    margin-top: 0.4rem;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 
 
 

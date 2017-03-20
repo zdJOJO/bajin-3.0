@@ -97,7 +97,6 @@ const fetchComment = obj => {
 
         return fetch( url )
             .then(res => {
-                console.log(res.status);
                 return res.json()
             })
             .then(data => {

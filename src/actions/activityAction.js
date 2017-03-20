@@ -111,7 +111,7 @@ function fetchActList(page,isRefresh) {
                 dispatch(successGetActList(data,isRefresh))
             })
             .catch(e =>{
-                dispatch(fallGetActList())
+                dispatch(fallGetActList());
                 console.log(e)
             })
     }
@@ -124,9 +124,9 @@ function fetchActDetail(itemId) {
                 console.log(res.status)
                 return res.json()
             })
-            .then(data => {
-                dispatch(successGetActDetail(data))
-            }).then(e =>{
+            .then(json => {
+                dispatch(successGetActDetail(json))
+            }).catch(e =>{
                 console.log(e)
             })
     }
