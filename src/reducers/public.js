@@ -32,7 +32,6 @@ const initState = {
     errorStr: '',
 
     collectionList: [], //收藏列表 GET_COllECTIONLIST_SUCCESS
-    collectionLoading: false,  //加载loading
     isCollection: false, //物品是否被收藏
     collectId: 0  //收藏id
 };
@@ -95,7 +94,8 @@ export default function publicReducer(state=initState, action){
         case  GET_COllECTIONLIST_SUCCESS:
             return{
                 ...state,
-                collectionList: action.page === 1 ? action.list : state.collectionList.concat(action.list)
+                // collectionList: action.page === 1 ? action.list : state.collectionList.concat(action.list)
+                collectionList: action.list
             }
         default:
             return state;

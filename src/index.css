@@ -39,3 +39,7 @@ ul, li{
 .weui-popup>div{
   -webkit-overflow-scrolling: touch;
 }
+
+::-webkit-scrollbar{
+  display: none;
+}

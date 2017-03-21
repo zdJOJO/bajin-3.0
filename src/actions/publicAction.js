@@ -411,9 +411,9 @@ const cancleCollectFn = (obj)=>{
     }
 };
 //获取列表  GET
-const getCollectionList = ()=>{
+const getCollectionList = (type)=>{
     return dispatch =>{
-        return fetch(``)
+        return fetch(`${port}/card/collect?type=${type}&token=${cookie.load('token')}`)
             .then( res =>{
                 return res.json()
             })
@@ -445,7 +445,7 @@ export const fetchCollect =(obj)=>{
             case 3:
                 return  dispatch( cancleCollectFn(obj) );
             case 4:
-                return dispatch(getCollectionList());
+                return dispatch(getCollectionList(obj.type2));
             default:
                 return false
         }
