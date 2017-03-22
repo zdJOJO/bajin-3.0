@@ -8,7 +8,7 @@ import { createStore, applyMiddleware, compose } from 'redux' // 引入redux cre
 import { dev } from '../public/index';
 
 // 调用日志打印方法
-const loggerMiddleware = createLogger();
+//const loggerMiddleware = createLogger();
 
 // 创建一个中间件集合
 //const middleware = dev ? [thunk] : [thunk, loggerMiddleware];
@@ -19,6 +19,18 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const finalCreateStore = composeEnhancers(
     applyMiddleware(...middleware),
 )(createStore);
+
+
+/*
+    // 调用日志打印方法
+    const loggerMiddleware = createLogger();
+    // 创建一个中间件集合
+    const middleware = dev ? [thunk] : [thunk, loggerMiddleware];
+    // 利用compose增强store，这个 store 与 applyMiddleware
+    const finalCreateStore = compose(
+        applyMiddleware(...middleware),
+    )(createStore);
+*/
 
 
 export default finalCreateStore;

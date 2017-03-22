@@ -157,8 +157,7 @@ const fetchInfo = (valueObj,type,_subType)=> {
         inviteCode: valueObj.inviteCode || ''
     }
     return dispatch =>{
-        console.log('注册请求的body是:')
-        console.log(data)
+        console.log('注册请求的body是:');
         return fetch(url, {
             method: 'POST',
             headers: {
